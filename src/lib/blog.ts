@@ -64,6 +64,17 @@ export async function callAdmin<T = unknown>(
   }
 }
 
+// Converts a title into a URL-safe slug (lowercase, hyphens, max 100 chars)
+export function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 100);
+}
+
 // Very small markdown -> HTML converter for blog bodies (headings, bold, lists, paragraphs).
 export function renderMarkdown(md: string): string {
   if (!md) return '';

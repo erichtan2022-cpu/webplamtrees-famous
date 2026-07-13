@@ -7,8 +7,8 @@ import { images } from '@/data/siteContent';
 const slides = [
   {
     img: images.hero[0],
-    headlineId: 'Tumbuh Bersama di Lingkungan Inklusif',
-    headlineEn: 'Growing Together in an Inclusive Environment',
+    headlineId: 'Tumbuh Bersama di Palm Trees Montessori BSD – Sekolah Inklusi & Preschool Terbaik di Tangerang Selatan',
+    headlineEn: 'Palm Trees Montessori BSD – Inclusive School & Best Preschool in South Tangerang',
     subId: 'Ruang belajar Montessori yang hangat dan menerima setiap anak apa adanya.',
     subEn: 'A warm Montessori space that welcomes every child for who they are.',
   },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Loader2, Share2, Facebook, Twitter, Link2 } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Loader as Loader2, Share2, Facebook, Twitter, Link2 } from 'lucide-react';
 import { useLanguage, getRoute } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
 import { SectionReveal } from '@/components/site/SectionReveal';
@@ -32,6 +32,69 @@ export default function BlogPost() {
       setLoading(false);
     });
   }, [slug]);
+
+  useEffect(() => {
+    if (!post) return;
+
+    const postUrl = `https://palmtreesmontessori.com/${lang}/blog/${post.slug}`;
+    const postTitle = lang === 'id' ? post.title_id : post.title_en;
+    const postExcerpt = lang === 'id' ? post.excerpt_id : post.excerpt_en;
+    const blogBase = `https://palmtreesmontessori.com/${lang}/blog`;
+    const homeLabel = lang === 'id' ? 'Beranda' : 'Home';
+
+    const canonicalEl = document.getElementById('canonical-tag');
+    if (canonicalEl) canonicalEl.setAttribute('href', postUrl);
+    const ogUrlEl = document.getElementById('og-url-tag');
+    if (ogUrlEl) ogUrlEl.setAttribute('content', postUrl);
+
+    const schema = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Article',
+          headline: postTitle,
+          description: postExcerpt,
+          image: post.featured_image || 'https://palmtreesmontessori.com/og.jpg',
+          datePublished: post.published_at,
+          dateModified: post.updated_at || post.published_at,
+          author: { '@type': 'Person', name: post.author },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Palm Trees Montessori School',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://d64gsuwffb70l.cloudfront.net/6a1329e25207b61e4d9e1f32_1783626180696_c3db2863.PNG',
+            },
+          },
+          url: postUrl,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: homeLabel, item: 'https://palmtreesmontessori.com' },
+            { '@type': 'ListItem', position: 2, name: 'Blog', item: blogBase },
+            { '@type': 'ListItem', position: 3, name: postTitle, item: postUrl },
+          ],
+        },
+      ],
+    };
+
+    const scriptId = 'blog-post-schema';
+    let el = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (!el) {
+      el = document.createElement('script');
+      el.id = scriptId;
+      el.type = 'application/ld+json';
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(schema);
+
+    return () => {
+      const s = document.getElementById(scriptId);
+      if (s) s.remove();
+    };
+  }, [post, lang]);
 
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString(lang === 'id' ? 'id-ID' : 'en-US', {

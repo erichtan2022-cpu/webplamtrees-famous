@@ -20,7 +20,7 @@ const faqs = [
   { qId: 'Apa saja yang termasuk biaya?', qEn: 'What is included in the fees?', aId: 'SPP, materials Montessori, dan snack sehat. Biaya seragam dan field trip terpisah.', aEn: 'Tuition, Montessori materials, and healthy snack. Uniform and field trips are separate.' },
   { qId: 'Apakah ada bahasa Inggris?', qEn: 'Is English used in class?', aId: 'Ya, kami bilingual ID/EN dengan guru native dan lokal yang bersertifikasi.', aEn: 'Yes, we are bilingual ID/EN with certified native and local guides.' },
   { qId: 'Kapan tahun ajaran dimulai?', qEn: 'When does the school year start?', aId: 'Tahun ajaran utama mulai Juli, tapi rolling admission tersedia setiap saat.', aEn: 'The main school year starts in July, but rolling admissions are open year-round.' },
-  { qId: 'Bagaimana dengan anak yang membutuhkan dukungan khusus?', qEn: 'What about children who need extra support?', aId: 'Kami mengevaluasi bersama dan menyusun pendampingan yang tepat — tanpa terburu-buru.', aEn: 'We assess together and design the right support — without rushing.' },
+  { qId: 'Bagaimana dengan anak yang membutuhkan dukungan khusus?', qEn: 'What about children who need extra support?', aId: 'Palm Trees Montessori adalah sekolah inklusi di BSD yang menyambut anak berkebutuhan khusus (ABK), termasuk anak dengan speech delay. Kami mengevaluasi bersama, menyusun rencana pendampingan yang tepat bersama keluarga, dan memastikan setiap anak merasa diterima — tanpa terburu-buru.', aEn: 'Palm Trees Montessori is an inclusive school in BSD that welcomes children with special needs/ABK, including children with speech delay. We assess together, build the right support plan with families, and ensure every child feels welcomed — never rushed.' },
 ];
 
 export default function Admission() {
@@ -53,10 +53,10 @@ export default function Admission() {
 
   return (
     <SiteLayout
-      titleId="Pendaftaran & Tour Sekolah | Palmtrees Montessori BSD"
-      titleEn="Admission & School Tour | Palmtrees Montessori BSD"
-      descId="Daftar tour sekolah Palmtrees Montessori BSD. Proses pendaftaran sederhana, ramah, dan dipandu Ayah Bunda dari awal."
-      descEn="Book a school tour at Palmtrees Montessori BSD. A simple, friendly admission process guided every step of the way."
+      titleId="Pendaftaran Sekolah Montessori BSD – Trial Class & Open Day | Palm Trees"
+      titleEn="Montessori BSD School Admission – Trial Class & Open Day | Palm Trees"
+      descId="Daftar trial class atau open day di Palm Trees Montessori BSD. Proses pendaftaran sederhana dan ramah, termasuk untuk anak berkebutuhan khusus (ABK) dan speech delay."
+      descEn="Register for a trial class or open day at Palm Trees Montessori BSD. A simple, friendly admission process — including for children with special needs/ABK and speech delay."
     >
       <section className="relative py-16 px-4 sm:px-8 bg-gradient-to-b from-[#F5F0E6] to-white text-center overflow-hidden">
         <FloatingLeaf className="w-20 h-20 top-10 left-[10%] opacity-30" />
@@ -66,7 +66,7 @@ export default function Admission() {
             {t('Pendaftaran', 'Admission')}
           </span>
           <h1 className="font-quicksand font-bold text-4xl sm:text-6xl text-[#8B5E3C] mb-4">
-            {t('Mari Mulai Perjalanan', 'Let\'s Begin the Journey')}
+            {t('Pendaftaran Sekolah Montessori BSD – Trial Class & Open Day', 'Montessori BSD School Admission – Trial Class & Open Day')}
           </h1>
           <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto text-lg">
             {t(
@@ -118,8 +118,8 @@ export default function Admission() {
               </h2>
               <p className="text-[#8B5E3C]/80 mb-6 leading-relaxed">
                 {t(
-                  'Unduh brosur lengkap kami untuk melihat rincian biaya, jadwal, dan paket tahun ajaran 2025/2026.',
-                  'Download our complete brochure for detailed fees, schedules, and 2025/2026 school year packages.'
+                  'Unduh brosur resmi kami untuk melihat rincian lengkap mengenai biaya sekolah Palm Trees Montessori, jadwal biaya masuk, dan paket tahun ajaran baru.',
+                  'Download our official brochure for full details on Palm Trees Montessori school fees, enrollment fee schedule, and new school year packages.'
                 )}
               </p>
               <a

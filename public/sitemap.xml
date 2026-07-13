@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://palmtreesmontessori.com/</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Indonesian pages -->
+  <url>
+    <loc>https://palmtreesmontessori.com/id/beranda</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/beranda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/home"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/tentang-kami</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/tentang-kami"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/about-us"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/program</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/program"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/programs"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/metode-montessori</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/metode-montessori"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/montessori-method"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/program-inklusi</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/program-inklusi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/inclusive-program"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/pendaftaran</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/pendaftaran"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/admission"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/blog</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/blog"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/id/kontak</loc>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/kontak"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/contact"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- English pages -->
+  <url>
+    <loc>https://palmtreesmontessori.com/en/home</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/home"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/beranda"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/about-us</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/about-us"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/tentang-kami"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/programs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/programs"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/program"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/montessori-method</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/montessori-method"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/metode-montessori"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/inclusive-program</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/inclusive-program"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/program-inklusi"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/admission</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/admission"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/pendaftaran"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/blog"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://palmtreesmontessori.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://palmtreesmontessori.com/id/kontak"/>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Static documents (accessible without SPA routing) -->
+  <url>
+    <loc>https://palmtreesmontessori.com/palmtrees_icp.html</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/panduan-orangtua-montessori.html</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/ebook-panduan-orangtua-montessori-html.html</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/omnichannel-palmtrees.html</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://palmtreesmontessori.com/PalmTrees_Montessori_Strategy_2026.html</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

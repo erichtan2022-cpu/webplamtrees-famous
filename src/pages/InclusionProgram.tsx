@@ -83,6 +83,12 @@ export default function InclusionProgram() {
                   'Strategically located in the BSD City area, North Serpong, Palm Trees Montessori is easy to reach for families from South Tangerang, Tangerang, and West Jakarta. Since 2000, we have walked alongside hundreds of families in discovering their children\'s fullest potential.'
                 )}
               </p>
+              <p>
+                {t(
+                  'Sebagai sekolah berkebutuhan khusus di Tangerang yang terpercaya, kami adalah sekolah ABK terdekat bagi banyak keluarga di kawasan BSD dan sekitarnya. Kami secara khusus berpengalaman mendampingi anak dengan speech delay, keterlambatan perkembangan, dan berbagai gaya belajar yang beragam — dalam satu komunitas yang inklusif dan hangat.',
+                  'As a trusted school for special needs children in Tangerang, we are the nearest inclusive school for many families in the BSD area. We have extensive experience supporting children with speech delay, developmental delays, and diverse learning styles — all within one inclusive and warm community.'
+                )}
+              </p>
             </div>
           </SectionReveal>
         </div>

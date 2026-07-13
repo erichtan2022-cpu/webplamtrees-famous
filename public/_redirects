@@ -1,0 +1,12 @@
+# 301 Redirects — legacy URL migration
+
+# Old admissions page → new Indonesian enrollment page
+/admissions/ /id/pendaftaran 301
+/admissions  /id/pendaftaran 301
+
+# Old lang query-param URL → English admission
+/?lang=en    /en/admission   301
+
+# SPA fallback — all paths serve index.html (200, not redirect)
+# Static HTML files in /public/ are served directly (no fallback needed)
+/*           /index.html     200
