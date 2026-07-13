@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Eye, Target, Heart, Leaf, Sparkles, Users2 } from 'lucide-react';
+import { Eye, Target, Heart, Leaf } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
 import { Parallax } from '@/components/site/Parallax';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf } from '@/components/site/Decorations';
-import { images, teachers } from '@/data/siteContent';
+import { images } from '@/data/siteContent';
 
 const missionItemsId = [
   'Mempersiapkan anak-anak untuk menjadi pembelajar mandiri',
@@ -37,7 +37,6 @@ const facilities = [
 
 export default function About() {
   const { t, lang } = useLanguage();
-  const [hoveredTeacher, setHoveredTeacher] = useState<number | null>(null);
   const [activeFacility, setActiveFacility] = useState(0);
   const missionItems = lang === 'id' ? missionItemsId : missionItemsEn;
 
@@ -141,52 +140,6 @@ export default function About() {
                 );
               })}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team grid */}
-      <section className="py-20 px-4 sm:px-8 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <SectionReveal className="text-center mb-12">
-            <Users2 className="w-10 h-10 mx-auto mb-3 text-[#7A9A01]" />
-            <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-3">
-              {t('Tim Kami', 'Our Team')}
-            </h2>
-            <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto">
-              {t('Hover untuk mengenal fakta Montessori favorit setiap guru.', 'Hover to discover each guide\'s favorite Montessori fact.')}
-            </p>
-          </SectionReveal>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
-            {teachers.map((teacher, i) => (
-              <SectionReveal key={i} delay={i * 60}>
-                <div
-                  onMouseEnter={() => setHoveredTeacher(i)}
-                  onMouseLeave={() => setHoveredTeacher(null)}
-                  onClick={() => setHoveredTeacher(hoveredTeacher === i ? null : i)}
-                  className="relative bg-white rounded-2xl p-3 shadow-lg hover:shadow-2xl hover:-rotate-2 transition-all cursor-pointer border-2 border-[#F5F0E6]"
-                  style={{ transform: `rotate(${(i % 2 === 0 ? -1 : 1) * 1.5}deg)` }}
-                >
-                  <div className="relative aspect-square rounded-xl overflow-hidden mb-3">
-                    <img src={images.teachers[i]} alt={teacher.name} loading="lazy" className="w-full h-full object-cover" />
-                    {/* Tape effect */}
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-4 bg-[#F5B700]/60 rounded-sm"></div>
-
-                    <div className={`absolute inset-0 bg-[#8B5E3C]/95 text-white p-4 flex flex-col items-center justify-center text-center transition-opacity duration-300 ${hoveredTeacher === i ? 'opacity-100' : 'opacity-0'}`}>
-                      <Sparkles className="w-5 h-5 mb-2 text-[#F5B700]" />
-                      <p className="text-sm leading-relaxed">{lang === 'id' ? teacher.factId : teacher.factEn}</p>
-                    </div>
-                  </div>
-                  <div className="text-center pb-2">
-                    <h3 className="font-quicksand font-bold text-lg text-[#8B5E3C]">{teacher.name}</h3>
-                    <p className="text-xs text-[#7A9A01] font-semibold uppercase tracking-wider">
-                      {lang === 'id' ? teacher.roleId : teacher.roleEn}
-                    </p>
-                  </div>
-                </div>
-              </SectionReveal>
-            ))}
           </div>
         </div>
       </section>
