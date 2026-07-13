@@ -14,6 +14,9 @@ export interface BlogPost {
   author: string;
   published_at: string;
   is_published: boolean;
+  meta_title: string;
+  meta_description: string;
+  meta_keywords: string;
   created_at?: string;
   updated_at?: string;
 }

@@ -5,6 +5,7 @@ import { SiteLayout } from '@/components/site/SiteLayout';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf } from '@/components/site/Decorations';
 import { contactInfo } from '@/data/siteContent';
+import { usePageContent } from '@/hooks/usePageContent';
 
 
 const steps = [
@@ -25,6 +26,7 @@ const faqs = [
 
 export default function Admission() {
   const { t, lang } = useLanguage();
+  const { getContent } = usePageContent('admission');
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [form, setForm] = useState({ parent: '', email: '', phone: '', child: '', age: '', date: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -66,7 +68,10 @@ export default function Admission() {
             {t('Pendaftaran', 'Admission')}
           </span>
           <h1 className="font-quicksand font-bold text-4xl sm:text-6xl text-[#8B5E3C] mb-4">
-            {t('Pendaftaran Sekolah Montessori BSD – Trial Class & Open Day', 'Montessori BSD School Admission – Trial Class & Open Day')}
+            {lang === 'id'
+              ? getContent('h1_id', 'Pendaftaran Sekolah Montessori BSD – Trial Class & Open Day')
+              : getContent('h1_en', 'Montessori BSD School Admission – Trial Class & Open Day')
+            }
           </h1>
           <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto text-lg">
             {t(
@@ -117,10 +122,10 @@ export default function Admission() {
                 {t('Informasi Biaya Sekolah', 'Tuition Information')}
               </h2>
               <p className="text-[#8B5E3C]/80 mb-6 leading-relaxed">
-                {t(
-                  'Unduh brosur resmi kami untuk melihat rincian lengkap mengenai biaya sekolah Palm Trees Montessori, jadwal biaya masuk, dan paket tahun ajaran baru.',
-                  'Download our official brochure for full details on Palm Trees Montessori school fees, enrollment fee schedule, and new school year packages.'
-                )}
+                {lang === 'id'
+                  ? getContent('brochure_desc_id', 'Unduh brosur resmi kami untuk melihat rincian lengkap mengenai biaya sekolah Palm Trees Montessori, jadwal biaya masuk, dan paket tahun ajaran baru.')
+                  : getContent('brochure_desc_en', 'Download our official brochure for full details on Palm Trees Montessori school fees, enrollment fee schedule, and new school year packages.')
+                }
               </p>
               <a
                 href="#"

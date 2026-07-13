@@ -7,6 +7,9 @@
 # Old lang query-param URL → English admission
 /?lang=en    /en/admission   301
 
+# Dynamic sitemap via Supabase Edge Function
+/sitemap.xml https://gcmkhtbbalozuiczbejn.supabase.co/functions/v1/generate-sitemap 200!
+
 # SPA fallback — all paths serve index.html (200, not redirect)
 # Static HTML files in /public/ are served directly (no fallback needed)
 /*           /index.html     200

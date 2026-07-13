@@ -3,6 +3,7 @@ import { useLanguage, getRoute } from '@/contexts/LanguageContext';
 import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { images } from '@/data/siteContent';
+import { usePageContent } from '@/hooks/usePageContent';
 
 const slides = [
   {
@@ -31,8 +32,16 @@ const slides = [
 
 export const HeroSlider = () => {
   const { lang, t } = useLanguage();
+  const { getContent } = usePageContent('home');
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+
+  const dynamicH1Id = getContent('hero_h1_id', slides[0].headlineId);
+  const dynamicH1En = getContent('hero_h1_en', slides[0].headlineEn);
+
+  const slidesWithDynamic = slides.map((s, i) =>
+    i === 0 ? { ...s, headlineId: dynamicH1Id, headlineEn: dynamicH1En } : s
+  );
 
   const next = useCallback(() => setIndex((i) => (i + 1) % slides.length), []);
   const prev = useCallback(() => setIndex((i) => (i - 1 + slides.length) % slides.length), []);
@@ -50,7 +59,7 @@ export const HeroSlider = () => {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Slides with Ken Burns */}
-      {slides.map((s, i) => (
+      {slidesWithDynamic.map((s, i) => (
         <div
           key={i}
           className={`absolute inset-0 transition-opacity duration-1000 ${i === index ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
@@ -76,10 +85,10 @@ export const HeroSlider = () => {
               🌿 {t('Sekolah Montessori Inklusi · BSD', 'Inclusive Montessori School · BSD')}
             </span>
             <h1 className="font-quicksand font-bold text-3xl sm:text-5xl lg:text-6xl leading-tight mb-5 drop-shadow-lg">
-              {lang === 'id' ? slides[index].headlineId : slides[index].headlineEn}
+              {lang === 'id' ? slidesWithDynamic[index].headlineId : slidesWithDynamic[index].headlineEn}
             </h1>
             <p className="text-base sm:text-xl text-white/95 mb-8 max-w-2xl drop-shadow">
-              {lang === 'id' ? slides[index].subId : slides[index].subEn}
+              {lang === 'id' ? slidesWithDynamic[index].subId : slidesWithDynamic[index].subEn}
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link

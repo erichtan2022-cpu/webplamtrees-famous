@@ -8,6 +8,7 @@ import { Parallax } from '@/components/site/Parallax';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf, TreeIllustration } from '@/components/site/Decorations';
 import { images, testimonials, contactInfo } from '@/data/siteContent';
+import { usePageContent } from '@/hooks/usePageContent';
 
 
 const whyCards = [
@@ -46,6 +47,7 @@ const programCards = [
 
 export default function Home() {
   const { t, lang } = useLanguage();
+  const { getContent } = usePageContent('home');
   const [tIdx, setTIdx] = useState(0);
 
   useEffect(() => {
@@ -65,10 +67,10 @@ export default function Home() {
       {/* Local coverage SEO intro */}
       <section className="py-6 px-4 sm:px-8 bg-white border-b border-[#8B5E3C]/10">
         <p className="max-w-4xl mx-auto text-center text-sm text-[#8B5E3C]/75 leading-relaxed">
-          {t(
-            'Melayani keluarga dari BSD City, Serpong, Alam Sutera, dan Bintaro — sekolah Montessori inklusi terpercaya di jantung Tangerang Selatan sejak tahun 2000.',
-            'Serving families from BSD City, Serpong, Alam Sutera, and Bintaro — a trusted inclusive Montessori school in the heart of South Tangerang since 2000.'
-          )}
+          {lang === 'id'
+            ? getContent('geo_intro_id', 'Melayani keluarga dari BSD City, Serpong, Alam Sutera, dan Bintaro — sekolah Montessori inklusi terpercaya di jantung Tangerang Selatan sejak tahun 2000.')
+            : getContent('geo_intro_en', 'Serving families from BSD City, Serpong, Alam Sutera, and Bintaro — a trusted inclusive Montessori school in the heart of South Tangerang since 2000.')
+          }
         </p>
       </section>
 

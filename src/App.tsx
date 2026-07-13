@@ -15,7 +15,13 @@ import Admission from "./pages/Admission";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
-import AdminBlog from "./pages/AdminBlog";
+import AdminLogin from "./pages/admin/Login";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminBlogList from "./pages/admin/BlogList";
+import AdminBlogEditor from "./pages/admin/BlogEditor";
+import AdminPageEditor from "./pages/admin/PageEditor";
+import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
+import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const queryClient = new QueryClient();
@@ -65,8 +71,14 @@ const App = () => (
             <Route path="/en/blog/:slug" element={<LanguageProvider initialLang="en"><BlogPost /></LanguageProvider>} />
             <Route path="/en/contact" element={<LanguageProvider initialLang="en"><Contact /></LanguageProvider>} />
 
-            {/* Admin (password protected via edge function) */}
-            <Route path="/admin/blog" element={<AdminBlog />} />
+            {/* Admin */}
+            <Route path="/admin/login" element={<AdminAuthProvider><AdminLogin /></AdminAuthProvider>} />
+            <Route path="/admin/dashboard" element={<AdminAuthProvider><ProtectedRoute><AdminDashboard /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/blog" element={<AdminAuthProvider><ProtectedRoute><AdminBlogList /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/blog/new" element={<AdminAuthProvider><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/blog/:id" element={<AdminAuthProvider><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/pages" element={<AdminAuthProvider><ProtectedRoute><AdminPageEditor /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
 
             <Route path="*" element={<LanguageProvider><NotFound /></LanguageProvider>} />
           </Routes>
