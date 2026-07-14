@@ -2,13 +2,19 @@
 export const images = {
   logo: 'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1783623429514_8d08b768.webp',
   ceo: 'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1783623429587_f7475193.webp',
-  schoolBuilding: 'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1783623447574_784d4fe3.jpg',
+  schoolBuilding: 'https://i.imgur.com/Ab6r1d7.jpeg',
   inclusiveHero: 'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1783623463747_c450ef3f.jpg',
   hero: [
     'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775694660_44291c6e.png',
     'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775739353_540c06e6.png',
     'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775772258_65efa84c.png',
   ],
+  heroSlides: [
+    'https://i.imgur.com/E0yWTNM.jpeg',
+    'https://i.imgur.com/C0qkK3C.jpeg',
+    'https://i.imgur.com/Ab6r1d7.jpeg',
+  ],
+  uniqueChild: 'https://i.imgur.com/pl8LwoE.jpeg',
   classrooms: [
     'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775929923_bca0f46c.png',
     'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775930892_9a2fd69b.png',
@@ -37,12 +43,12 @@ export const images = {
   ],
   building: 'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778776002678_e0fe501d.png',
   activities: [
-    'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778776021075_d9fea6fc.jpg',
-    'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778776025975_80763e50.png',
-    'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778776026620_a9a1b43a.png',
-    'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775694660_44291c6e.png',
-    'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775739353_540c06e6.png',
-    'https://d64gsuwffb70l.cloudfront.net/6a05f5ed7fae75f422be90c0_1778775772258_65efa84c.png',
+    'https://i.imgur.com/SCl2jgm.jpeg',
+    'https://i.imgur.com/NaqQWwl.jpeg',
+    'https://i.imgur.com/mHhpWp7.jpeg',
+    'https://i.imgur.com/97dTfiS.jpeg',
+    'https://i.imgur.com/8DaOGhY.jpeg',
+    'https://i.imgur.com/I3YrSsk.jpeg',
   ],
 };
 

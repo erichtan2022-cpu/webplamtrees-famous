@@ -17,8 +17,8 @@ const whyCards = [
     color: '#7A9A01',
     titleId: 'Montessori Asli',
     titleEn: 'Authentic Montessori',
-    descId: 'Lingkungan terpersiapkan, material lengkap, dan guru bersertifikasi AMI/MACTE.',
-    descEn: 'Prepared environment, complete materials, and AMI/MACTE-certified guides.',
+    descId: 'Lingkungan terpersiapkan, material lengkap, dan guru berpengalaman dengan metode montessori.',
+    descEn: 'Prepared environment, complete materials, and experienced Montessori-method guides.',
   },
   {
     icon: Heart,
@@ -123,7 +123,7 @@ export default function Home() {
       </section>
 
       {/* Parallax: Every Child is Unique */}
-      <Parallax image={images.hero[1]} speed={0.3} height="min-h-[520px]" overlayClass="bg-gradient-to-r from-[#3a2e22]/75 to-[#7A9A01]/60">
+      <Parallax image={images.uniqueChild} speed={0.3} height="min-h-[520px]" overlayClass="bg-gradient-to-r from-[#3a2e22]/75 to-[#7A9A01]/60">
         <div className="h-full min-h-[520px] flex items-center justify-center px-4 text-center">
           <SectionReveal className="max-w-3xl text-white">
             <Sparkles className="w-12 h-12 mx-auto mb-5 text-[#F5F0E6]" style={{ animation: 'spin-slow 12s linear infinite' }} />

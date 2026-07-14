@@ -7,23 +7,23 @@ import { usePageContent } from '@/hooks/usePageContent';
 
 const slides = [
   {
-    img: images.hero[0],
-    headlineId: 'Tumbuh Bersama di Palm Trees Montessori BSD – Sekolah Inklusi & Preschool Terbaik di Tangerang Selatan',
+    img: images.heroSlides[0],
+    headlineId: 'Palm Trees Montessori BSD – Sekolah Inklusi & Preschool Terbaik di Tangerang Selatan',
     headlineEn: 'Palm Trees Montessori BSD – Inclusive School & Best Preschool in South Tangerang',
     subId: 'Ruang belajar Montessori yang hangat dan menerima setiap anak apa adanya.',
     subEn: 'A warm Montessori space that welcomes every child for who they are.',
   },
   {
-    img: images.hero[1],
-    headlineId: 'Bermain. Belajar. Bersahabat.',
-    headlineEn: 'Play. Learn. Belong.',
-    subId: 'Persahabatan tumbuh dari rasa saling menghargai setiap perbedaan.',
-    subEn: 'Friendship grows from celebrating every kind of mind.',
+    img: images.heroSlides[1],
+    headlineId: 'Taman Bermain. Taman Belajar. Taman Bertumbuh.',
+    headlineEn: 'Playground. Learning Garden. Growing Garden.',
+    subId: 'Fasilitas outdoor asri yang menyatu dengan konsep nature-based Montessori.',
+    subEn: 'Lush outdoor facilities integrated with a nature-based Montessori concept.',
   },
   {
-    img: images.schoolBuilding,
-    headlineId: 'Palm Trees Montessori BSD',
-    headlineEn: 'Palm Trees Montessori BSD',
+    img: images.heroSlides[2],
+    headlineId: 'Palm Trees Montessori School BSD',
+    headlineEn: 'Palm Trees Montessori School BSD',
     subId: 'Sekolah Montessori Terakreditasi di Tangerang Selatan.',
     subEn: 'An Accredited Montessori School in South Tangerang.',
   },
@@ -73,7 +73,7 @@ export const HeroSlider = () => {
               animation: i === index ? `kenBurns${i % 3} 8s ease-out forwards` : 'none',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#3a2e22]/80 via-[#3a2e22]/30 to-[#3a2e22]/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#3a2e22]/60 via-[#3a2e22]/40 to-[#7A9A01]/60" />
         </div>
       ))}
 
