@@ -5,10 +5,12 @@ import { SiteLayout } from '@/components/site/SiteLayout';
 import { Parallax } from '@/components/site/Parallax';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { images } from '@/data/siteContent';
+import { usePageContent } from '@/hooks/usePageContent';
+import { useSiteImages, useSiteCards } from '@/hooks/useSiteContent';
 
-const programs = [
+const defaultPrograms = [
   {
-    key: 'preschool-kindergarten',
+    key: 'preschool',
     labelId: 'Preschool dan Kindergarten · 2-6 th',
     labelEn: 'Preschool & Kindergarten · 2-6 y',
     titleId: 'Preschool dan Kindergarten',
@@ -57,7 +59,7 @@ const programs = [
   },
 ];
 
-const dayRhythm = [
+const defaultDayRhythm = [
   { icon: Sun, time: '08:00', id: 'Lingkar Pagi & Salam', en: 'Morning Circle & Greeting' },
   { icon: BookOpen, time: '08:30', id: 'Work Cycle: Practical Life', en: 'Work Cycle: Practical Life' },
   { icon: Sparkles, time: '09:30', id: 'Work Cycle: Sensorial & Language', en: 'Work Cycle: Sensorial & Language' },
@@ -67,10 +69,43 @@ const dayRhythm = [
   { icon: Music, time: '12:00', id: 'Lingkar Penutup & Pulang', en: 'Closing Circle & Dismissal' },
 ];
 
+const rhythmIcons = [Sun, BookOpen, Sparkles, Coffee, Trees, Palette, Music];
+
 export default function Programs() {
   const { t, lang } = useLanguage();
   const [active, setActive] = useState(0);
-  const p = programs[active];
+  const { getContent } = usePageContent('programs');
+  const { getImages } = useSiteImages();
+  const { cards: programCards } = useSiteCards('program');
+  const { cards: rhythmCards } = useSiteCards('day_rhythm');
+
+  const inclusiveHeroImg = getImages('programs', 'inclusive_hero')[0] || images.inclusiveHero;
+  const inclusiveImg = getImages('programs', 'inclusive')[0] || images.programs.inclusive;
+
+  const programs = programCards.length > 0
+    ? programCards.map((c, i) => ({
+        key: `program-${i}`,
+        labelId: c.title_id + (c.extra_id ? ` · ${c.extra_id}` : ''),
+        labelEn: c.title_en + (c.extra_en ? ` · ${c.extra_en}` : ''),
+        titleId: c.title_id,
+        titleEn: c.title_en,
+        descId: c.desc_id,
+        descEn: c.desc_en,
+        img: c.image_url || getImages('programs', ['preschool', 'kindergarten', 'inclusive'][i] || 'preschool')[0],
+        highlights: defaultPrograms[i]?.highlights ?? [],
+      }))
+    : defaultPrograms;
+
+  const dayRhythm = rhythmCards.length > 0
+    ? rhythmCards.map((c, i) => ({
+        icon: rhythmIcons[i % rhythmIcons.length],
+        time: c.extra_id || '',
+        id: c.title_id,
+        en: c.title_en,
+      }))
+    : defaultDayRhythm;
+
+  const p = programs[active] ?? programs[0];
 
   return (
     <SiteLayout
@@ -79,27 +114,24 @@ export default function Programs() {
       descId="Palm Trees Montessori BSD menyediakan program Preschool dan Kindergarten (2-6 tahun), Program Elementary (6-12 tahun), dan Program Inklusi."
       descEn="Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6), an Elementary program (ages 6-12), and an Inclusion Program."
     >
-      {/* Hero — Inclusion Program imagery */}
-      <Parallax image={images.inclusiveHero} speed={0.35} height="min-h-[440px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/70 to-[#7A9A01]/60">
+      <Parallax image={inclusiveHeroImg} speed={0.35} height="min-h-[440px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/70 to-[#7A9A01]/60">
         <div className="h-full min-h-[440px] flex items-center justify-center px-4 text-center">
           <SectionReveal className="text-white max-w-3xl">
             <span className="inline-block bg-white/15 backdrop-blur-sm text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-4">
               {t('Program Kami', 'Our Programs')}
             </span>
             <h1 className="font-quicksand font-bold text-4xl sm:text-6xl mb-4 drop-shadow-lg">
-              {t('Kelas di Palmtrees Montessori', 'Classes at Palmtrees Montessori')}
+              {lang === 'id' ? getContent('hero_h1_id', 'Kelas di Palmtrees Montessori') : getContent('hero_h1_en', 'Classes at Palmtrees Montessori')}
             </h1>
             <p className="text-lg sm:text-xl text-white/95">
-              {t(
-                'Palm Trees Montessori BSD menyediakan program Preschool dan Kindergarten (2-6 tahun), Program Elementary (6-12 tahun) yang dirancang sesuai tahap perkembangan anak dan Program Inklusi.',
-                'Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6), an Elementary program (ages 6-12) designed around each stage of child development, and an Inclusion Program.'
-              )}
+              {lang === 'id'
+                ? getContent('hero_subtitle_id', 'Palm Trees Montessori BSD menyediakan program Preschool dan Kindergarten (2-6 tahun), Program Elementary (6-12 tahun) yang dirancang sesuai tahap perkembangan anak dan Program Inklusi.')
+                : getContent('hero_subtitle_en', 'Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6), an Elementary program (ages 6-12) designed around each stage of child development, and an Inclusion Program.')}
             </p>
           </SectionReveal>
         </div>
       </Parallax>
 
-      {/* Tabs */}
       <section className="px-4 sm:px-8 bg-white py-14">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap gap-2 justify-center mb-10">
@@ -154,15 +186,14 @@ export default function Programs() {
         </div>
       </section>
 
-      {/* Day in class infographic */}
       <section className="py-20 px-4 sm:px-8 bg-[#F5F0E6]">
         <div className="max-w-5xl mx-auto">
           <SectionReveal className="text-center mb-12">
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-3">
-              {t('Sehari di Kelas', 'A Day in Class')}
+              {lang === 'id' ? getContent('rhythm_title_id', 'Sehari di Kelas') : getContent('rhythm_title_en', 'A Day in Class')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto">
-              {t('Ritme harian yang menenangkan dan dapat diprediksi anak.', 'A calming, predictable daily rhythm.')}
+              {lang === 'id' ? getContent('rhythm_subtitle_id', 'Ritme harian yang menenangkan dan dapat diprediksi anak.') : getContent('rhythm_subtitle_en', 'A calming, predictable daily rhythm.')}
             </p>
           </SectionReveal>
 
@@ -192,19 +223,17 @@ export default function Programs() {
         </div>
       </section>
 
-      {/* Inclusive section */}
-      <Parallax image={images.programs.inclusive} speed={0.3} height="min-h-[420px]" overlayClass="bg-[#7A9A01]/70">
+      <Parallax image={inclusiveImg} speed={0.3} height="min-h-[420px]" overlayClass="bg-[#7A9A01]/70">
         <div className="h-full min-h-[420px] flex items-center justify-center text-center px-4">
           <div className="max-w-3xl text-white">
             <Heart className="w-12 h-12 mx-auto mb-4" />
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl mb-4 drop-shadow-lg">
-              {t('Mendukung Setiap Gaya Belajar', 'Supporting Every Learning Style')}
+              {lang === 'id' ? getContent('inclusive_section_title_id', 'Mendukung Setiap Gaya Belajar') : getContent('inclusive_section_title_en', 'Supporting Every Learning Style')}
             </h2>
             <p className="text-lg text-white/95 max-w-2xl mx-auto">
-              {t(
-                'Bukan tentang label. Tentang melihat setiap anak utuh, lalu menemani mereka tumbuh dengan caranya sendiri.',
-                'Not about labels. About seeing each child whole, then walking alongside them on their own path.'
-              )}
+              {lang === 'id'
+                ? getContent('inclusive_section_desc_id', 'Bukan tentang label. Tentang melihat setiap anak utuh, lalu menemani mereka tumbuh dengan caranya sendiri.')
+                : getContent('inclusive_section_desc_en', 'Not about labels. About seeing each child whole, then walking alongside them on their own path.')}
             </p>
           </div>
         </div>
@@ -214,7 +243,7 @@ export default function Programs() {
         <div className="max-w-5xl mx-auto">
           <SectionReveal className="text-center mb-12">
             <h2 className="font-quicksand font-bold text-3xl sm:text-4xl text-[#8B5E3C] mb-3">
-              {t('Bagaimana Program Inklusi Bekerja', 'How Our Inclusive Program Works')}
+              {lang === 'id' ? getContent('how_inclusion_title_id', 'Bagaimana Program Inklusi Bekerja') : getContent('how_inclusion_title_en', 'How Our Inclusive Program Works')}
             </h2>
           </SectionReveal>
 

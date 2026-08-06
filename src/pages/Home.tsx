@@ -7,8 +7,9 @@ import { HeroSlider } from '@/components/site/HeroSlider';
 import { Parallax } from '@/components/site/Parallax';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf, TreeIllustration } from '@/components/site/Decorations';
-import { images, testimonials, contactInfo } from '@/data/siteContent';
+import { testimonials as defaultTestimonials } from '@/data/siteContent';
 import { usePageContent } from '@/hooks/usePageContent';
+import { useSiteImages, useSiteCards } from '@/hooks/useSiteContent';
 
 
 const whyCards = [
@@ -38,22 +39,29 @@ const whyCards = [
   },
 ];
 
-const programCards = [
-  { key: 'preschool', route: 'programs' as const, titleId: 'Program Preschool dan Kindergarten', titleEn: 'Preschool & Kindergarten Program', ageId: 'Usia 2 – 6 tahun', ageEn: 'Ages 2 – 6 years', img: images.programs.preschool, descId: 'Practical Life, sensorial, bahasa, dan matematika awal dengan ritme harian yang konsisten.', descEn: 'Practical Life, sensorial, language, and early math with a consistent daily rhythm.' },
-  { key: 'elementary', route: 'programs' as const, titleId: 'Program Elementary', titleEn: 'Elementary Program', ageId: 'Usia 6 – 12 tahun', ageEn: 'Ages 6 – 12 years', img: images.programs.kindergarten, descId: 'Matematika, sains, budaya, dan proyek riset mandiri yang bermakna hingga Kelas 6.', descEn: 'Math, science, culture, and meaningful independent research projects through Grade 6.' },
-  { key: 'inclusive', route: 'inclusion' as const, titleId: 'Program Inklusi', titleEn: 'Inclusion Program', ageId: 'Montessori untuk Setiap Anak', ageEn: 'Montessori for Every Child', img: images.programs.inclusive, descId: 'Pendampingan personal untuk setiap anak agar berkembang dengan nyaman.', descEn: 'Personal support for every child to flourish at their own pace.' },
-];
-
-
 export default function Home() {
   const { t, lang } = useLanguage();
   const { getContent } = usePageContent('home');
+  const { getImages } = useSiteImages();
+  const { cards: testimonialCards } = useSiteCards('testimonial');
+
+  const activityImages = getImages('home', 'activities');
+  const uniqueChildImg = getImages('home', 'unique_child')[0];
+
+  const testimonials = testimonialCards.length > 0
+    ? testimonialCards.map((c) => ({
+        name: c.title_id || c.title_en,
+        quoteId: c.desc_id,
+        quoteEn: c.desc_en,
+      }))
+    : defaultTestimonials;
+
   const [tIdx, setTIdx] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => setTIdx((i) => (i + 1) % testimonials.length), 6000);
     return () => clearInterval(id);
-  }, []);
+  }, [testimonials.length]);
 
   return (
     <SiteLayout
@@ -86,13 +94,12 @@ export default function Home() {
               {t('Kenapa Palmtrees?', 'Why Palmtrees?')}
             </span>
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-4">
-              {t('Tempat Anak Tumbuh dengan Hati', 'Where Children Grow with Heart')}
+              {lang === 'id' ? getContent('why_title_id', 'Tempat Anak Tumbuh dengan Hati') : getContent('why_title_en', 'Where Children Grow with Heart')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto text-lg">
-              {t(
-                'Tiga pilar yang menjadi fondasi setiap hari di kelas kami.',
-                'Three pillars that ground every day in our classrooms.'
-              )}
+              {lang === 'id'
+                ? getContent('why_subtitle_id', 'Tiga pilar yang menjadi fondasi setiap hari di kelas kami.')
+                : getContent('why_subtitle_en', 'Three pillars that ground every day in our classrooms.')}
             </p>
           </SectionReveal>
 
@@ -123,7 +130,7 @@ export default function Home() {
       </section>
 
       {/* Parallax: Every Child is Unique */}
-      <Parallax image={images.uniqueChild} speed={0.3} height="min-h-[520px]" overlayClass="bg-gradient-to-r from-[#3a2e22]/75 to-[#7A9A01]/60">
+      <Parallax image={uniqueChildImg} speed={0.3} height="min-h-[520px]" overlayClass="bg-gradient-to-r from-[#3a2e22]/75 to-[#7A9A01]/60">
         <div className="h-full min-h-[520px] flex items-center justify-center px-4 text-center">
           <SectionReveal className="max-w-3xl text-white">
             <Sparkles className="w-12 h-12 mx-auto mb-5 text-[#F5F0E6]" style={{ animation: 'spin-slow 12s linear infinite' }} />
@@ -148,43 +155,49 @@ export default function Home() {
               {t('Program Kami', 'Our Programs')}
             </span>
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-4">
-              {t('Dari Preschool hingga Elementary', 'From Preschool to Elementary')}
+              {lang === 'id' ? getContent('programs_title_id', 'Dari Preschool hingga Elementary') : getContent('programs_title_en', 'From Preschool to Elementary')}
             </h2>
 
           </SectionReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {programCards.map((p, i) => (
-              <SectionReveal key={p.key} delay={i * 80}>
-                <Link
-                  to={getRoute(p.route, lang)}
-
-                  className="group block bg-white rounded-3xl p-6 hover-lift border border-[#8B5E3C]/10 text-center h-full"
-                >
-                  <div className="relative w-32 h-32 mx-auto mb-4">
-                    <div className="absolute inset-0 rounded-full bg-[#7A9A01]/20 group-hover:scale-110 transition-transform" />
-                    <img
-                      src={p.img}
-                      alt={p.titleEn}
-                      loading="lazy"
-                      className="relative w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg group-hover:rotate-6 transition-transform"
-                    />
-                  </div>
-                  <h3 className="font-quicksand font-bold text-xl text-[#8B5E3C] mb-1">
-                    {lang === 'id' ? p.titleId : p.titleEn}
-                  </h3>
-                  <div className="text-xs font-bold text-[#7A9A01] uppercase tracking-wider mb-3">
-                    {lang === 'id' ? p.ageId : p.ageEn}
-                  </div>
-                  <p className="text-sm text-[#8B5E3C]/80 leading-relaxed">
-                    {lang === 'id' ? p.descId : p.descEn}
-                  </p>
-                  <span className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-[#7A9A01] group-hover:gap-2 transition-all">
-                    {t('Pelajari', 'Learn more')} <ArrowRight className="w-4 h-4" />
-                  </span>
-                </Link>
-              </SectionReveal>
-            ))}
+            {[
+              { key: 'preschool', route: 'programs' as const, titleId: 'Program Preschool dan Kindergarten', titleEn: 'Preschool & Kindergarten Program', ageId: 'Usia 2 – 6 tahun', ageEn: 'Ages 2 – 6 years', descId: 'Practical Life, sensorial, bahasa, dan matematika awal dengan ritme harian yang konsisten.', descEn: 'Practical Life, sensorial, language, and early math with a consistent daily rhythm.' },
+              { key: 'kindergarten', route: 'programs' as const, titleId: 'Program Elementary', titleEn: 'Elementary Program', ageId: 'Usia 6 – 12 tahun', ageEn: 'Ages 6 – 12 years', descId: 'Matematika, sains, budaya, dan proyek riset mandiri yang bermakna hingga Kelas 6.', descEn: 'Math, science, culture, and meaningful independent research projects through Grade 6.' },
+              { key: 'inclusive', route: 'inclusion' as const, titleId: 'Program Inklusi', titleEn: 'Inclusion Program', ageId: 'Montessori untuk Setiap Anak', ageEn: 'Montessori for Every Child', descId: 'Pendampingan personal untuk setiap anak agar berkembang dengan nyaman.', descEn: 'Personal support for every child to flourish at their own pace.' },
+            ].map((p, i) => {
+              const img = getImages('programs', p.key)[0];
+              return (
+                <SectionReveal key={p.key} delay={i * 80}>
+                  <Link
+                    to={getRoute(p.route, lang)}
+                    className="group block bg-white rounded-3xl p-6 hover-lift border border-[#8B5E3C]/10 text-center h-full"
+                  >
+                    <div className="relative w-32 h-32 mx-auto mb-4">
+                      <div className="absolute inset-0 rounded-full bg-[#7A9A01]/20 group-hover:scale-110 transition-transform" />
+                      <img
+                        src={img}
+                        alt={p.titleEn}
+                        loading="lazy"
+                        className="relative w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg group-hover:rotate-6 transition-transform"
+                      />
+                    </div>
+                    <h3 className="font-quicksand font-bold text-xl text-[#8B5E3C] mb-1">
+                      {lang === 'id' ? p.titleId : p.titleEn}
+                    </h3>
+                    <div className="text-xs font-bold text-[#7A9A01] uppercase tracking-wider mb-3">
+                      {lang === 'id' ? p.ageId : p.ageEn}
+                    </div>
+                    <p className="text-sm text-[#8B5E3C]/80 leading-relaxed">
+                      {lang === 'id' ? p.descId : p.descEn}
+                    </p>
+                    <span className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-[#7A9A01] group-hover:gap-2 transition-all">
+                      {t('Pelajari', 'Learn more')} <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </Link>
+                </SectionReveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -200,7 +213,7 @@ export default function Home() {
               {t('Cerita Ayah Bunda', 'From Our Parents')}
             </span>
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-white">
-              {t('Testimoni Keluarga Palmtrees', 'Palmtrees Family Stories')}
+              {lang === 'id' ? getContent('testimonials_title_id', 'Testimoni Keluarga Palmtrees') : getContent('testimonials_title_en', 'Palmtrees Family Stories')}
             </h2>
           </SectionReveal>
 
@@ -212,9 +225,9 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-lg sm:text-2xl text-[#3a2e22] italic mb-6 leading-relaxed max-w-2xl mx-auto">
-                "{lang === 'id' ? testimonials[tIdx].quoteId : testimonials[tIdx].quoteEn}"
+                "{lang === 'id' ? testimonials[tIdx]?.quoteId : testimonials[tIdx]?.quoteEn}"
               </p>
-              <div className="font-quicksand font-bold text-xl text-[#8B5E3C]">{testimonials[tIdx].name}</div>
+              <div className="font-quicksand font-bold text-xl text-[#8B5E3C]">{testimonials[tIdx]?.name}</div>
             </div>
 
 
@@ -250,21 +263,20 @@ export default function Home() {
           <SectionReveal className="text-center mb-10">
             <Instagram className="w-10 h-10 mx-auto mb-4 text-[#7A9A01]" />
             <h2 className="font-quicksand font-bold text-3xl sm:text-4xl text-[#8B5E3C] mb-3">
-              @palmtreesmontessori
+              {getContent('instagram_title', '@palmtreesmontessori')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-xl mx-auto">
-              {t(
-                'Ikuti keseharian kami di Instagram. Cerita kecil yang penuh makna.',
-                'Follow our daily life on Instagram. Small stories, big meaning.'
-              )}
+              {lang === 'id'
+                ? getContent('instagram_subtitle_id', 'Ikuti keseharian kami di Instagram. Cerita kecil yang penuh makna.')
+                : getContent('instagram_subtitle_en', 'Follow our daily life on Instagram. Small stories, big meaning.')}
             </p>
           </SectionReveal>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 mb-10">
-            {images.activities.map((src, i) => (
+            {activityImages.map((src, i) => (
               <a
                 key={i}
-                href={contactInfo.instagram}
+                href="https://www.instagram.com/palmtreesmontessori/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative aspect-square rounded-2xl overflow-hidden block"
@@ -282,13 +294,12 @@ export default function Home() {
           <SectionReveal className="text-center">
             <div className="inline-block bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-[#8B5E3C]/10 max-w-2xl">
               <h3 className="font-quicksand font-bold text-2xl sm:text-3xl text-[#8B5E3C] mb-3">
-                {t('Mau melihat sekolah kami langsung?', 'Want to see our school in person?')}
+                {lang === 'id' ? getContent('cta_title_id', 'Mau melihat sekolah kami langsung?') : getContent('cta_title_en', 'Want to see our school in person?')}
               </h3>
               <p className="text-[#8B5E3C]/80 mb-6">
-                {t(
-                  'Jadwalkan kunjungan dan rasakan suasana kelas Palmtrees bersama keluarga.',
-                  'Schedule a visit and feel the Palmtrees classroom atmosphere with your family.'
-                )}
+                {lang === 'id'
+                  ? getContent('cta_desc_id', 'Jadwalkan kunjungan dan rasakan suasana kelas Palmtrees bersama keluarga.')
+                  : getContent('cta_desc_en', 'Schedule a visit and feel the Palmtrees classroom atmosphere with your family.')}
               </p>
               <Link
                 to={getRoute('admission', lang)}

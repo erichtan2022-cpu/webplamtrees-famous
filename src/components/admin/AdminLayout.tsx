@@ -1,12 +1,25 @@
 import { ReactNode, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FileText, LayoutTemplate, LogOut, Menu, X, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, FileText, LayoutTemplate, LogOut, Menu, X, ChevronRight, Image as ImageIcon, Users, MessageSquare, BookOpen, Building2, CircleHelp as HelpCircle, ListChecks, Sparkles, HeartPulse, Clock, Mail, Settings, GraduationCap, Quote } from 'lucide-react';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
 
 const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/admin/blog', label: 'Artikel Blog', icon: FileText },
-  { to: '/admin/pages', label: 'Edit Halaman', icon: LayoutTemplate },
+  { to: '/admin/pages', label: 'Edit Teks Halaman', icon: LayoutTemplate },
+  { to: '/admin/images', label: 'Kelola Gambar', icon: ImageIcon },
+  { to: '/admin/teachers', label: 'Guru', icon: Users },
+  { to: '/admin/testimonials', label: 'Testimoni', icon: Quote },
+  { to: '/admin/programs', label: 'Program', icon: BookOpen },
+  { to: '/admin/facilities', label: 'Fasilitas', icon: Building2 },
+  { to: '/admin/faqs', label: 'FAQ', icon: HelpCircle },
+  { to: '/admin/steps', label: 'Langkah Pendaftaran', icon: ListChecks },
+  { to: '/admin/advantages', label: 'Keunggulan Montessori', icon: Sparkles },
+  { to: '/admin/pillars', label: 'Pilar Inklusi', icon: HeartPulse },
+  { to: '/admin/reasons', label: 'Alasan Inklusi', icon: ListChecks },
+  { to: '/admin/rhythm', label: 'Ritme Harian', icon: Clock },
+  { to: '/admin/ceo-message', label: 'Pesan CEO', icon: Mail },
+  { to: '/admin/settings', label: 'Kontak & Jam', icon: Settings },
 ];
 
 interface AdminLayoutProps {
@@ -46,22 +59,22 @@ export const AdminLayout = ({ children, title, breadcrumb }: AdminLayoutProps) =
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {navItems.map(({ to, label, icon: Icon }) => {
-          const active = location.pathname.startsWith(to);
+          const active = location.pathname === to || (to !== '/admin/dashboard' && location.pathname.startsWith(to));
           return (
             <Link
               key={to}
               to={to}
               onClick={() => setSidebarOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 active
                   ? 'bg-[#7A9A01] text-white'
                   : 'text-slate-300 hover:bg-slate-800 hover:text-white'
               }`}
             >
               <Icon className="w-4 h-4 flex-shrink-0" />
-              {label}
+              <span className="truncate">{label}</span>
               {active && <ChevronRight className="w-4 h-4 ml-auto" />}
             </Link>
           );

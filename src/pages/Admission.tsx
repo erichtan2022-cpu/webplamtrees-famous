@@ -6,9 +6,9 @@ import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf } from '@/components/site/Decorations';
 import { contactInfo } from '@/data/siteContent';
 import { usePageContent } from '@/hooks/usePageContent';
+import { useSiteCards, useSiteSettings } from '@/hooks/useSiteContent';
 
-
-const steps = [
+const defaultSteps = [
   { id: 'Hubungi Kami', en: 'Reach Out', descId: 'Isi formulir atau WhatsApp untuk memperkenalkan keluarga.', descEn: 'Fill the form or WhatsApp us to introduce your family.' },
   { id: 'Tour Sekolah', en: 'School Tour', descId: 'Datang ke kampus, mengobrol, dan melihat anak-anak belajar.', descEn: 'Visit our campus, chat with us, and see the children at work.' },
   { id: 'Trial Class', en: 'Trial Class', descId: 'Ananda mencoba ritme kelas selama 1-2 sesi singkat.', descEn: 'Your child experiences our class rhythm for 1-2 short sessions.' },
@@ -16,7 +16,7 @@ const steps = [
   { id: 'Pendaftaran Resmi', en: 'Official Enrollment', descId: 'Selamat datang di keluarga Palmtrees Montessori!', descEn: 'Welcome to the Palmtrees Montessori family!' },
 ];
 
-const faqs = [
+const defaultFaqs = [
   { qId: 'Berapa rasio guru dan anak?', qEn: 'What is the teacher-to-child ratio?', aId: 'Rata-rata 1:6 di setiap kelas, dengan dukungan tambahan untuk Inclusive Support Program.', aEn: 'On average 1:6 in each class, with extra support for the Inclusive Support Program.' },
   { qId: 'Apa saja yang termasuk biaya?', qEn: 'What is included in the fees?', aId: 'SPP, materials Montessori, dan snack sehat. Biaya seragam dan field trip terpisah.', aEn: 'Tuition, Montessori materials, and healthy snack. Uniform and field trips are separate.' },
   { qId: 'Apakah ada bahasa Inggris?', qEn: 'Is English used in class?', aId: 'Ya, kami bilingual ID/EN dengan guru native dan lokal yang bersertifikasi.', aEn: 'Yes, we are bilingual ID/EN with certified native and local guides.' },
@@ -27,10 +27,25 @@ const faqs = [
 export default function Admission() {
   const { t, lang } = useLanguage();
   const { getContent } = usePageContent('admission');
+  const { cards: stepCards } = useSiteCards('admission_step');
+  const { cards: faqCards } = useSiteCards('faq');
+  const { getSetting } = useSiteSettings();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [form, setForm] = useState({ parent: '', email: '', phone: '', child: '', age: '', date: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  const phoneDisplay = getSetting('phone_display') || contactInfo.phoneDisplay;
+  const email = getSetting('email') || contactInfo.email;
+  const waDisplay = getSetting('wa_display') || contactInfo.waDisplay;
+
+  const steps = stepCards.length > 0
+    ? stepCards.map((c) => ({ id: c.title_id, en: c.title_en, descId: c.desc_id, descEn: c.desc_en }))
+    : defaultSteps;
+
+  const faqs = faqCards.length > 0
+    ? faqCards.map((c) => ({ qId: c.title_id, qEn: c.title_en, aId: c.desc_id, aEn: c.desc_en }))
+    : defaultFaqs;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,8 +152,8 @@ export default function Admission() {
               </a>
 
               <div className="mt-8 pt-6 border-t border-[#8B5E3C]/10 space-y-3 text-sm text-[#8B5E3C]/85">
-                <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-[#7A9A01]" /> {t('Telp.', 'Phone')} {contactInfo.phoneDisplay} · WA: {contactInfo.waDisplay}</p>
-                <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-[#7A9A01]" /> {contactInfo.email}</p>
+                <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-[#7A9A01]" /> {t('Telp.', 'Phone')} {phoneDisplay} · WA: {waDisplay}</p>
+                <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-[#7A9A01]" /> {email}</p>
 
                 <p className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#7A9A01]" /> {t('Senin–Jumat, 08:00–16:00', 'Mon–Fri, 8am–4pm')}</p>
               </div>

@@ -5,12 +5,25 @@ import { useLanguage, getRoute } from '@/contexts/LanguageContext';
 import { TreeIllustration } from './Decorations';
 import { Logo } from './Logo';
 import { contactInfo } from '@/data/siteContent';
+import { useSiteSettings } from '@/hooks/useSiteContent';
 
 
 export const Footer = () => {
   const { t, lang } = useLanguage();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const { getSetting } = useSiteSettings();
+
+  const addressId = getSetting('address_id') || contactInfo.addressId;
+  const addressEn = getSetting('address_en') || contactInfo.addressEn;
+  const phoneDisplay = getSetting('phone_display') || contactInfo.phoneDisplay;
+  const phoneTel = getSetting('phone_tel') || contactInfo.phoneTel;
+  const emailAddr = getSetting('email') || contactInfo.email;
+  const waNumber = getSetting('wa_number') || contactInfo.waNumber;
+  const waDisplay = getSetting('wa_display') || contactInfo.waDisplay;
+  const instagram = getSetting('instagram') || contactInfo.instagram;
+  const facebook = getSetting('facebook') || contactInfo.facebook;
+  const youtube = getSetting('youtube') || contactInfo.youtube;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,9 +69,9 @@ export const Footer = () => {
             </p>
             <div className="flex gap-3 mt-5">
               {[
-                { Icon: Instagram, href: contactInfo.instagram, label: 'Instagram' },
-                { Icon: Facebook, href: contactInfo.facebook, label: 'Facebook' },
-                { Icon: Youtube, href: contactInfo.youtube, label: 'YouTube' },
+                { Icon: Instagram, href: instagram, label: 'Instagram' },
+                { Icon: Facebook, href: facebook, label: 'Facebook' },
+                { Icon: Youtube, href: youtube, label: 'YouTube' },
               ].map(({ Icon, href, label }) => (
                 <a
                   key={label}
@@ -112,24 +125,24 @@ export const Footer = () => {
             <ul className="space-y-3 text-sm text-[#8B5E3C]/85">
               <li className="flex gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-[#7A9A01]" />
-                <span>{t(contactInfo.addressId, contactInfo.addressEn)}</span>
+                <span>{t(addressId, addressEn)}</span>
               </li>
               <li className="flex gap-2 items-center">
                 <Phone className="w-4 h-4 text-[#7A9A01]" />
-                <a href={`tel:${contactInfo.phoneTel}`} className="hover:text-[#7A9A01]">{t('Telp.', 'Phone')} {contactInfo.phoneDisplay}</a>
+                <a href={`tel:${phoneTel}`} className="hover:text-[#7A9A01]">{t('Telp.', 'Phone')} {phoneDisplay}</a>
               </li>
               <li className="flex gap-2 items-center">
                 <Mail className="w-4 h-4 text-[#7A9A01]" />
-                <a href={`mailto:${contactInfo.email}`} className="hover:text-[#7A9A01]">{contactInfo.email}</a>
+                <a href={`mailto:${emailAddr}`} className="hover:text-[#7A9A01]">{emailAddr}</a>
               </li>
               <li className="flex gap-2 items-center">
                 <MessageCircle className="w-4 h-4 text-[#7A9A01]" />
                 <a
-                  href={`https://wa.me/${contactInfo.waNumber}`}
+                  href={`https://wa.me/${waNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#7A9A01]"
-                >WA: {contactInfo.waDisplay}</a>
+                >WA: {waDisplay}</a>
               </li>
             </ul>
 

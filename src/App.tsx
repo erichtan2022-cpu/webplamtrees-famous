@@ -20,6 +20,9 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBlogList from "./pages/admin/BlogList";
 import AdminBlogEditor from "./pages/admin/BlogEditor";
 import AdminPageEditor from "./pages/admin/PageEditor";
+import AdminImageManager from "./pages/admin/ImageManager";
+import AdminCardManager from "./pages/admin/CardManager";
+import AdminSettingsManager from "./pages/admin/SettingsManager";
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 import { ProtectedRoute } from "@/components/admin/ProtectedRoute";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -78,6 +81,19 @@ const App = () => (
             <Route path="/admin/blog/new" element={<AdminAuthProvider><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/blog/:id" element={<AdminAuthProvider><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/pages" element={<AdminAuthProvider><ProtectedRoute><AdminPageEditor /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/images" element={<AdminAuthProvider><ProtectedRoute><AdminImageManager /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/teachers" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="teacher" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/testimonials" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="testimonial" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/programs" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="program" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/facilities" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="facility" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/faqs" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="faq" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/steps" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="admission_step" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/advantages" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="advantage" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/pillars" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="pillar" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/reasons" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="reason" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/rhythm" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="day_rhythm" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/ceo-message" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="ceo_message" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/settings" element={<AdminAuthProvider><ProtectedRoute><AdminSettingsManager /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
 
             <Route path="*" element={<LanguageProvider><NotFound /></LanguageProvider>} />

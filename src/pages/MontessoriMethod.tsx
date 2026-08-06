@@ -6,8 +6,10 @@ import { Parallax } from '@/components/site/Parallax';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf } from '@/components/site/Decorations';
 import { images } from '@/data/siteContent';
+import { usePageContent } from '@/hooks/usePageContent';
+import { useSiteImages, useSiteCards } from '@/hooks/useSiteContent';
 
-const advantages = [
+const defaultAdvantages = [
   { icon: Compass, titleId: 'Kemandirian Sejak Dini', titleEn: 'Independence from an Early Age', descId: 'Anak belajar memilih, memutuskan, dan menyelesaikan pekerjaannya sendiri — fondasi karakter yang kuat.', descEn: 'Children learn to choose, decide, and complete their own work — the foundation of strong character.' },
   { icon: Heart, titleId: 'Belajar Sesuai Ritme Anak', titleEn: 'Learning at the Child\'s Pace', descId: 'Setiap anak mengikuti ritme perkembangannya sendiri, tanpa dibandingkan dengan anak lain.', descEn: 'Every child follows their own developmental rhythm, never compared to others.' },
   { icon: Leaf, titleId: 'Lingkungan Terpersiapkan', titleEn: 'Prepared Environment', descId: 'Ruang kelas dirancang khusus dengan material Montessori asli yang mengundang rasa ingin tahu.', descEn: 'Classrooms are purposefully designed with authentic Montessori materials that spark curiosity.' },
@@ -16,7 +18,9 @@ const advantages = [
   { icon: Hand, titleId: 'Keterampilan Hidup Nyata', titleEn: 'Real-Life Skills', descId: 'Practical Life melatih motorik, konsentrasi, dan kemampuan merawat diri, orang lain, dan lingkungan.', descEn: 'Practical Life builds motor skills, concentration, and the ability to care for self, others, and the environment.' },
 ];
 
-const ceoParagraphsEn = [
+const advantageIcons = [Compass, Heart, Leaf, Star, BookOpen, Hand];
+
+const defaultCeoParagraphsEn = [
   'Greetings!',
   'I am delighted to welcome you to our school, located in the heart of BSD city. Our school began its journey as Kiddy Montessori Preschool in 2001, and was founded on the principles envisioned by Dr. Maria Montessori, a pioneer in children\'s education. I started Palm Trees Montessori School decades ago because I believe in fostering independence within every child, and helping them reach their full potential.',
   'As a mother of three myself, I have always been outspoken about the importance of education and schooling in a child\'s development. I found that the Montessori method was unique in that it allows each child to take charge of their own learning, rather than simply do what they\'re told.',
@@ -24,7 +28,7 @@ const ceoParagraphsEn = [
   'I hope to see more families join us in the future, and I am so excited for what\'s to come!',
 ];
 
-const ceoParagraphsId = [
+const defaultCeoParagraphsId = [
   'Salam hangat!',
   'Dengan senang hati saya menyambut Ayah Bunda di sekolah kami yang berlokasi di jantung kota BSD. Sekolah kami memulai perjalanannya sebagai Kiddy Montessori Preschool pada tahun 2001, dan didirikan berdasarkan prinsip-prinsip yang digagas oleh Dr. Maria Montessori, pelopor pendidikan anak. Saya memulai Palm Trees Montessori School puluhan tahun lalu karena saya percaya pada pentingnya menumbuhkan kemandirian dalam diri setiap anak, serta membantu mereka mencapai potensi penuhnya.',
   'Sebagai seorang ibu dari tiga anak, saya selalu vokal tentang pentingnya pendidikan dan sekolah dalam tumbuh kembang anak. Saya menemukan bahwa metode Montessori unik karena memungkinkan setiap anak memegang kendali atas pembelajarannya sendiri, bukan sekadar melakukan apa yang diperintahkan.',
@@ -34,7 +38,27 @@ const ceoParagraphsId = [
 
 export default function MontessoriMethod() {
   const { t, lang } = useLanguage();
-  const ceoParagraphs = lang === 'id' ? ceoParagraphsId : ceoParagraphsEn;
+  const { getContent } = usePageContent('montessori');
+  const { getImages } = useSiteImages();
+  const { cards: advantageCards } = useSiteCards('advantage');
+  const { cards: ceoCards } = useSiteCards('ceo_message');
+
+  const ceoImg = getImages('global', 'ceo')[0] || images.ceo;
+  const schoolBuildingImg = getImages('global', 'school_building')[0] || images.schoolBuilding;
+
+  const advantages = advantageCards.length > 0
+    ? advantageCards.map((c, i) => ({
+        icon: advantageIcons[i % advantageIcons.length],
+        titleId: c.title_id,
+        titleEn: c.title_en,
+        descId: c.desc_id,
+        descEn: c.desc_en,
+      }))
+    : defaultAdvantages;
+
+  const ceoParagraphs = ceoCards.length > 0
+    ? ceoCards.map((c) => lang === 'id' ? c.desc_id : c.desc_en).filter(Boolean)
+    : (lang === 'id' ? defaultCeoParagraphsId : defaultCeoParagraphsEn);
 
   return (
     <SiteLayout
@@ -43,7 +67,6 @@ export default function MontessoriMethod() {
       descId="Kenali metode Montessori di Palm Trees Montessori BSD — filosofi, pesan dari CEO, dan keunggulan Montessori untuk membentuk karakter anak."
       descEn="Discover the Montessori method at Palm Trees Montessori BSD — its philosophy, a message from our CEO, and the advantages of Montessori for character building."
     >
-      {/* Hero */}
       <section className="relative py-20 px-4 sm:px-8 bg-gradient-to-b from-[#F5F0E6] to-white text-center overflow-hidden">
         <FloatingLeaf className="w-20 h-20 top-10 left-[8%] opacity-30" />
         <FloatingLeaf className="w-14 h-14 bottom-10 right-[10%] opacity-25" delay={2} color="#8B5E3C" />
@@ -52,32 +75,24 @@ export default function MontessoriMethod() {
             {t('Metode Montessori', 'The Montessori Method')}
           </span>
           <h1 className="font-quicksand font-bold text-4xl sm:text-6xl text-[#8B5E3C] mb-5 max-w-4xl mx-auto leading-tight">
-            {t(
-              'Metode Montessori – Tepat untuk Character Building Anak',
-              'The Montessori Method – The Right Path for Your Child\'s Character Building'
-            )}
+            {lang === 'id' ? getContent('hero_h1_id', 'Metode Montessori – Tepat untuk Character Building Anak') : getContent('hero_h1_en', 'The Montessori Method – The Right Path for Your Child\'s Character Building')}
           </h1>
           <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto text-lg">
-            {t(
-              'Lebih dari sekadar kurikulum — Montessori adalah cara memandang anak sebagai pembangun masa depannya sendiri.',
-              'More than a curriculum — Montessori is a way of seeing the child as the builder of their own future.'
-            )}
+            {lang === 'id' ? getContent('hero_subtitle_id', 'Lebih dari sekadar kurikulum — Montessori adalah cara memandang anak sebagai pembangun masa depannya sendiri.') : getContent('hero_subtitle_en', 'More than a curriculum — Montessori is a way of seeing the child as the builder of their own future.')}
           </p>
         </SectionReveal>
       </section>
 
-      {/* Philosophy + Quote */}
       <section className="py-20 px-4 sm:px-8 bg-white">
         <div className="max-w-5xl mx-auto">
           <SectionReveal className="text-center mb-12">
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-4">
-              {t('Filosofi Montessori', 'The Montessori Philosophy')}
+              {lang === 'id' ? getContent('philosophy_title_id', 'Filosofi Montessori') : getContent('philosophy_title_en', 'The Montessori Philosophy')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-3xl mx-auto text-lg leading-relaxed">
-              {t(
-                'Dr. Maria Montessori percaya bahwa anak-anak belajar paling baik ketika mereka diberi kebebasan dalam batas yang jelas, di lingkungan yang dipersiapkan dengan penuh kasih. Guru bukan pusat kelas — anaklah pusatnya. Tugas kami adalah mengamati, menemani, dan membuka jalan bagi keajaiban belajar setiap anak.',
-                'Dr. Maria Montessori believed that children learn best when given freedom within clear limits, in a lovingly prepared environment. The teacher is not the center of the classroom — the child is. Our task is to observe, accompany, and open the way for each child\'s wonder of learning.'
-              )}
+              {lang === 'id'
+                ? getContent('philosophy_desc_id', 'Dr. Maria Montessori percaya bahwa anak-anak belajar paling baik ketika mereka diberi kebebasan dalam batas yang jelas, di lingkungan yang dipersiapkan dengan penuh kasih. Guru bukan pusat kelas — anaklah pusatnya. Tugas kami adalah mengamati, menemani, dan membuka jalan bagi keajaiban belajar setiap anak.')
+                : getContent('philosophy_desc_en', 'Dr. Maria Montessori believed that children learn best when given freedom within clear limits, in a lovingly prepared environment. The teacher is not the center of the classroom — the child is. Our task is to observe, accompany, and open the way for each child\'s wonder of learning.')}
             </p>
           </SectionReveal>
 
@@ -97,7 +112,6 @@ export default function MontessoriMethod() {
         </div>
       </section>
 
-      {/* Message from the CEO */}
       <section className="py-20 px-4 sm:px-8 bg-[#F5F0E6] overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <SectionReveal className="text-center mb-12">
@@ -105,7 +119,7 @@ export default function MontessoriMethod() {
               {t('Pesan dari CEO', 'Message from the CEO')}
             </span>
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C]">
-              {t('Sepatah Kata dari Pendiri Kami', 'A Word from Our Founder')}
+              {lang === 'id' ? getContent('ceo_title_id', 'Sepatah Kata dari Pendiri Kami') : getContent('ceo_title_en', 'A Word from Our Founder')}
             </h2>
           </SectionReveal>
 
@@ -114,7 +128,7 @@ export default function MontessoriMethod() {
               <div className="relative max-w-sm mx-auto">
                 <div className="absolute -inset-3 rounded-3xl bg-[#7A9A01]/15 rotate-2" />
                 <img
-                  src={images.ceo}
+                  src={ceoImg}
                   alt="Jaspreet Kaur — CEO Palm Trees Montessori School"
                   loading="lazy"
                   className="relative w-full rounded-3xl shadow-2xl object-cover border-4 border-white"
@@ -142,19 +156,15 @@ export default function MontessoriMethod() {
         </div>
       </section>
 
-      {/* Advantages */}
       <section className="py-20 px-4 sm:px-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <SectionReveal className="text-center mb-12">
             <Sparkles className="w-10 h-10 mx-auto mb-3 text-[#7A9A01]" />
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-4">
-              {t('Keunggulan Metode Montessori', 'Advantages of the Montessori Method')}
+              {lang === 'id' ? getContent('advantages_title_id', 'Keunggulan Metode Montessori') : getContent('advantages_title_en', 'Advantages of the Montessori Method')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto text-lg">
-              {t(
-                'Enam alasan mengapa Montessori menjadi fondasi terbaik bagi tumbuh kembang dan karakter Ananda.',
-                'Six reasons why Montessori is the best foundation for your child\'s growth and character.'
-              )}
+              {lang === 'id' ? getContent('advantages_subtitle_id', 'Enam alasan mengapa Montessori menjadi fondasi terbaik bagi tumbuh kembang dan karakter Ananda.') : getContent('advantages_subtitle_en', 'Six reasons why Montessori is the best foundation for your child\'s growth and character.')}
             </p>
           </SectionReveal>
 
@@ -181,8 +191,7 @@ export default function MontessoriMethod() {
         </div>
       </section>
 
-      {/* CTA */}
-      <Parallax image={images.schoolBuilding} speed={0.3} height="min-h-[420px]" overlayClass="bg-gradient-to-r from-[#3a2e22]/80 to-[#7A9A01]/60">
+      <Parallax image={schoolBuildingImg} speed={0.3} height="min-h-[420px]" overlayClass="bg-gradient-to-r from-[#3a2e22]/80 to-[#7A9A01]/60">
         <div className="h-full min-h-[420px] flex items-center justify-center text-center px-4">
           <SectionReveal className="max-w-3xl text-white">
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl mb-5 drop-shadow-lg">

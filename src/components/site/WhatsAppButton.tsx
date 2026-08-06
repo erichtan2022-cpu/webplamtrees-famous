@@ -1,9 +1,12 @@
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { contactInfo } from '@/data/siteContent';
+import { useSiteSettings } from '@/hooks/useSiteContent';
 
 export const WhatsAppButton = () => {
   const { t } = useLanguage();
+  const { getSetting } = useSiteSettings();
+  const waNumber = getSetting('wa_number') || contactInfo.waNumber;
   const msg = encodeURIComponent(
     t(
       'Halo Palmtrees, saya tertarik untuk tahu lebih banyak tentang sekolah.',
@@ -12,7 +15,7 @@ export const WhatsAppButton = () => {
   );
   return (
     <a
-      href={`https://wa.me/${contactInfo.waNumber}?text=${msg}`}
+      href={`https://wa.me/${waNumber}?text=${msg}`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-40 group"

@@ -6,6 +6,8 @@ import { Parallax } from '@/components/site/Parallax';
 import { SectionReveal } from '@/components/site/SectionReveal';
 import { FloatingLeaf } from '@/components/site/Decorations';
 import { images } from '@/data/siteContent';
+import { usePageContent } from '@/hooks/usePageContent';
+import { useSiteImages, useSiteCards } from '@/hooks/useSiteContent';
 
 const missionItemsId = [
   'Mempersiapkan anak-anak untuk menjadi pembelajar mandiri',
@@ -28,17 +30,31 @@ const timelineItems = [
   { icon: Leaf, titleId: 'Inklusi yang Tulus', titleEn: 'Genuine Inclusion', descId: 'Kami percaya inklusi bukan label, melainkan cara hidup bersama dalam komunitas.', descEn: 'We believe inclusion isn\'t a label — it\'s how we live together as a community.', isList: false },
 ];
 
-const facilities = [
-  { titleId: 'Kelas Preschool dan Kindergarten', titleEn: 'Preschool & Kindergarten Classroom', img: images.classrooms[0], descId: 'Lingkungan terpersiapkan untuk usia 2-6 tahun dengan material Montessori lengkap.', descEn: 'A prepared environment for ages 2-6 with complete Montessori materials.' },
-  { titleId: 'Kelas Elementary', titleEn: 'Elementary Classroom', img: images.classrooms[1], descId: 'Ruang belajar usia 6-12 tahun untuk riset mandiri dan proyek kelompok.', descEn: 'A learning space for ages 6-12 for independent research and group projects.' },
-  { titleId: 'Kelas Inklusi', titleEn: 'Inclusion Classroom', img: images.classrooms[2], descId: 'Ruang tenang dengan pendampingan personal untuk setiap gaya belajar.', descEn: 'A calm space with personal support for every learning style.' },
-  { titleId: 'Ruang Practical Life', titleEn: 'Practical Life Room', img: images.classrooms[3], descId: 'Tempat anak belajar kemandirian harian.', descEn: 'Where children learn daily independence.' },
-];
-
 export default function About() {
   const { t, lang } = useLanguage();
   const [activeFacility, setActiveFacility] = useState(0);
   const missionItems = lang === 'id' ? missionItemsId : missionItemsEn;
+  const { getContent } = usePageContent('about');
+  const { getImages } = useSiteImages();
+  const { cards: facilityCards } = useSiteCards('facility');
+
+  const schoolBuildingImg = getImages('global', 'school_building')[0] || images.schoolBuilding;
+  const classroomImages = getImages('about', 'classrooms');
+
+  const facilities = facilityCards.length > 0
+    ? facilityCards.map((c, i) => ({
+        titleId: c.title_id,
+        titleEn: c.title_en,
+        img: c.image_url || classroomImages[i] || images.classrooms[i] || '',
+        descId: c.desc_id,
+        descEn: c.desc_en,
+      }))
+    : [
+        { titleId: 'Kelas Preschool dan Kindergarten', titleEn: 'Preschool & Kindergarten Classroom', img: classroomImages[0] || images.classrooms[0], descId: 'Lingkungan terpersiapkan untuk usia 2-6 tahun dengan material Montessori lengkap.', descEn: 'A prepared environment for ages 2-6 with complete Montessori materials.' },
+        { titleId: 'Kelas Elementary', titleEn: 'Elementary Classroom', img: classroomImages[1] || images.classrooms[1], descId: 'Ruang belajar usia 6-12 tahun untuk riset mandiri dan proyek kelompok.', descEn: 'A learning space for ages 6-12 for independent research and group projects.' },
+        { titleId: 'Kelas Inklusi', titleEn: 'Inclusion Classroom', img: classroomImages[2] || images.classrooms[2], descId: 'Ruang tenang dengan pendampingan personal untuk setiap gaya belajar.', descEn: 'A calm space with personal support for every learning style.' },
+        { titleId: 'Ruang Practical Life', titleEn: 'Practical Life Room', img: classroomImages[3] || images.classrooms[3], descId: 'Tempat anak belajar kemandirian harian.', descEn: 'Where children learn daily independence.' },
+      ];
 
   return (
     <SiteLayout
@@ -47,41 +63,36 @@ export default function About() {
       descId="Visi, misi, dan tim kami di Palm Trees Montessori — sekolah Montessori inklusi untuk usia 2-12 tahun di BSD City Tangerang Selatan."
       descEn="Vision, mission, and our team at Palm Trees Montessori — an inclusive Montessori school for ages 2-12 in BSD City, South Tangerang."
     >
-      {/* Parallax header — school building */}
-      <Parallax image={images.schoolBuilding} speed={0.35} height="min-h-[440px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/60 to-[#7A9A01]/60">
+      <Parallax image={schoolBuildingImg} speed={0.35} height="min-h-[440px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/60 to-[#7A9A01]/60">
         <div className="h-full min-h-[440px] flex items-center justify-center px-4 text-center">
           <SectionReveal className="text-white max-w-3xl">
             <span className="inline-block bg-white/15 backdrop-blur-sm text-white text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-4">
               {t('Tentang Kami', 'About Us')}
             </span>
             <h1 className="font-quicksand font-bold text-4xl sm:text-6xl mb-4 drop-shadow-lg">
-              Palm Trees Montessori School
+              {getContent('hero_h1') || 'Palm Trees Montessori School'}
             </h1>
             <p className="text-lg sm:text-xl text-white/95">
-              {t(
-                'Sekolah swasta untuk anak usia 2 hingga 12 tahun di jantung kota BSD.',
-                'A private school for children aged 2 to 12 in the heart of BSD city.'
-              )}
+              {lang === 'id'
+                ? getContent('hero_subtitle_id', 'Sekolah swasta untuk anak usia 2 hingga 12 tahun di jantung kota BSD.')
+                : getContent('hero_subtitle_en', 'A private school for children aged 2 to 12 in the heart of BSD city.')}
             </p>
           </SectionReveal>
         </div>
       </Parallax>
 
-      {/* Intro story */}
       <section className="py-16 px-4 sm:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <SectionReveal>
             <p className="text-lg sm:text-xl text-[#8B5E3C]/90 leading-relaxed text-center">
-              {t(
-                'Palm Trees Montessori School adalah sekolah swasta untuk anak usia 2 hingga 12 tahun, dari Prasekolah hingga Kelas 6. Sekolah ini berdiri pada tahun 2000, dan didirikan oleh PT. Citra Anak Mandiri. Bangunan gedung dirancang untuk memenuhi kebutuhan anak-anak yang belajar di lingkungan Montessori. Palm Trees Montessori berafiliasi dengan North American Montessori Center (NAMC) dan anggota International Montessori Council (IMC). Kelas-kelas dipimpin oleh guru Montessori berpengalaman dan Sekolah memberikan prioritas lebih tinggi kepada orang tua dan guru terkait kinerja anak. Guru mengharapkan dan menyambut dialog dengan orang tua. Sekolah menawarkan kesempatan yang sama bagi semua orang dan tidak diskriminatif.',
-                'Palm Trees Montessori School is a private school for children aged 2 to 12, from Preschool through Grade 6. The school was established in 2000 and founded by PT. Citra Anak Mandiri. The building was designed to meet the needs of children learning in a Montessori environment. Palm Trees Montessori is affiliated with the North American Montessori Center (NAMC) and is a member of the International Montessori Council (IMC). Classes are led by experienced Montessori teachers, and the school places a high priority on parents and teachers regarding each child\'s progress. Teachers expect and welcome dialogue with parents. The school offers equal opportunity for everyone and is non-discriminatory.'
-              )}
+              {lang === 'id'
+                ? getContent('intro_paragraph_id', 'Palm Trees Montessori School adalah sekolah swasta untuk anak usia 2 hingga 12 tahun, dari Prasekolah hingga Kelas 6. Sekolah ini berdiri pada tahun 2000, dan didirikan oleh PT. Citra Anak Mandiri. Bangunan gedung dirancang untuk memenuhi kebutuhan anak-anak yang belajar di lingkungan Montessori. Palm Trees Montessori berafiliasi dengan North American Montessori Center (NAMC) dan anggota International Montessori Council (IMC). Kelas-kelas dipimpin oleh guru Montessori berpengalaman dan Sekolah memberikan prioritas lebih tinggi kepada orang tua dan guru terkait kinerja anak. Guru mengharapkan dan menyambut dialog dengan orang tua. Sekolah menawarkan kesempatan yang sama bagi semua orang dan tidak diskriminatif.')
+                : getContent('intro_paragraph_en', 'Palm Trees Montessori School is a private school for children aged 2 to 12, from Preschool through Grade 6. The school was established in 2000 and founded by PT. Citra Anak Mandiri. The building was designed to meet the needs of children learning in a Montessori environment. Palm Trees Montessori is affiliated with the North American Montessori Center (NAMC) and is a member of the International Montessori Council (IMC). Classes are led by experienced Montessori teachers, and the school places a high priority on parents and teachers regarding each child\'s progress. Teachers expect and welcome dialogue with parents. The school offers equal opportunity for everyone and is non-discriminatory.')}
             </p>
           </SectionReveal>
         </div>
       </section>
 
-      {/* Story timeline */}
       <section className="relative py-20 px-4 sm:px-8 bg-[#F5F0E6] overflow-hidden">
         <FloatingLeaf className="w-20 h-20 top-10 right-[5%] opacity-30" delay={1} />
         <FloatingLeaf className="w-14 h-14 bottom-20 left-[8%] opacity-25" delay={3} color="#8B5E3C" />
@@ -89,20 +100,17 @@ export default function About() {
         <div className="max-w-5xl mx-auto">
           <SectionReveal className="text-center mb-14">
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-4">
-              {t('Visi, Misi & Nilai Kami', 'Our Vision, Mission & Values')}
+              {lang === 'id' ? getContent('values_title_id', 'Visi, Misi & Nilai Kami') : getContent('values_title_en', 'Our Vision, Mission & Values')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto text-lg">
-              {t(
-                'Setiap pilar di Palmtrees lahir dari satu keyakinan: anak-anak akan tumbuh saat mereka merasa dilihat.',
-                'Every pillar at Palmtrees was born from one belief: children flourish when they feel seen.'
-              )}
+              {lang === 'id'
+                ? getContent('values_subtitle_id', 'Setiap pilar di Palmtrees lahir dari satu keyakinan: anak-anak akan tumbuh saat mereka merasa dilihat.')
+                : getContent('values_subtitle_en', 'Every pillar at Palmtrees was born from one belief: children flourish when they feel seen.')}
             </p>
           </SectionReveal>
 
           <div className="relative">
-            {/* vertical line */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-[#7A9A01]/30 -translate-x-1/2 rounded-full" />
-
             <div className="space-y-10">
               {timelineItems.map((item, i) => {
                 const Icon = item.icon;
@@ -144,23 +152,21 @@ export default function About() {
         </div>
       </section>
 
-      {/* Facilities */}
       <section className="py-20 px-4 sm:px-8 bg-[#F5F0E6]">
         <div className="max-w-6xl mx-auto">
           <SectionReveal className="text-center mb-12">
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-3">
-              {t('Fasilitas Kami', 'Our Facilities')}
+              {lang === 'id' ? getContent('facilities_title_id', 'Fasilitas Kami') : getContent('facilities_title_en', 'Our Facilities')}
             </h2>
             <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto">
-              {t('Pilih ruangan di bawah untuk melihat detailnya.', 'Pick a room below to see the details.')}
+              {lang === 'id' ? getContent('facilities_subtitle_id', 'Pilih ruangan di bawah untuk melihat detailnya.') : getContent('facilities_subtitle_en', 'Pick a room below to see the details.')}
             </p>
           </SectionReveal>
 
           <div className="grid lg:grid-cols-2 gap-8 items-start">
             <SectionReveal>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-                <img src={facilities[activeFacility].img} alt="" className="w-full h-full object-cover transition-opacity duration-500" />
-                {/* hotspot dots over image */}
+                <img src={facilities[activeFacility]?.img} alt="" className="w-full h-full object-cover transition-opacity duration-500" />
                 {facilities.map((_, i) => (
                   <button
                     key={i}

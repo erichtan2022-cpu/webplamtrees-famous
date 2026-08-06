@@ -15,19 +15,120 @@ type DraftMap = Record<string, string>;
 
 const PAGE_LABELS: Record<string, string> = {
   home: 'Homepage',
-  admission: 'Halaman Pendaftaran',
+  about: 'Tentang Kami',
+  programs: 'Program',
+  montessori: 'Metode Montessori',
+  inclusion: 'Program Inklusi',
+  admission: 'Pendaftaran',
+  contact: 'Kontak',
 };
 
 const SECTION_LABELS: Record<string, { label: string; hint?: string }> = {
+  // Home
   hero_h1_id: { label: 'Hero H1 — Bahasa Indonesia', hint: 'Ditampilkan sebagai judul utama (H1) di slider homepage.' },
   hero_h1_en: { label: 'Hero H1 — English', hint: 'Displayed as the main heading (H1) in the homepage slider.' },
   geo_intro_id: { label: 'Teks Geo Intro — Bahasa Indonesia', hint: 'Teks pendek di bawah slider mengenai wilayah layanan.' },
   geo_intro_en: { label: 'Geo Intro Text — English', hint: 'Short text below slider about service area.' },
+  why_title_id: { label: 'Judul "Kenapa Palmtrees" — ID', hint: 'Judul section "Why Palmtrees".' },
+  why_title_en: { label: '"Why Palmtrees" Title — EN', hint: 'Title for the "Why Palmtrees" section.' },
+  why_subtitle_id: { label: 'Subjudul "Kenapa Palmtrees" — ID' },
+  why_subtitle_en: { label: '"Why Palmtrees" Subtitle — EN' },
+  programs_title_id: { label: 'Judul Section Program — ID' },
+  programs_title_en: { label: 'Programs Section Title — EN' },
+  testimonials_title_id: { label: 'Judul Testimoni — ID' },
+  testimonials_title_en: { label: 'Testimonials Title — EN' },
+  instagram_title: { label: 'Instagram Title', hint: 'Username Instagram yang ditampilkan.' },
+  instagram_subtitle_id: { label: 'Subjudul Instagram — ID' },
+  instagram_subtitle_en: { label: 'Instagram Subtitle — EN' },
+  cta_title_id: { label: 'CTA Judul — ID', hint: 'Call-to-action di bagian bawah homepage.' },
+  cta_title_en: { label: 'CTA Title — EN' },
+  cta_desc_id: { label: 'CTA Deskripsi — ID' },
+  cta_desc_en: { label: 'CTA Description — EN' },
+
+  // About
+  'about:hero_h1': { label: 'Hero H1 — About', hint: 'Judul utama di halaman About.' },
+  'about:hero_subtitle_id': { label: 'Hero Subtitle — ID' },
+  'about:hero_subtitle_en': { label: 'Hero Subtitle — EN' },
+  'about:intro_paragraph_id': { label: 'Paragraf Intro — ID', hint: 'Cerita pendiri sekolah.' },
+  'about:intro_paragraph_en': { label: 'Intro Paragraph — EN' },
+  'about:values_title_id': { label: 'Judul Visi Misi — ID' },
+  'about:values_title_en': { label: 'Values Title — EN' },
+  'about:values_subtitle_id': { label: 'Subjudul Visi Misi — ID' },
+  'about:values_subtitle_en': { label: 'Values Subtitle — EN' },
+  'about:facilities_title_id': { label: 'Judul Fasilitas — ID' },
+  'about:facilities_title_en': { label: 'Facilities Title — EN' },
+  'about:facilities_subtitle_id': { label: 'Subjudul Fasilitas — ID' },
+  'about:facilities_subtitle_en': { label: 'Facilities Subtitle — EN' },
+
+  // Programs
+  'programs:hero_h1_id': { label: 'Hero H1 — ID', hint: 'Judul utama halaman Program.' },
+  'programs:hero_h1_en': { label: 'Hero H1 — EN' },
+  'programs:hero_subtitle_id': { label: 'Hero Subtitle — ID' },
+  'programs:hero_subtitle_en': { label: 'Hero Subtitle — EN' },
+  'programs:rhythm_title_id': { label: 'Judul "Sehari di Kelas" — ID' },
+  'programs:rhythm_title_en': { label: '"A Day in Class" Title — EN' },
+  'programs:rhythm_subtitle_id': { label: 'Subjudul Ritme — ID' },
+  'programs:rhythm_subtitle_en': { label: 'Rhythm Subtitle — EN' },
+  'programs:inclusive_section_title_id': { label: 'Judul Section Inklusi — ID' },
+  'programs:inclusive_section_title_en': { label: 'Inclusion Section Title — EN' },
+  'programs:inclusive_section_desc_id': { label: 'Deskripsi Section Inklusi — ID' },
+  'programs:inclusive_section_desc_en': { label: 'Inclusion Section Desc — EN' },
+  'programs:how_inclusion_title_id': { label: 'Judul "Cara Inklusi Bekerja" — ID' },
+  'programs:how_inclusion_title_en': { label: 'How Inclusion Title — EN' },
+
+  // Montessori
+  'montessori:hero_h1_id': { label: 'Hero H1 — ID', hint: 'Judul utama halaman Metode Montessori.' },
+  'montessori:hero_h1_en': { label: 'Hero H1 — EN' },
+  'montessori:hero_subtitle_id': { label: 'Hero Subtitle — ID' },
+  'montessori:hero_subtitle_en': { label: 'Hero Subtitle — EN' },
+  'montessori:philosophy_title_id': { label: 'Judul Filosofi — ID' },
+  'montessori:philosophy_title_en': { label: 'Philosophy Title — EN' },
+  'montessori:philosophy_desc_id': { label: 'Deskripsi Filosofi — ID' },
+  'montessori:philosophy_desc_en': { label: 'Philosophy Description — EN' },
+  'montessori:ceo_title_id': { label: 'Judul Pesan CEO — ID' },
+  'montessori:ceo_title_en': { label: 'CEO Message Title — EN' },
+  'montessori:advantages_title_id': { label: 'Judul Keunggulan — ID' },
+  'montessori:advantages_title_en': { label: 'Advantages Title — EN' },
+  'montessori:advantages_subtitle_id': { label: 'Subjudul Keunggulan — ID' },
+  'montessori:advantages_subtitle_en': { label: 'Advantages Subtitle — EN' },
+
+  // Inclusion
+  'inclusion:hero_h1_id': { label: 'Hero H1 — ID', hint: 'Judul utama halaman Program Inklusi.' },
+  'inclusion:hero_h1_en': { label: 'Hero H1 — EN' },
+  'inclusion:hero_subtitle_id': { label: 'Hero Subtitle — ID' },
+  'inclusion:hero_subtitle_en': { label: 'Hero Subtitle — EN' },
+  'inclusion:seo_intro_title_id': { label: 'Judul SEO Intro — ID' },
+  'inclusion:seo_intro_title_en': { label: 'SEO Intro Title — EN' },
+  'inclusion:pillars_title_id': { label: 'Judul Pilar — ID' },
+  'inclusion:pillars_title_en': { label: 'Pillars Title — EN' },
+  'inclusion:pillars_subtitle_id': { label: 'Subjudul Pilar — ID' },
+  'inclusion:pillars_subtitle_en': { label: 'Pillars Subtitle — EN' },
+  'inclusion:reasons_title_id': { label: 'Judul Alasan — ID' },
+  'inclusion:reasons_title_en': { label: 'Reasons Title — EN' },
+  'inclusion:reassurance_title_id': { label: 'Judul Reassurance — ID' },
+  'inclusion:reassurance_title_en': { label: 'Reassurance Title — EN' },
+  'inclusion:reassurance_desc_id': { label: 'Deskripsi Reassurance — ID' },
+  'inclusion:reassurance_desc_en': { label: 'Reassurance Description — EN' },
+
+  // Admission
   h1_id: { label: 'H1 Halaman — Bahasa Indonesia', hint: 'Judul utama halaman pendaftaran.' },
   h1_en: { label: 'H1 Page — English', hint: 'Main heading for the admission page.' },
   brochure_desc_id: { label: 'Deskripsi Brosur — Bahasa Indonesia', hint: 'Teks yang muncul di tombol unduh brosur.' },
   brochure_desc_en: { label: 'Brochure Description — English', hint: 'Text shown on the brochure download button.' },
+
+  // Contact
+  'contact:hero_h1_id': { label: 'Hero H1 — ID', hint: 'Judul utama halaman Kontak.' },
+  'contact:hero_h1_en': { label: 'Hero H1 — EN' },
+  'contact:hero_subtitle_id': { label: 'Hero Subtitle — ID' },
+  'contact:hero_subtitle_en': { label: 'Hero Subtitle — EN' },
+  'contact:hours_title_id': { label: 'Judul Jam Operasional — ID' },
+  'contact:hours_title_en': { label: 'Hours Title — EN' },
 };
+
+function getSectionMeta(row: ContentRow) {
+  const compositeKey = `${row.page_key}:${row.section_key}`;
+  return SECTION_LABELS[compositeKey] ?? SECTION_LABELS[row.section_key];
+}
 
 export default function PageEditor() {
   const [rows, setRows] = useState<ContentRow[]>([]);
@@ -103,7 +204,7 @@ export default function PageEditor() {
               </h2>
               <div className="space-y-4">
                 {pageRows.map((row) => {
-                  const meta = SECTION_LABELS[row.section_key];
+                  const meta = getSectionMeta(row);
                   const dirty = isDirty(row);
                   const isSaving = saving === row.id;
                   return (
