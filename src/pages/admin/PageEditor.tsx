@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Save, Loader as Loader2, CircleAlert as AlertCircle, ShieldAlert } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { Save, Loader as Loader2, CircleAlert as AlertCircle, ShieldAlert, Image as ImageIcon, Plus, Trash2 } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
 
@@ -11,9 +12,18 @@ interface ContentRow {
   is_seo_critical: boolean;
 }
 
+interface ImageRow {
+  id: string;
+  page_key: string;
+  section_key: string;
+  image_url: string;
+  label: string;
+  sort_order: number;
+}
+
 type DraftMap = Record<string, string>;
 
-const PAGE_LABELS: Record<string, string> = {
+const PAGE_TITLES: Record<string, string> = {
   home: 'Homepage',
   about: 'Tentang Kami',
   programs: 'Program',
@@ -125,17 +135,50 @@ const SECTION_LABELS: Record<string, { label: string; hint?: string }> = {
   'contact:hours_title_en': { label: 'Hours Title — EN' },
 };
 
+// Which sections of images belong to each page
+const PAGE_IMAGE_SECTIONS: Record<string, { section_key: string; label: string }[]> = {
+  home: [
+    { section_key: 'hero_slides', label: 'Hero Slides (Slider Utama)' },
+    { section_key: 'unique_child', label: 'Parallax "Setiap Anak Unik"' },
+    { section_key: 'activities', label: 'Foto Aktivitas Instagram' },
+  ],
+  about: [
+    { section_key: 'classrooms', label: 'Foto Ruang Kelas' },
+  ],
+  programs: [
+    { section_key: 'preschool', label: 'Foto Program Preschool' },
+    { section_key: 'kindergarten', label: 'Foto Program Elementary' },
+    { section_key: 'inclusive', label: 'Foto Program Inklusi' },
+    { section_key: 'inclusive_hero', label: 'Foto Hero Halaman Program' },
+  ],
+  montessori: [],
+  inclusion: [],
+  admission: [],
+  contact: [],
+};
+
 function getSectionMeta(row: ContentRow) {
   const compositeKey = `${row.page_key}:${row.section_key}`;
   return SECTION_LABELS[compositeKey] ?? SECTION_LABELS[row.section_key];
 }
 
 export default function PageEditor() {
+  const { pageKey = 'home' } = useParams<{ pageKey: string }>();
+  const pageTitle = PAGE_TITLES[pageKey] ?? pageKey;
+  const imageSections = PAGE_IMAGE_SECTIONS[pageKey] ?? [];
+
   const [rows, setRows] = useState<ContentRow[]>([]);
   const [drafts, setDrafts] = useState<DraftMap>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Images state
+  const [images, setImages] = useState<ImageRow[]>([]);
+  const [imgDrafts, setImgDrafts] = useState<Record<string, string>>({});
+  const [imgSaving, setImgSaving] = useState<string | null>(null);
+  const [showAddImg, setShowAddImg] = useState<string | null>(null);
+  const [newImgUrl, setNewImgUrl] = useState('');
 
   const showToast = (type: 'success' | 'error', text: string) => {
     setToast({ type, text });
@@ -144,21 +187,36 @@ export default function PageEditor() {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('page_content')
-      .select('id, page_key, section_key, content, is_seo_critical')
-      .order('page_key')
-      .order('section_key');
+    const [textRes, imgRes] = await Promise.all([
+      supabase
+        .from('page_content')
+        .select('id, page_key, section_key, content, is_seo_critical')
+        .eq('page_key', pageKey)
+        .order('section_key'),
+      supabase
+        .from('site_images')
+        .select('*')
+        .eq('page_key', pageKey)
+        .order('section_key')
+        .order('sort_order'),
+    ]);
     setLoading(false);
-    if (error) { showToast('error', error.message); return; }
-    const loaded = (data ?? []) as ContentRow[];
-    setRows(loaded);
+    if (textRes.error) { showToast('error', textRes.error.message); return; }
+    if (imgRes.error) { showToast('error', imgRes.error.message); return; }
+    const loadedText = (textRes.data ?? []) as ContentRow[];
+    setRows(loadedText);
     const map: DraftMap = {};
-    loaded.forEach((r) => { map[r.id] = r.content; });
+    loadedText.forEach((r) => { map[r.id] = r.content; });
     setDrafts(map);
+
+    const loadedImgs = (imgRes.data ?? []) as ImageRow[];
+    setImages(loadedImgs);
+    const imgMap: Record<string, string> = {};
+    loadedImgs.forEach((r) => { imgMap[r.id] = r.image_url; });
+    setImgDrafts(imgMap);
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [pageKey]);
 
   const handleSave = async (row: ContentRow) => {
     const newContent = drafts[row.id] ?? row.content;
@@ -170,18 +228,57 @@ export default function PageEditor() {
     setSaving(null);
     if (error) { showToast('error', error.message); return; }
     setRows((prev) => prev.map((r) => r.id === row.id ? { ...r, content: newContent } : r));
-    showToast('success', 'Konten berhasil disimpan');
+    showToast('success', 'Teks berhasil disimpan');
   };
 
   const isDirty = (row: ContentRow) => (drafts[row.id] ?? row.content) !== row.content;
 
-  const pageGroups = rows.reduce<Record<string, ContentRow[]>>((acc, row) => {
-    (acc[row.page_key] ??= []).push(row);
-    return acc;
-  }, {});
+  // Image handlers
+  const handleImgSave = async (img: ImageRow) => {
+    const newUrl = imgDrafts[img.id] ?? img.image_url;
+    setImgSaving(img.id);
+    const { error } = await supabase.from('site_images').update({ image_url: newUrl }).eq('id', img.id);
+    setImgSaving(null);
+    if (error) { showToast('error', error.message); return; }
+    setImages((prev) => prev.map((r) => r.id === img.id ? { ...r, image_url: newUrl } : r));
+    showToast('success', 'Gambar berhasil diperbarui');
+  };
+
+  const handleImgDelete = async (img: ImageRow) => {
+    if (!confirm(`Hapus gambar "${img.label}"?`)) return;
+    const { error } = await supabase.from('site_images').delete().eq('id', img.id);
+    if (error) { showToast('error', error.message); return; }
+    setImages((prev) => prev.filter((r) => r.id !== img.id));
+    showToast('success', 'Gambar dihapus');
+  };
+
+  const handleImgAdd = async (sectionKey: string, label: string) => {
+    if (!newImgUrl.trim()) return;
+    const maxOrder = images
+      .filter((r) => r.section_key === sectionKey)
+      .reduce((max, r) => Math.max(max, r.sort_order), -1) + 1;
+    const { data, error } = await supabase
+      .from('site_images')
+      .insert({
+        page_key: pageKey,
+        section_key: sectionKey,
+        image_url: newImgUrl.trim(),
+        label: `${label} ${maxOrder + 1}`,
+        sort_order: maxOrder,
+      })
+      .select('*')
+      .single();
+    if (error) { showToast('error', error.message); return; }
+    setImages((prev) => [...prev, data as ImageRow]);
+    setNewImgUrl('');
+    setShowAddImg(null);
+    showToast('success', 'Gambar ditambahkan');
+  };
+
+  const isImgDirty = (img: ImageRow) => (imgDrafts[img.id] ?? img.image_url) !== img.image_url;
 
   return (
-    <AdminLayout title="Edit Konten Halaman" breadcrumb="Panel Admin">
+    <AdminLayout title={pageTitle} breadcrumb="Edit Halaman">
       {toast && (
         <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2 ${
           toast.type === 'success' ? 'bg-[#7A9A01] text-white' : 'bg-red-600 text-white'
@@ -197,13 +294,105 @@ export default function PageEditor() {
         </div>
       ) : (
         <div className="space-y-8 max-w-3xl">
-          {Object.entries(pageGroups).map(([pageKey, pageRows]) => (
-            <div key={pageKey}>
-              <h2 className="text-base font-bold text-slate-800 mb-3">
-                {PAGE_LABELS[pageKey] ?? pageKey}
-              </h2>
+          {/* Images section (only if page has images) */}
+          {imageSections.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <ImageIcon className="w-5 h-5 text-[#7A9A01]" />
+                <h2 className="text-base font-bold text-slate-800">Gambar Halaman</h2>
+              </div>
+              <div className="space-y-6">
+                {imageSections.map(({ section_key, label }) => {
+                  const sectionImgs = images.filter((r) => r.section_key === section_key);
+                  return (
+                    <div key={section_key} className="bg-white rounded-2xl border border-slate-200 p-5">
+                      <h3 className="text-sm font-semibold text-slate-700 mb-3">{label}</h3>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {sectionImgs.map((img) => {
+                          const dirty = isImgDirty(img);
+                          const saving = imgSaving === img.id;
+                          return (
+                            <div key={img.id} className="rounded-xl border border-slate-200 overflow-hidden">
+                              <div className="aspect-video bg-slate-100 relative">
+                                <img src={imgDrafts[img.id] ?? img.image_url} alt={img.label} className="w-full h-full object-cover" />
+                                <button
+                                  onClick={() => handleImgDelete(img)}
+                                  className="absolute top-1 right-1 bg-red-500 text-white rounded-lg p-1 hover:bg-red-600"
+                                  title="Hapus"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                              <div className="p-2">
+                                <input
+                                  value={imgDrafts[img.id] ?? img.image_url}
+                                  onChange={(e) => setImgDrafts((prev) => ({ ...prev, [img.id]: e.target.value }))}
+                                  className="w-full px-2 py-1.5 rounded-lg border border-slate-200 text-xs font-mono"
+                                />
+                                {dirty && (
+                                  <button
+                                    onClick={() => handleImgSave(img)}
+                                    disabled={saving}
+                                    className="mt-1.5 w-full inline-flex items-center justify-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-white disabled:opacity-40"
+                                  >
+                                    {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+                                    Simpan
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                        {/* Add new image button */}
+                        {showAddImg === section_key ? (
+                          <div className="rounded-xl border-2 border-dashed border-slate-300 p-3 flex flex-col gap-2">
+                            <input
+                              value={newImgUrl}
+                              onChange={(e) => setNewImgUrl(e.target.value)}
+                              placeholder="Tempel URL gambar..."
+                              className="w-full px-2 py-1.5 rounded-lg border border-slate-200 text-xs font-mono"
+                              autoFocus
+                            />
+                            <div className="flex gap-1.5">
+                              <button
+                                onClick={() => handleImgAdd(section_key, label)}
+                                className="flex-1 text-xs font-semibold px-2 py-1.5 rounded-lg bg-[#7A9A01] hover:bg-[#6a8a01] text-white"
+                              >
+                                Tambah
+                              </button>
+                              <button
+                                onClick={() => { setShowAddImg(null); setNewImgUrl(''); }}
+                                className="text-xs font-semibold px-2 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600"
+                              >
+                                Batal
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => setShowAddImg(section_key)}
+                            className="rounded-xl border-2 border-dashed border-slate-300 hover:border-[#7A9A01] hover:bg-[#7A9A01]/5 transition-colors flex items-center justify-center min-h-[120px]"
+                          >
+                            <div className="text-center text-slate-400">
+                              <Plus className="w-6 h-6 mx-auto mb-1" />
+                              <span className="text-xs font-medium">Tambah Gambar</span>
+                            </div>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Text content section */}
+          {rows.length > 0 && (
+            <div>
+              <h2 className="text-base font-bold text-slate-800 mb-3">Teks Halaman</h2>
               <div className="space-y-4">
-                {pageRows.map((row) => {
+                {rows.map((row) => {
                   const meta = getSectionMeta(row);
                   const dirty = isDirty(row);
                   const isSaving = saving === row.id;
@@ -263,7 +452,13 @@ export default function PageEditor() {
                 })}
               </div>
             </div>
-          ))}
+          )}
+
+          {rows.length === 0 && imageSections.length === 0 && (
+            <div className="text-center py-20 text-slate-400">
+              <p>Tidak ada konten yang bisa diedit untuk halaman ini.</p>
+            </div>
+          )}
         </div>
       )}
     </AdminLayout>

@@ -20,7 +20,6 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBlogList from "./pages/admin/BlogList";
 import AdminBlogEditor from "./pages/admin/BlogEditor";
 import AdminPageEditor from "./pages/admin/PageEditor";
-import AdminImageManager from "./pages/admin/ImageManager";
 import AdminCardManager from "./pages/admin/CardManager";
 import AdminSettingsManager from "./pages/admin/SettingsManager";
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
@@ -80,11 +79,10 @@ const App = () => (
             <Route path="/admin/blog" element={<AdminAuthProvider><ProtectedRoute><AdminBlogList /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/blog/new" element={<AdminAuthProvider><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/blog/:id" element={<AdminAuthProvider><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></AdminAuthProvider>} />
-            <Route path="/admin/pages" element={<AdminAuthProvider><ProtectedRoute><AdminPageEditor /></ProtectedRoute></AdminAuthProvider>} />
-            <Route path="/admin/images" element={<AdminAuthProvider><ProtectedRoute><AdminImageManager /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/pages/:pageKey" element={<AdminAuthProvider><ProtectedRoute><AdminPageEditor /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/teachers" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="teacher" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/testimonials" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="testimonial" /></ProtectedRoute></AdminAuthProvider>} />
-            <Route path="/admin/programs" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="program" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/programs-cards" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="program" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/facilities" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="facility" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/faqs" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="faq" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/steps" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="admission_step" /></ProtectedRoute></AdminAuthProvider>} />

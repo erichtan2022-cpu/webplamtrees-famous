@@ -1,16 +1,25 @@
 import { ReactNode, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FileText, LayoutTemplate, LogOut, Menu, X, ChevronRight, Image as ImageIcon, Users, MessageSquare, BookOpen, Building2, CircleHelp as HelpCircle, ListChecks, Sparkles, HeartPulse, Clock, Mail, Settings, GraduationCap, Quote } from 'lucide-react';
+import { LayoutDashboard, FileText, LayoutTemplate, LogOut, Menu, X, ChevronRight, Users, BookOpen, Building2, CircleHelp as HelpCircle, ListChecks, Sparkles, HeartPulse, Clock, Mail, Settings, Quote, Chrome as HomeIcon, GraduationCap, Heart, Phone } from 'lucide-react';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
 
 const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/admin/blog', label: 'Artikel Blog', icon: FileText },
-  { to: '/admin/pages', label: 'Edit Teks Halaman', icon: LayoutTemplate },
-  { to: '/admin/images', label: 'Kelola Gambar', icon: ImageIcon },
+
+  // Per-page editors (text + images)
+  { to: '/admin/pages/home', label: 'Homepage', icon: HomeIcon },
+  { to: '/admin/pages/about', label: 'Tentang Kami', icon: LayoutTemplate },
+  { to: '/admin/pages/programs', label: 'Program', icon: GraduationCap },
+  { to: '/admin/pages/montessori', label: 'Metode Montessori', icon: Sparkles },
+  { to: '/admin/pages/inclusion', label: 'Program Inklusi', icon: Heart },
+  { to: '/admin/pages/admission', label: 'Pendaftaran', icon: ListChecks },
+  { to: '/admin/pages/contact', label: 'Kontak', icon: Phone },
+
+  // Card managers
   { to: '/admin/teachers', label: 'Guru', icon: Users },
   { to: '/admin/testimonials', label: 'Testimoni', icon: Quote },
-  { to: '/admin/programs', label: 'Program', icon: BookOpen },
+  { to: '/admin/programs-cards', label: 'Kartu Program', icon: BookOpen },
   { to: '/admin/facilities', label: 'Fasilitas', icon: Building2 },
   { to: '/admin/faqs', label: 'FAQ', icon: HelpCircle },
   { to: '/admin/steps', label: 'Langkah Pendaftaran', icon: ListChecks },
@@ -61,7 +70,10 @@ export const AdminLayout = ({ children, title, breadcrumb }: AdminLayoutProps) =
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {navItems.map(({ to, label, icon: Icon }) => {
-          const active = location.pathname === to || (to !== '/admin/dashboard' && location.pathname.startsWith(to));
+          const isPageEditor = to.startsWith('/admin/pages/');
+          const active = isPageEditor
+            ? location.pathname === to
+            : location.pathname === to || (to !== '/admin/dashboard' && !location.pathname.startsWith('/admin/pages/') && location.pathname.startsWith(to));
           return (
             <Link
               key={to}
