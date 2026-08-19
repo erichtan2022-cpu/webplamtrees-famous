@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Save, Loader as Loader2, Plus, Trash2, CircleAlert as AlertCircle, GripVertical } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
@@ -28,6 +29,7 @@ const CARD_TYPES: Record<string, CardTypeConfig> = {
 };
 
 export default function CardManager({ cardType }: { cardType: string }) {
+  const queryClient = useQueryClient();
   const config = CARD_TYPES[cardType] ?? { label: cardType, titleLabel: 'Title', descLabel: 'Description', showImage: false, showExtra: false, extraLabel: '' };
   const [rows, setRows] = useState<SiteCardRow[]>([]);
   const [drafts, setDrafts] = useState<Record<string, Partial<SiteCardRow>>>({});
@@ -88,6 +90,7 @@ export default function CardManager({ cardType }: { cardType: string }) {
     if (error) { showToast('error', error.message); return; }
     setRows((prev) => prev.map((r) => r.id === row.id ? { ...r, ...updates } : r));
     setDrafts((prev) => { const n = { ...prev }; delete n[row.id]; return n; });
+    queryClient.invalidateQueries({ queryKey: ['site-cards'] });
     showToast('success', 'Berhasil disimpan');
   };
 
@@ -96,6 +99,7 @@ export default function CardManager({ cardType }: { cardType: string }) {
     const { error } = await supabase.from('site_cards').delete().eq('id', row.id);
     if (error) { showToast('error', error.message); return; }
     setRows((prev) => prev.filter((r) => r.id !== row.id));
+    queryClient.invalidateQueries({ queryKey: ['site-cards'] });
     showToast('success', 'Dihapus');
   };
 
@@ -103,6 +107,7 @@ export default function CardManager({ cardType }: { cardType: string }) {
     const { error } = await supabase.from('site_cards').update({ is_active: !row.is_active }).eq('id', row.id);
     if (error) { showToast('error', error.message); return; }
     setRows((prev) => prev.map((r) => r.id === row.id ? { ...r, is_active: !r.is_active } : r));
+    queryClient.invalidateQueries({ queryKey: ['site-cards'] });
   };
 
   const handleAdd = async () => {
@@ -127,6 +132,7 @@ export default function CardManager({ cardType }: { cardType: string }) {
     setRows((prev) => [...prev, data as SiteCardRow]);
     setNewCard({ title_id: '', title_en: '', desc_id: '', desc_en: '', image_url: '', extra_id: '', extra_en: '' });
     setShowAdd(false);
+    queryClient.invalidateQueries({ queryKey: ['site-cards'] });
     showToast('success', 'Ditambahkan');
   };
 

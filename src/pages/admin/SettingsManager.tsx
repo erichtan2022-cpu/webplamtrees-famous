@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Save, Loader as Loader2, CircleAlert as AlertCircle } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
@@ -11,6 +12,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export default function SettingsManager() {
+  const queryClient = useQueryClient();
   const [rows, setRows] = useState<SiteSettingRow[]>([]);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
@@ -50,6 +52,7 @@ export default function SettingsManager() {
     setSaving(null);
     if (error) { showToast('error', error.message); return; }
     setRows((prev) => prev.map((r) => r.key === row.key ? { ...r, value: newVal } : r));
+    queryClient.invalidateQueries({ queryKey: ['site-settings'] });
     showToast('success', 'Pengaturan disimpan');
   };
 

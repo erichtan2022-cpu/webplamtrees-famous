@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { ArrowRight, Search, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
@@ -16,15 +17,11 @@ export default function Blog() {
   const { t, lang } = useLanguage();
   const [cat, setCat] = useState<string>('all');
   const [query, setQuery] = useState('');
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchPublishedPosts().then((p) => {
-      setPosts(p);
-      setLoading(false);
-    });
-  }, []);
+  const { data: posts = [], isLoading: loading } = useQuery<BlogPost[]>({
+    queryKey: ['blog-posts', 'published'],
+    queryFn: fetchPublishedPosts,
+    staleTime: 60 * 1000,
+  });
 
   const filtered = useMemo(() => {
     return posts.filter((p) => {

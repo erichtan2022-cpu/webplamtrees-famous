@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { Save, ArrowLeft, Loader as Loader2, CircleAlert as AlertCircle, Image, Globe, Search } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
@@ -31,6 +32,7 @@ export default function BlogEditor() {
   const { id } = useParams<{ id: string }>();
   const isNew = !id || id === 'new';
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [form, setForm] = useState<FormData>(EMPTY);
   const [loading, setLoading] = useState(!isNew);
@@ -121,6 +123,7 @@ export default function BlogEditor() {
       showToast('error', error.message);
       return;
     }
+    queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
     showToast('success', isNew ? 'Artikel berhasil dibuat' : 'Artikel berhasil disimpan');
     setTimeout(() => navigate('/admin/blog'), 800);
   };
@@ -171,7 +174,7 @@ export default function BlogEditor() {
                 <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${form.is_published ? 'translate-x-5' : 'translate-x-0'}`} />
               </div>
               <span className="text-sm font-medium text-slate-700">
-                {form.is_published ? 'Publik' : 'Draft'}
+                {form.is_published ? 'Publik (tampil di blog)' : 'Draft (belum tampil)'}
               </span>
             </label>
             <button

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { Save, Loader as Loader2, CircleAlert as AlertCircle, ShieldAlert, Image as ImageIcon, Plus, Trash2 } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
@@ -162,6 +163,7 @@ function getSectionMeta(row: ContentRow) {
 
 export default function PageEditor() {
   const { pageKey = 'home' } = useParams<{ pageKey: string }>();
+  const queryClient = useQueryClient();
   const pageTitle = PAGE_TITLES[pageKey] ?? pageKey;
   const imageSections = PAGE_IMAGE_SECTIONS[pageKey] ?? [];
 
@@ -226,6 +228,7 @@ export default function PageEditor() {
     setSaving(null);
     if (error) { showToast('error', error.message); return; }
     setRows((prev) => prev.map((r) => r.id === row.id ? { ...r, content: newContent } : r));
+    queryClient.invalidateQueries({ queryKey: ['page-content', pageKey] });
     showToast('success', 'Teks berhasil disimpan');
   };
 
@@ -239,6 +242,7 @@ export default function PageEditor() {
     setImgSaving(null);
     if (error) { showToast('error', error.message); return; }
     setImages((prev) => prev.map((r) => r.id === img.id ? { ...r, image_url: newUrl } : r));
+    queryClient.invalidateQueries({ queryKey: ['site-images'] });
     showToast('success', 'Gambar berhasil diperbarui');
   };
 
@@ -247,6 +251,7 @@ export default function PageEditor() {
     const { error } = await supabase.from('site_images').delete().eq('id', img.id);
     if (error) { showToast('error', error.message); return; }
     setImages((prev) => prev.filter((r) => r.id !== img.id));
+    queryClient.invalidateQueries({ queryKey: ['site-images'] });
     showToast('success', 'Gambar dihapus');
   };
 
@@ -270,6 +275,7 @@ export default function PageEditor() {
     setImages((prev) => [...prev, data as ImageRow]);
     setNewImgUrl('');
     setShowAddImg(null);
+    queryClient.invalidateQueries({ queryKey: ['site-images'] });
     showToast('success', 'Gambar ditambahkan');
   };
 

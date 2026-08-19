@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { Plus, CreditCard as Edit3, Trash2, Eye, EyeOff, Loader as Loader2, Search, CircleAlert as AlertCircle } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
 import { BlogPost } from '@/lib/blog';
 
 export default function AdminBlogList() {
+  const queryClient = useQueryClient();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -38,6 +40,7 @@ export default function AdminBlogList() {
       .update({ is_published: !post.is_published, updated_at: new Date().toISOString() })
       .eq('id', post.id);
     if (error) { showToast('error', error.message); return; }
+    queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
     showToast('success', post.is_published ? 'Artikel disembunyikan' : 'Artikel dipublikasikan');
     load();
   };
@@ -46,6 +49,7 @@ export default function AdminBlogList() {
     if (!confirm(`Hapus "${title}"? Tindakan ini tidak dapat dibatalkan.`)) return;
     const { error } = await supabase.from('blog_posts').delete().eq('id', id);
     if (error) { showToast('error', error.message); return; }
+    queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
     showToast('success', 'Artikel dihapus');
     load();
   };
