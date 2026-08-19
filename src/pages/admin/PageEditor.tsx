@@ -95,8 +95,6 @@ const SECTION_LABELS: Record<string, { label: string; hint?: string }> = {
   'montessori:philosophy_title_en': { label: 'Philosophy Title — EN' },
   'montessori:philosophy_desc_id': { label: 'Deskripsi Filosofi — ID' },
   'montessori:philosophy_desc_en': { label: 'Philosophy Description — EN' },
-  'montessori:ceo_title_id': { label: 'Judul Pesan CEO — ID' },
-  'montessori:ceo_title_en': { label: 'CEO Message Title — EN' },
   'montessori:advantages_title_id': { label: 'Judul Keunggulan — ID' },
   'montessori:advantages_title_en': { label: 'Advantages Title — EN' },
   'montessori:advantages_subtitle_id': { label: 'Subjudul Keunggulan — ID' },

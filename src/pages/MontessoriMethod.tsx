@@ -20,30 +20,12 @@ const defaultAdvantages = [
 
 const advantageIcons = [Compass, Heart, Leaf, Star, BookOpen, Hand];
 
-const defaultCeoParagraphsEn = [
-  'Greetings!',
-  'I am delighted to welcome you to our school, located in the heart of BSD city. Our school began its journey as Kiddy Montessori Preschool in 2001, and was founded on the principles envisioned by Dr. Maria Montessori, a pioneer in children\'s education. I started Palm Trees Montessori School decades ago because I believe in fostering independence within every child, and helping them reach their full potential.',
-  'As a mother of three myself, I have always been outspoken about the importance of education and schooling in a child\'s development. I found that the Montessori method was unique in that it allows each child to take charge of their own learning, rather than simply do what they\'re told.',
-  'Today, our school has developed into a preschool and elementary school, with a vibrant and thriving community of families. After their individualized learning journeys at Palm Trees, our students go on to thrive at some of the nation\'s top secondary schools as lifelong Montessori learners.',
-  'I hope to see more families join us in the future, and I am so excited for what\'s to come!',
-];
-
-const defaultCeoParagraphsId = [
-  'Salam hangat!',
-  'Dengan senang hati saya menyambut Ayah Bunda di sekolah kami yang berlokasi di jantung kota BSD. Sekolah kami memulai perjalanannya sebagai Kiddy Montessori Preschool pada tahun 2001, dan didirikan berdasarkan prinsip-prinsip yang digagas oleh Dr. Maria Montessori, pelopor pendidikan anak. Saya memulai Palm Trees Montessori School puluhan tahun lalu karena saya percaya pada pentingnya menumbuhkan kemandirian dalam diri setiap anak, serta membantu mereka mencapai potensi penuhnya.',
-  'Sebagai seorang ibu dari tiga anak, saya selalu vokal tentang pentingnya pendidikan dan sekolah dalam tumbuh kembang anak. Saya menemukan bahwa metode Montessori unik karena memungkinkan setiap anak memegang kendali atas pembelajarannya sendiri, bukan sekadar melakukan apa yang diperintahkan.',
-  'Kini, sekolah kami telah berkembang menjadi preschool dan sekolah dasar (elementary), dengan komunitas keluarga yang hidup dan terus bertumbuh. Setelah perjalanan belajar yang dipersonalisasi di Palm Trees, para siswa kami melanjutkan dan berkembang di sekolah-sekolah menengah terbaik di negeri ini sebagai pembelajar Montessori seumur hidup.',
-  'Saya berharap semakin banyak keluarga bergabung bersama kami di masa depan, dan saya sangat bersemangat menyambut hal-hal baik yang akan datang!',
-];
-
 export default function MontessoriMethod() {
   const { t, lang } = useLanguage();
   const { getContent } = usePageContent('montessori');
   const { getImages } = useSiteImages();
   const { cards: advantageCards } = useSiteCards('advantage');
-  const { cards: ceoCards } = useSiteCards('ceo_message');
 
-  const ceoImg = getImages('global', 'ceo')[0] || images.ceo;
   const schoolBuildingImg = getImages('global', 'school_building')[0] || images.schoolBuilding;
 
   const advantages = advantageCards.length > 0
@@ -56,16 +38,12 @@ export default function MontessoriMethod() {
       }))
     : defaultAdvantages;
 
-  const ceoParagraphs = ceoCards.length > 0
-    ? ceoCards.map((c) => lang === 'id' ? c.desc_id : c.desc_en).filter(Boolean)
-    : (lang === 'id' ? defaultCeoParagraphsId : defaultCeoParagraphsEn);
-
   return (
     <SiteLayout
       titleId="Metode Montessori untuk Character Building Anak | Palmtrees Montessori BSD"
       titleEn="The Montessori Method for Character Building | Palmtrees Montessori BSD"
-      descId="Kenali metode Montessori di Palm Trees Montessori BSD — filosofi, pesan dari CEO, dan keunggulan Montessori untuk membentuk karakter anak."
-      descEn="Discover the Montessori method at Palm Trees Montessori BSD — its philosophy, a message from our CEO, and the advantages of Montessori for character building."
+      descId="Kenali metode Montessori di Palm Trees Montessori BSD — filosofi dan keunggulan Montessori untuk membentuk karakter anak."
+      descEn="Discover the Montessori method at Palm Trees Montessori BSD — its philosophy and the advantages of Montessori for character building."
     >
       <section className="relative py-20 px-4 sm:px-8 bg-gradient-to-b from-[#F5F0E6] to-white text-center overflow-hidden">
         <FloatingLeaf className="w-20 h-20 top-10 left-[8%] opacity-30" />
@@ -109,50 +87,6 @@ export default function MontessoriMethod() {
               <FloatingLeaf className="w-14 h-14 -top-6 -right-4 opacity-40" delay={1} />
             </div>
           </SectionReveal>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 sm:px-8 bg-[#F5F0E6] overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <SectionReveal className="text-center mb-12">
-            <span className="inline-block bg-[#8B5E3C]/10 text-[#8B5E3C] text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-4">
-              {t('Pesan dari CEO', 'Message from the CEO')}
-            </span>
-            <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C]">
-              {lang === 'id' ? getContent('ceo_title_id', 'Sepatah Kata dari Pendiri Kami') : getContent('ceo_title_en', 'A Word from Our Founder')}
-            </h2>
-          </SectionReveal>
-
-          <div className="grid lg:grid-cols-5 gap-10 items-start">
-            <SectionReveal className="lg:col-span-2">
-              <div className="relative max-w-sm mx-auto">
-                <div className="absolute -inset-3 rounded-3xl bg-[#7A9A01]/15 rotate-2" />
-                <img
-                  src={ceoImg}
-                  alt="Jaspreet Kaur — CEO Palm Trees Montessori School"
-                  loading="lazy"
-                  className="relative w-full rounded-3xl shadow-2xl object-cover border-4 border-white"
-                />
-                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-white rounded-2xl px-6 py-3 shadow-xl text-center whitespace-nowrap">
-                  <div className="font-quicksand font-bold text-[#8B5E3C]">Jaspreet Kaur</div>
-                  <div className="text-xs font-bold text-[#7A9A01] uppercase tracking-wider">CEO</div>
-                </div>
-              </div>
-            </SectionReveal>
-
-            <SectionReveal delay={100} className="lg:col-span-3">
-              <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-[#8B5E3C]/10 space-y-4 text-[#8B5E3C]/90 leading-relaxed">
-                {ceoParagraphs.map((p, i) => (
-                  <p key={i} className={i === 0 ? 'font-quicksand font-bold text-xl text-[#8B5E3C]' : ''}>{p}</p>
-                ))}
-                <div className="pt-2">
-                  <p className="italic text-[#8B5E3C]">{t('Salam hangat,', 'Warmest regards,')}</p>
-                  <p className="font-quicksand font-bold text-lg text-[#8B5E3C] mt-1">Jaspreet Kaur</p>
-                  <p className="text-sm font-bold text-[#7A9A01] uppercase tracking-wider">CEO</p>
-                </div>
-              </div>
-            </SectionReveal>
-          </div>
         </div>
       </section>
 
