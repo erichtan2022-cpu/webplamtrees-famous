@@ -91,7 +91,7 @@ export default function Programs() {
         titleEn: c.title_en,
         descId: c.desc_id,
         descEn: c.desc_en,
-        img: c.image_url || getImages('programs', ['preschool', 'kindergarten', 'inclusive'][i] || 'preschool')[0],
+        img: getImages('programs', ['preschool', 'kindergarten', 'inclusive'][i] || 'preschool')[0] || c.image_url,
         highlights: defaultPrograms[i]?.highlights ?? [],
       }))
     : defaultPrograms;
