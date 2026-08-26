@@ -129,12 +129,12 @@ export default function InclusionProgram() {
             </p>
           </SectionReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {pillars.map((p, i) => {
               const Icon = p.icon;
               return (
                 <SectionReveal key={i} delay={i * 80}>
-                  <div className="bg-[#F5F0E6] rounded-3xl p-7 h-full hover-lift border border-[#8B5E3C]/10 flex gap-5">
+                  <div className="bg-[#F5F0E6] rounded-3xl p-7 h-full hover-lift border border-[#8B5E3C]/10 flex flex-col items-start gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-[#8B5E3C] flex items-center justify-center shadow-md flex-shrink-0">
                       <Icon className="w-7 h-7 text-white" />
                     </div>
