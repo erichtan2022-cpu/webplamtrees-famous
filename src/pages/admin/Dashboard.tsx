@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, LayoutTemplate, Plus, TrendingUp, Eye, Clock, Image as ImageIcon, Users, Quote, BookOpen, Building2, CircleHelp as HelpCircle, ListChecks, Sparkles, HeartPulse, Mail, Settings, GraduationCap } from 'lucide-react';
+import { FileText, LayoutTemplate, Plus, TrendingUp, Eye, Clock, Image as ImageIcon, Users, Quote, BookOpen, Building2, CircleHelp as HelpCircle, ListChecks, Sparkles, HeartPulse, Mail, Settings, GraduationCap, Instagram } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { supabase } from '@/lib/supabase';
 
@@ -65,6 +65,7 @@ export default function AdminDashboard() {
     { to: '/admin/reasons', label: 'Alasan Inklusi', icon: ListChecks, desc: 'Edit daftar alasan kenapa Palm Trees' },
     { to: '/admin/rhythm', label: 'Ritme Harian', icon: Clock, desc: 'Edit jadwal aktivitas harian kelas' },
     { to: '/admin/ceo-message', label: 'Pesan CEO', icon: Mail, desc: 'Edit paragraf pesan dari CEO' },
+    { to: '/admin/instagram', label: 'Instagram Posts', icon: Instagram, desc: 'Tambah foto dari link post Instagram' },
     { to: '/admin/settings', label: 'Kontak & Jam', icon: Settings, desc: 'Edit info kontak, sosial, jam operasional' },
   ];
 

@@ -91,6 +91,7 @@ const App = () => (
             <Route path="/admin/reasons" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="reason" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/rhythm" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="day_rhythm" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/ceo-message" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="ceo_message" /></ProtectedRoute></AdminAuthProvider>} />
+            <Route path="/admin/instagram" element={<AdminAuthProvider><ProtectedRoute><AdminCardManager cardType="instagram" /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin/settings" element={<AdminAuthProvider><ProtectedRoute><AdminSettingsManager /></ProtectedRoute></AdminAuthProvider>} />
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
 

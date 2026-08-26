@@ -44,9 +44,14 @@ export default function Home() {
   const { getContent } = usePageContent('home');
   const { getImages } = useSiteImages();
   const { cards: testimonialCards } = useSiteCards('testimonial');
+  const { cards: instagramCards } = useSiteCards('instagram');
 
   const activityImages = getImages('home', 'activities');
   const uniqueChildImg = getImages('home', 'unique_child')[0];
+
+  const instagramPosts = instagramCards
+    .filter((c) => c.is_active)
+    .map((c) => ({ image: c.image_url, link: c.desc_id || '', caption: c.title_id || c.title_en || '' }));
 
   const testimonials = testimonialCards.length > 0
     ? testimonialCards.map((c) => ({
@@ -273,16 +278,16 @@ export default function Home() {
           </SectionReveal>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 mb-10">
-            {activityImages.map((src, i) => (
+            {(instagramPosts.length > 0 ? instagramPosts : activityImages.map((src) => ({ image: src, link: 'https://www.instagram.com/palmtreesmontessori/', caption: '' }))).map((post, i) => (
               <a
                 key={i}
-                href="https://www.instagram.com/palmtreesmontessori/"
+                href={post.link || 'https://www.instagram.com/palmtreesmontessori/'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative aspect-square rounded-2xl overflow-hidden block"
                 style={{ animation: `fadeInUp 0.6s ease-out ${i * 0.05}s both` }}
               >
-                <img src={src} alt="" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src={post.image} alt={post.caption || ''} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-[#7A9A01]/0 group-hover:bg-[#7A9A01]/60 flex items-center justify-center transition-colors">
                   <Instagram className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
