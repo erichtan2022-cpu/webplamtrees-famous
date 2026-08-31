@@ -47,6 +47,8 @@ export default function Admission() {
     ? faqCards.map((c) => ({ qId: c.title_id, qEn: c.title_en, aId: c.desc_id, aEn: c.desc_en }))
     : defaultFaqs;
 
+  const waNumber = getSetting('wa_number') || contactInfo.waNumber;
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.parent || !form.email) return;
@@ -64,6 +66,34 @@ export default function Admission() {
         }),
       });
     } catch {}
+
+    const ageLabel = form.age === 'preschool-kindergarten'
+      ? t('2 - 6 tahun (Preschool & Kindergarten)', '2 - 6 years (Preschool & Kindergarten)')
+      : form.age === 'elementary'
+        ? t('6 - 12 tahun (Elementary)', '6 - 12 years (Elementary)')
+        : '-';
+
+    const waText = t(
+      `Halo Palmtrees, saya ingin mendaftar Tour Sekolah.\n\n` +
+      `Nama Ayah/Bunda: ${form.parent}\n` +
+      `Email: ${form.email}\n` +
+      `WhatsApp: ${form.phone || '-'}\n` +
+      `Nama Ananda: ${form.child || '-'}\n` +
+      `Usia: ${ageLabel}\n` +
+      `Tanggal Tour: ${form.date || '-'}\n` +
+      `Pesan: ${form.message || '-'}`,
+      `Hello Palmtrees, I would like to book a school tour.\n\n` +
+      `Parent name: ${form.parent}\n` +
+      `Email: ${form.email}\n` +
+      `WhatsApp: ${form.phone || '-'}\n` +
+      `Child's name: ${form.child || '-'}\n` +
+      `Age: ${ageLabel}\n` +
+      `Tour date: ${form.date || '-'}\n` +
+      `Message: ${form.message || '-'}`
+    );
+
+    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`, '_blank', 'noopener,noreferrer');
+
     setSubmitting(false);
     setSubmitted(true);
   };
