@@ -82,12 +82,15 @@ Deno.serve(async (req: Request) => {
 
     let emailSent = false;
     let autoreplySent = false;
+    let notifyError = "";
+    let autoreplyError = "";
 
     try {
       await sendEmail(SCHOOL_EMAIL, `[Kontak Website] ${emailSubject}`, notificationHtml);
       emailSent = true;
     } catch (err) {
-      console.error("Failed to send notification email:", (err as Error).message);
+      notifyError = (err as Error).message;
+      console.error("Failed to send notification email:", notifyError);
     }
 
     // 2. Send autoreply to sender
@@ -117,7 +120,8 @@ Deno.serve(async (req: Request) => {
       await sendEmail(email, "Terima Kasih atas Pesan Anda - Palmtrees Montessori", autoreplyHtml);
       autoreplySent = true;
     } catch (err) {
-      console.error("Failed to send autoreply:", (err as Error).message);
+      autoreplyError = (err as Error).message;
+      console.error("Failed to send autoreply:", autoreplyError);
     }
 
     // Update DB record with email status
@@ -132,7 +136,13 @@ Deno.serve(async (req: Request) => {
     }
 
     return new Response(
-      JSON.stringify({ ok: true, email_sent: emailSent, autoreply_sent: autoreplySent }),
+      JSON.stringify({
+        ok: true,
+        email_sent: emailSent,
+        autoreply_sent: autoreplySent,
+        notify_error: notifyError || undefined,
+        autoreply_error: autoreplyError || undefined,
+      }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (err) {
