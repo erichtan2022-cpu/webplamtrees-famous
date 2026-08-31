@@ -38,11 +38,18 @@ export default function Contact() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.email) return;
+    if (!form.name || !form.email || !form.message) {
+      setSendError('Nama, email, dan pesan wajib diisi.');
+      return;
+    }
     setSending(true);
     setSendError('');
     try {
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`, {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`;
+      console.log('Sending to:', apiUrl);
+      console.log('Form data:', form);
+
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,12 +57,22 @@ export default function Contact() {
         },
         body: JSON.stringify(form),
       });
+
+      console.log('Response status:', res.status);
+      const data = await res.json().catch(() => ({}));
+      console.log('Response data:', data);
+
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || `Gagal mengirim pesan (${res.status})`);
       }
-      setSent(true);
+
+      if (data.ok === true) {
+        setSent(true);
+      } else {
+        throw new Error(data.error || 'Respon tidak valid dari server');
+      }
     } catch (err) {
+      console.error('Contact form error:', err);
       setSendError(err instanceof Error ? err.message : 'Gagal mengirim pesan');
     } finally {
       setSending(false);
