@@ -10,8 +10,15 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SCHOOL_EMAIL = "info@palmtreesmontessori.com";
 const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") || "Palmtrees Montessori <onboarding@resend.dev>";
 
-async function sendEmail(to: string, subject: string, html: string, replyTo?: string) {
-  const body: Record<string, unknown> = { from: FROM_EMAIL, to, subject, html };
+async function sendEmail(to: string, subject: string, html: string, text: string, replyTo?: string) {
+  const body: Record<string, unknown> = {
+    from: FROM_EMAIL,
+    to,
+    subject,
+    html,
+    text,
+    tags: [{ name: "category", value: "transactional" }],
+  };
   if (replyTo) body.reply_to = replyTo;
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -83,6 +90,18 @@ Deno.serve(async (req: Request) => {
       </div>
     `;
 
+    const notificationText = `Pesan Baru dari Website Palmtrees Montessori
+
+Nama: ${name}
+Email: ${email}
+Subjek: ${emailSubject}
+
+Pesan:
+${message}
+
+---
+Email ini dikirim otomatis dari form kontak website Palmtrees Montessori.`;
+
     let emailSent = false;
     let autoreplySent = false;
     let notifyError = "";
@@ -91,7 +110,7 @@ Deno.serve(async (req: Request) => {
     let autoreplyId: string | undefined;
 
     try {
-      notifyId = await sendEmail(SCHOOL_EMAIL, `[Kontak Website] ${emailSubject}`, notificationHtml, email);
+      notifyId = await sendEmail(SCHOOL_EMAIL, `[Kontak Website] ${emailSubject}`, notificationHtml, notificationText, email);
       emailSent = true;
     } catch (err) {
       notifyError = (err as Error).message;
@@ -121,8 +140,21 @@ Deno.serve(async (req: Request) => {
       </div>
     `;
 
+    const autoreplyText = `Terima Kasih, ${name}!
+
+Kami telah menerima pesan Anda dan sangat menghargai waktu yang Anda luangkan untuk menghubungi kami.
+
+Pihak sekolah akan menghubungi Anda secepatnya untuk menindaklanjuti pesan Anda. Mohon kesabaran jika balasan kami membutuhkan waktu 1x24 jam kerja.
+
+Palmtrees Montessori School
+BSD City, Tangerang Selatan
+Email: info@palmtreesmontessori.com
+
+---
+Email ini dikirim otomatis. Mohon tidak membalas email ini secara langsung.`;
+
     try {
-      autoreplyId = await sendEmail(email, "Terima Kasih atas Pesan Anda - Palmtrees Montessori", autoreplyHtml);
+      autoreplyId = await sendEmail(email, "Terima Kasih atas Pesan Anda - Palmtrees Montessori", autoreplyHtml, autoreplyText);
       autoreplySent = true;
     } catch (err) {
       autoreplyError = (err as Error).message;
