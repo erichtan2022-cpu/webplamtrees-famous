@@ -10,19 +10,22 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SCHOOL_EMAIL = Deno.env.get("CONTACT_TO_EMAIL") || "info@palmtreesmontessori.com";
 const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") || "Palmtrees Montessori <onboarding@resend.dev>";
 
-async function sendEmail(to: string, subject: string, html: string) {
+async function sendEmail(to: string, subject: string, html: string, replyTo?: string) {
+  const body: Record<string, unknown> = { from: FROM_EMAIL, to, subject, html };
+  if (replyTo) body.reply_to = replyTo;
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${RESEND_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ from: FROM_EMAIL, to, subject, html }),
+    body: JSON.stringify(body),
   });
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Resend API error: ${res.status} ${text}`);
+    throw new Error(`Resend API error: ${res.status} ${JSON.stringify(data)}`);
   }
+  return data.id as string | undefined;
 }
 
 Deno.serve(async (req: Request) => {
@@ -84,9 +87,11 @@ Deno.serve(async (req: Request) => {
     let autoreplySent = false;
     let notifyError = "";
     let autoreplyError = "";
+    let notifyId: string | undefined;
+    let autoreplyId: string | undefined;
 
     try {
-      await sendEmail(SCHOOL_EMAIL, `[Kontak Website] ${emailSubject}`, notificationHtml);
+      notifyId = await sendEmail(SCHOOL_EMAIL, `[Kontak Website] ${emailSubject}`, notificationHtml, email);
       emailSent = true;
     } catch (err) {
       notifyError = (err as Error).message;
@@ -117,7 +122,7 @@ Deno.serve(async (req: Request) => {
     `;
 
     try {
-      await sendEmail(email, "Terima Kasih atas Pesan Anda - Palmtrees Montessori", autoreplyHtml);
+      autoreplyId = await sendEmail(email, "Terima Kasih atas Pesan Anda - Palmtrees Montessori", autoreplyHtml);
       autoreplySent = true;
     } catch (err) {
       autoreplyError = (err as Error).message;
@@ -142,6 +147,10 @@ Deno.serve(async (req: Request) => {
         autoreply_sent: autoreplySent,
         notify_error: notifyError || undefined,
         autoreply_error: autoreplyError || undefined,
+        notify_id: notifyId,
+        autoreply_id: autoreplyId,
+        from_email: FROM_EMAIL,
+        school_email: SCHOOL_EMAIL,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
