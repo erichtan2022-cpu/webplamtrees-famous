@@ -7,8 +7,8 @@ const corsHeaders = {
 };
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const SCHOOL_EMAIL = "info@palmtreesmontessori.com";
-const FROM_EMAIL = "Palmtrees Montessori <onboarding@resend.dev>";
+const SCHOOL_EMAIL = Deno.env.get("CONTACT_TO_EMAIL") || "info@palmtreesmontessori.com";
+const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") || "Palmtrees Montessori <onboarding@resend.dev>";
 
 async function sendEmail(to: string, subject: string, html: string) {
   const res = await fetch("https://api.resend.com/emails", {
