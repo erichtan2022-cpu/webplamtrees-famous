@@ -8,7 +8,7 @@ const corsHeaders = {
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SCHOOL_EMAIL = "info@palmtreesmontessori.com";
-const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") || "Palmtrees Montessori <onboarding@resend.dev>";
+const FROM_EMAIL = "Palmtrees Montessori <kontak@send.palmtreesmontessori.com>";
 
 async function sendEmail(to: string, subject: string, html: string, text: string, replyTo?: string) {
   const body: Record<string, unknown> = {
@@ -17,7 +17,7 @@ async function sendEmail(to: string, subject: string, html: string, text: string
     subject,
     html,
     text,
-    tags: [{ name: "category", value: "transactional" }],
+
   };
   if (replyTo) body.reply_to = replyTo;
   const res = await fetch("https://api.resend.com/emails", {
@@ -110,7 +110,7 @@ Email ini dikirim otomatis dari form kontak website Palmtrees Montessori.`;
     let autoreplyId: string | undefined;
 
     try {
-      notifyId = await sendEmail(SCHOOL_EMAIL, `[Kontak Website] ${emailSubject}`, notificationHtml, notificationText, email);
+      notifyId = await sendEmail(SCHOOL_EMAIL, `${name} mengirim pesan dari website`, notificationHtml, notificationText, email);
       emailSent = true;
     } catch (err) {
       notifyError = (err as Error).message;
