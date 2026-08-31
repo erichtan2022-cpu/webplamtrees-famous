@@ -13,6 +13,8 @@ export default function Contact() {
   const { getSetting } = useSiteSettings();
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
 
   const addressId = getSetting('address_id') || contactInfo.addressId;
   const addressEn = getSetting('address_en') || contactInfo.addressEn;
@@ -37,20 +39,27 @@ export default function Contact() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.email) return;
+    setSending(true);
+    setSendError('');
     try {
-      await fetch('https://famous.ai/api/crm/6a05f5ed7fae75f422be90c0/subscribe', {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: form.email,
-          name: form.name,
-          source: 'contact-form',
-          tags: ['contact', 'general-inquiry'],
-          metadata: { subject: form.subject, message: form.message },
-        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify(form),
       });
-    } catch {}
-    setSent(true);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Gagal mengirim pesan (${res.status})`);
+      }
+      setSent(true);
+    } catch (err) {
+      setSendError(err instanceof Error ? err.message : 'Gagal mengirim pesan');
+    } finally {
+      setSending(false);
+    }
   };
 
   const socials = [
@@ -165,9 +174,14 @@ export default function Contact() {
                     <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder={t('Email', 'Email')} className="w-full px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />
                     <input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} placeholder={t('Subjek', 'Subject')} className="w-full px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />
                     <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder={t('Tulis pesan...', 'Write your message...')} className="w-full px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />
-                    <button type="submit" className="btn-bounce w-full bg-[#7A9A01] hover:bg-[#8B5E3C] text-white font-bold py-3.5 rounded-full shadow-lg flex items-center justify-center gap-2">
+                    {sendError && (
+                      <p className="text-sm text-red-500 bg-red-50 rounded-2xl px-4 py-3">
+                        {sendError}
+                      </p>
+                    )}
+                    <button type="submit" disabled={sending} className="btn-bounce w-full bg-[#7A9A01] hover:bg-[#8B5E3C] text-white font-bold py-3.5 rounded-full shadow-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
                       <Send className="w-4 h-4" />
-                      {t('Kirim Pesan', 'Send Message')}
+                      {sending ? t('Mengirim...', 'Sending...') : t('Kirim Pesan', 'Send Message')}
                     </button>
                   </form>
                 </>

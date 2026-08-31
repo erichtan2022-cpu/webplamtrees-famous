@@ -1,0 +1,11 @@
+[functions.blog-admin]
+verify_jwt = false
+
+[functions.generate-sitemap]
+verify_jwt = false
+
+[functions.instagram-fetch]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
