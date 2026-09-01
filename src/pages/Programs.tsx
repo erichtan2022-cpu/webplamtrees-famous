@@ -60,11 +60,11 @@ const defaultPrograms = [
 
 const defaultDayRhythm = [
   { icon: Sun, time: '08:00', id: 'Lingkar Pagi & Salam', en: 'Morning Circle & Greeting' },
-  { icon: BookOpen, time: '08:30', id: 'Work Cycle: Practical Life', en: 'Work Cycle: Practical Life' },
-  { icon: Sparkles, time: '09:30', id: 'Work Cycle: Sensorial & Language', en: 'Work Cycle: Sensorial & Language' },
-  { icon: Coffee, time: '10:30', id: 'Snack Bersama', en: 'Snack Together' },
-  { icon: Trees, time: '11:00', id: 'Outdoor Play & Berkebun', en: 'Outdoor Play & Gardening' },
-  { icon: Palette, time: '11:30', id: 'Art & Practical Life', en: 'Art & Practical Life' },
+  { icon: BookOpen, time: '08:30', id: 'Siklus Kerja: Practical Life', en: 'Work Cycle: Practical Life' },
+  { icon: Sparkles, time: '09:30', id: 'Siklus Kerja: Sensorial & Bahasa', en: 'Work Cycle: Sensorial & Language' },
+  { icon: Coffee, time: '10:30', id: 'Camilan Bersama', en: 'Snack Together' },
+  { icon: Trees, time: '11:00', id: 'Bermain Outdoor & Berkebun', en: 'Outdoor Play & Gardening' },
+  { icon: Palette, time: '11:30', id: 'Seni & Practical Life', en: 'Art & Practical Life' },
   { icon: Music, time: '12:00', id: 'Lingkar Penutup & Pulang', en: 'Closing Circle & Dismissal' },
 ];
 
