@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sun, BookOpen, Palette, Music, Sparkles, Users, Coffee, Trees, Heart, Stethoscope, GraduationCap } from 'lucide-react';
+import { Sun, BookOpen, Palette, Music, Sparkles, Users, Coffee, Trees, Heart, Stethoscope, GraduationCap, MessagesSquare } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
 import { Parallax } from '@/components/site/Parallax';
@@ -51,7 +51,6 @@ const defaultPrograms = [
     descEn: 'Montessori for every child. Gentle, personalized support for children who need extra help with their learning style — learning side by side in the same classroom.',
     img: images.programs.inclusive,
     highlights: [
-      { id: 'Shadow teacher terlatih', en: 'Trained shadow teachers' },
       { id: 'Kolaborasi terapis', en: 'Therapist collaboration' },
       { id: 'Rencana belajar individual', en: 'Individual learning plans' },
       { id: 'Komunikasi orang tua', en: 'Parent communication' },
@@ -249,9 +248,9 @@ export default function Programs() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: Users, titleId: 'Shadow Teacher', titleEn: 'Shadow Teacher', descId: 'Pendamping personal yang terlatih, bekerja sama dengan guru kelas untuk mendukung Ananda sehari-hari.', descEn: 'A trained personal companion who works alongside class guides to support your child daily.' },
+              { icon: MessagesSquare, titleId: 'Komunikasi Terbuka', titleEn: 'Open Communication', descId: 'Guru menyambut dialog dengan Ayah Bunda dan berbagi perkembangan Ananda secara berkala.', descEn: 'Our guides welcome dialogue with parents and share your child\'s progress regularly.' },
               { icon: Stethoscope, titleId: 'Kolaborasi Terapis', titleEn: 'Therapist Collaboration', descId: 'Kami berkoordinasi dengan terapis okupasi, wicara, atau psikolog yang sudah dipilih keluarga.', descEn: 'We coordinate with the OT, speech, or psychologist your family already trusts.' },
-              { icon: GraduationCap, titleId: 'Rencana Lembut', titleEn: 'Gentle Planning', descId: 'Individual goals yang fleksibel dan dievaluasi bersama orang tua secara rutin.', descEn: 'Flexible individual goals reviewed together with parents on a regular cadence.' },
+              { icon: GraduationCap, titleId: 'Perencanaan Fleksibel', titleEn: 'Flexible Planning', descId: 'Individual goals yang fleksibel dan dievaluasi bersama orang tua secara rutin.', descEn: 'Flexible individual goals reviewed together with parents on a regular cadence.' },
             ].map((c, i) => {
               const Icon = c.icon;
               return (
