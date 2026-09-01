@@ -59,13 +59,13 @@ const defaultPrograms = [
 ];
 
 const defaultDayRhythm = [
-  { icon: Sun, time: '08:00', id: 'Lingkar Pagi & Salam', en: 'Morning Circle & Greeting' },
-  { icon: BookOpen, time: '08:30', id: 'Siklus Kerja: Practical Life', en: 'Work Cycle: Practical Life' },
-  { icon: Sparkles, time: '09:30', id: 'Siklus Kerja: Sensorial & Bahasa', en: 'Work Cycle: Sensorial & Language' },
-  { icon: Coffee, time: '10:30', id: 'Camilan Bersama', en: 'Snack Together' },
-  { icon: Trees, time: '11:00', id: 'Bermain Outdoor & Berkebun', en: 'Outdoor Play & Gardening' },
-  { icon: Palette, time: '11:30', id: 'Seni & Practical Life', en: 'Art & Practical Life' },
-  { icon: Music, time: '12:00', id: 'Lingkar Penutup & Pulang', en: 'Closing Circle & Dismissal' },
+  { icon: Sun, time: '08:00', id: 'Waktu Berkumpul & Menyapa', en: 'Morning Circle & Greeting' },
+  { icon: BookOpen, time: '08:30', id: 'Waktu Eksplorasi: Kegiatan Sehari-hari', en: 'Work Cycle: Practical Life' },
+  { icon: Sparkles, time: '09:30', id: 'Waktu Eksplorasi: Indra & Bahasa', en: 'Work Cycle: Sensorial & Language' },
+  { icon: Coffee, time: '10:30', id: 'Saatnya Camilan', en: 'Snack Together' },
+  { icon: Trees, time: '11:00', id: 'Bermain di Luar & Eksplorasi Alam', en: 'Outdoor Play & Gardening' },
+  { icon: Palette, time: '11:30', id: 'Berkarya & Belajar Mandiri', en: 'Art & Practical Life' },
+  { icon: Music, time: '12:00', id: 'Menutup Hari & Bersiap Pulang', en: 'Closing Circle & Dismissal' },
 ];
 
 const rhythmIcons = [Sun, BookOpen, Sparkles, Coffee, Trees, Palette, Music];
