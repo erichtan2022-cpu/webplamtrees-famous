@@ -82,7 +82,7 @@ export const HeroSlider = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
           <div className="max-w-3xl text-white" key={index} style={{ animation: 'slideUp 0.8s ease-out' }}>
             <span className="inline-block bg-[#7A9A01]/90 backdrop-blur-sm text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full mb-5">
-              🌿 {t('Sekolah Montessori Inklusi · BSD', 'Inclusive Montessori School · BSD')}
+              🌿 {t('Sekolah Montessori · BSD', 'Montessori School · BSD')}
             </span>
             <h1 className="font-quicksand font-bold text-3xl sm:text-5xl lg:text-6xl leading-tight mb-5 drop-shadow-lg">
               {lang === 'id' ? slidesWithDynamic[index].headlineId : slidesWithDynamic[index].headlineEn}
