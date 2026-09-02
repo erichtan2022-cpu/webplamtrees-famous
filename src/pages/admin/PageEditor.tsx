@@ -145,8 +145,8 @@ const PAGE_IMAGE_SECTIONS: Record<string, { section_key: string; label: string }
     { section_key: 'classrooms', label: 'Foto Ruang Kelas' },
   ],
   programs: [
-    { section_key: 'preschool', label: 'Foto Program Preschool' },
-    { section_key: 'kindergarten', label: 'Foto Program Elementary' },
+    { section_key: 'preschool', label: 'Foto Program Pra-Sekolah & TK' },
+    { section_key: 'kindergarten', label: 'Foto Program Sekolah Dasar' },
     { section_key: 'inclusive', label: 'Foto Program Inklusi' },
     { section_key: 'inclusive_hero', label: 'Foto Hero Halaman Program' },
   ],

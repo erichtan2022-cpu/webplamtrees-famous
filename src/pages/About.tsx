@@ -50,8 +50,8 @@ export default function About() {
         descEn: c.desc_en,
       }))
     : [
-        { titleId: 'Kelas Preschool dan Kindergarten', titleEn: 'Preschool & Kindergarten Classroom', img: classroomImages[0] || images.classrooms[0], descId: 'Lingkungan terpersiapkan untuk usia 2-6 tahun dengan material Montessori lengkap.', descEn: 'A prepared environment for ages 2-6 with complete Montessori materials.' },
-        { titleId: 'Kelas Elementary', titleEn: 'Elementary Classroom', img: classroomImages[1] || images.classrooms[1], descId: 'Ruang belajar usia 6-12 tahun untuk riset mandiri dan proyek kelompok.', descEn: 'A learning space for ages 6-12 for independent research and group projects.' },
+        { titleId: 'Kelas Pra-Sekolah dan TK', titleEn: 'Preschool & Kindergarten Classroom', img: classroomImages[0] || images.classrooms[0], descId: 'Lingkungan terpersiapkan untuk usia 2-6 tahun dengan material Montessori lengkap.', descEn: 'A prepared environment for ages 2-6 with complete Montessori materials.' },
+        { titleId: 'Kelas Sekolah Dasar', titleEn: 'Elementary Classroom', img: classroomImages[1] || images.classrooms[1], descId: 'Ruang belajar usia 6-12 tahun untuk riset mandiri dan proyek kelompok.', descEn: 'A learning space for ages 6-12 for independent research and group projects.' },
         { titleId: 'Kelas Inklusi', titleEn: 'Inclusion Classroom', img: classroomImages[2] || images.classrooms[2], descId: 'Ruang tenang dengan pendampingan personal untuk setiap gaya belajar.', descEn: 'A calm space with personal support for every learning style.' },
         { titleId: 'Ruang Practical Life', titleEn: 'Practical Life Room', img: classroomImages[3] || images.classrooms[3], descId: 'Tempat anak belajar kemandirian harian.', descEn: 'Where children learn daily independence.' },
       ];

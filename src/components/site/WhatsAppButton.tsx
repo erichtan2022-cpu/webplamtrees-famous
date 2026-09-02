@@ -13,25 +13,25 @@ export const WhatsAppButton = () => {
   const programs = [
     {
       key: 'preschool',
-      label: t('Preschool', 'Preschool'),
+      label: t('Pra-Sekolah', 'Preschool'),
       message: t(
-        'Halo Palmtrees, saya tertarik untuk mengetahui lebih lanjut tentang program Preschool. Mohon informasinya, terima kasih.',
+        'Halo Palmtrees, saya tertarik untuk mengetahui lebih lanjut tentang program Pra-Sekolah. Mohon informasinya, terima kasih.',
         'Hello Palmtrees, I am interested to know more about the Preschool program. Please share the details, thank you.'
       ),
     },
     {
       key: 'kindergarten',
-      label: t('Kindergarten', 'Kindergarten'),
+      label: t('TK', 'Kindergarten'),
       message: t(
-        'Halo Palmtrees, saya tertarik untuk mengetahui lebih lanjut tentang program Kindergarten. Mohon informasinya, terima kasih.',
+        'Halo Palmtrees, saya tertarik untuk mengetahui lebih lanjut tentang program TK. Mohon informasinya, terima kasih.',
         'Hello Palmtrees, I am interested to know more about the Kindergarten program. Please share the details, thank you.'
       ),
     },
     {
       key: 'elementary',
-      label: t('Elementary', 'Elementary'),
+      label: t('Sekolah Dasar', 'Elementary'),
       message: t(
-        'Halo Palmtrees, saya tertarik untuk mengetahui lebih lanjut tentang program Elementary. Mohon informasinya, terima kasih.',
+        'Halo Palmtrees, saya tertarik untuk mengetahui lebih lanjut tentang program Sekolah Dasar. Mohon informasinya, terima kasih.',
         'Hello Palmtrees, I am interested to know more about the Elementary program. Please share the details, thank you.'
       ),
     },

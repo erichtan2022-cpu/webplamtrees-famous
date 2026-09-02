@@ -68,9 +68,9 @@ export default function Admission() {
     } catch {}
 
     const ageLabel = form.age === 'preschool-kindergarten'
-      ? t('2 - 6 tahun (Preschool & Kindergarten)', '2 - 6 years (Preschool & Kindergarten)')
+      ? t('2 - 6 tahun (Pra-Sekolah & TK)', '2 - 6 years (Preschool & Kindergarten)')
       : form.age === 'elementary'
-        ? t('6 - 12 tahun (Elementary)', '6 - 12 years (Elementary)')
+        ? t('6 - 12 tahun (Sekolah Dasar)', '6 - 12 years (Elementary)')
         : '-';
 
     const waText = t(
@@ -227,8 +227,8 @@ export default function Admission() {
                     <div className="grid sm:grid-cols-2 gap-3">
                       <select value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })} className="px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm">
                         <option value="">{t('Usia Ananda', 'Child\'s age')}</option>
-                        <option value="preschool-kindergarten">{t('2 - 6 tahun (Preschool & Kindergarten)', '2 - 6 years (Preschool & Kindergarten)')}</option>
-                        <option value="elementary">{t('6 - 12 tahun (Elementary)', '6 - 12 years (Elementary)')}</option>
+                        <option value="preschool-kindergarten">{t('2 - 6 tahun (Pra-Sekolah & TK)', '2 - 6 years (Preschool & Kindergarten)')}</option>
+                        <option value="elementary">{t('6 - 12 tahun (Sekolah Dasar)', '6 - 12 years (Elementary)')}</option>
 
                       </select>
                       <input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />

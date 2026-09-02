@@ -71,9 +71,9 @@ export const contactInfo = {
 // Teacher data
 export const teachers = [
   { name: 'Ms. Aulia', roleId: 'Lead Guide – Toddler', roleEn: 'Lead Guide – Toddler', factId: 'AMI Diploma 0-3. Suka berkebun bersama anak-anak.', factEn: 'AMI Diploma 0-3. Loves gardening with the children.' },
-  { name: 'Mr. Bagas', roleId: 'Guide – Preschool', roleEn: 'Guide – Preschool', factId: 'Penggemar puzzle peta dunia dan ahli geografi anak.', factEn: 'World-map puzzle enthusiast and kid geography expert.' },
+  { name: 'Mr. Bagas', roleId: 'Guide – Pra-Sekolah', roleEn: 'Guide – Preschool', factId: 'Penggemar puzzle peta dunia dan ahli geografi anak.', factEn: 'World-map puzzle enthusiast and kid geography expert.' },
   { name: 'Ms. Citra', roleId: 'Inclusion Coordinator', roleEn: 'Inclusion Coordinator', factId: 'Berpengalaman 10 tahun mendukung gaya belajar unik.', factEn: '10 years supporting every unique learning style.' },
-  { name: 'Ms. Dewi', roleId: 'Guide – Kindergarten', roleEn: 'Guide – Kindergarten', factId: 'Mencintai cerita rakyat Nusantara dan musik anak.', factEn: 'Loves Indonesian folktales and children\'s music.' },
+  { name: 'Ms. Dewi', roleId: 'Guide – TK', roleEn: 'Guide – Kindergarten', factId: 'Mencintai cerita rakyat Nusantara dan musik anak.', factEn: 'Loves Indonesian folktales and children\'s music.' },
   { name: 'Ms. Elya', roleId: 'Art & Practical Life', roleEn: 'Art & Practical Life', factId: 'Membuat sabun alami bersama anak setiap Jumat.', factEn: 'Makes natural soap with children every Friday.' },
   { name: 'Ms. Farah', roleId: 'Shadow Teacher Lead', roleEn: 'Shadow Teacher Lead', factId: 'Sertifikasi OT pediatrik, pendekatan lembut & sabar.', factEn: 'Pediatric OT certified, gentle and patient approach.' },
 ];

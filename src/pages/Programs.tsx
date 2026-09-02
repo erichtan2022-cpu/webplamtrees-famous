@@ -11,9 +11,9 @@ import { useSiteImages, useSiteCards } from '@/hooks/useSiteContent';
 const defaultPrograms = [
   {
     key: 'preschool',
-    labelId: 'Preschool dan Kindergarten · 2-6 th',
+    labelId: 'Pra-Sekolah dan TK · 2-6 th',
     labelEn: 'Preschool & Kindergarten · 2-6 y',
-    titleId: 'Preschool dan Kindergarten',
+    titleId: 'Pra-Sekolah dan TK',
     titleEn: 'Preschool & Kindergarten',
     descId: 'Program untuk usia 2-6 tahun. Anak membangun kemandirian, konsentrasi, dan cinta belajar melalui Practical Life, sensorial, bahasa, matematika, dan budaya dalam lingkungan Montessori yang terpersiapkan.',
     descEn: 'A program for ages 2-6. Children build independence, concentration, and a love of learning through Practical Life, sensorial, language, math, and culture in a prepared Montessori environment.',
@@ -27,9 +27,9 @@ const defaultPrograms = [
   },
   {
     key: 'elementary',
-    labelId: 'Elementary · 6-12 th',
+    labelId: 'Sekolah Dasar · 6-12 th',
     labelEn: 'Elementary · 6-12 y',
-    titleId: 'Elementary',
+    titleId: 'Sekolah Dasar',
     titleEn: 'Elementary',
     descId: 'Program untuk usia 6-12 tahun, dari Kelas 1 hingga Kelas 6. Kurikulum Cosmic Education Montessori: matematika lanjut, sains, geografi, sejarah, dan proyek riset mandiri yang bermakna.',
     descEn: 'A program for ages 6-12, from Grade 1 through Grade 6. The Montessori Cosmic Education curriculum: advanced math, science, geography, history, and meaningful independent research projects.',
@@ -108,9 +108,9 @@ export default function Programs() {
 
   return (
     <SiteLayout
-      titleId="Kelas Preschool, Kindergarten, Elementary & Inklusi | Palmtrees Montessori BSD"
+      titleId="Kelas Pra-Sekolah, TK, Sekolah Dasar & Inklusi | Palmtrees Montessori BSD"
       titleEn="Preschool, Kindergarten, Elementary & Inclusion Classes | Palmtrees Montessori BSD"
-      descId="Palm Trees Montessori BSD menyediakan program Preschool dan Kindergarten (2-6 tahun), Program Elementary (6-12 tahun), dan Program Inklusi."
+      descId="Palm Trees Montessori BSD menyediakan program Pra-Sekolah dan TK (2-6 tahun), Program Sekolah Dasar (6-12 tahun), dan Program Inklusi."
       descEn="Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6), an Elementary program (ages 6-12), and an Inclusion Program."
     >
       <Parallax image={inclusiveHeroImg} speed={0.35} height="min-h-[440px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/70 to-[#7A9A01]/60">
@@ -124,7 +124,7 @@ export default function Programs() {
             </h1>
             <p className="text-lg sm:text-xl text-white/95">
               {lang === 'id'
-                ? getContent('hero_subtitle_id', 'Palm Trees Montessori BSD menyediakan program Preschool dan Kindergarten (2-6 tahun), Program Elementary (6-12 tahun) yang dirancang sesuai tahap perkembangan anak dan Program Inklusi.')
+                ? getContent('hero_subtitle_id', 'Palm Trees Montessori BSD menyediakan program Pra-Sekolah dan TK (2-6 tahun), Program Sekolah Dasar (6-12 tahun) yang dirancang sesuai tahap perkembangan anak dan Program Inklusi.')
                 : getContent('hero_subtitle_en', 'Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6), an Elementary program (ages 6-12) designed around each stage of child development, and an Inclusion Program.')}
             </p>
           </SectionReveal>

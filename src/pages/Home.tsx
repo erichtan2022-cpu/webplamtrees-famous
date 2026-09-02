@@ -72,7 +72,7 @@ export default function Home() {
     <SiteLayout
       titleId="Sekolah Montessori Inklusi BSD | Palmtrees Montessori Tangerang Selatan"
       titleEn="Inclusive Montessori School BSD | Palmtrees Montessori South Tangerang"
-      descId="Palmtrees Montessori adalah sekolah Montessori inklusi di BSD City, Tangerang Selatan. Toddler, Preschool, dan Kindergarten dengan komunitas hangat."
+      descId="Palmtrees Montessori adalah sekolah Montessori inklusi di BSD City, Tangerang Selatan. Toddler, Pra-Sekolah, dan TK dengan komunitas hangat."
       descEn="Palmtrees Montessori is an inclusive Montessori school in BSD City, South Tangerang. Toddler, Preschool, and Kindergarten with a warm community."
     >
       <HeroSlider />
@@ -160,15 +160,15 @@ export default function Home() {
               {t('Program Kami', 'Our Programs')}
             </span>
             <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-4">
-              {lang === 'id' ? getContent('programs_title_id', 'Dari Preschool hingga Elementary') : getContent('programs_title_en', 'From Preschool to Elementary')}
+              {lang === 'id' ? getContent('programs_title_id', 'Dari Pra-Sekolah hingga Sekolah Dasar') : getContent('programs_title_en', 'From Preschool to Elementary')}
             </h2>
 
           </SectionReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { key: 'preschool', route: 'programs' as const, titleId: 'Program Preschool dan Kindergarten', titleEn: 'Preschool & Kindergarten Program', ageId: 'Usia 2 – 6 tahun', ageEn: 'Ages 2 – 6 years', descId: 'Practical Life, sensorial, bahasa, dan matematika awal dengan ritme harian yang konsisten.', descEn: 'Practical Life, sensorial, language, and early math with a consistent daily rhythm.' },
-              { key: 'kindergarten', route: 'programs' as const, titleId: 'Program Elementary', titleEn: 'Elementary Program', ageId: 'Usia 6 – 12 tahun', ageEn: 'Ages 6 – 12 years', descId: 'Matematika, sains, budaya, dan proyek riset mandiri yang bermakna hingga Kelas 6.', descEn: 'Math, science, culture, and meaningful independent research projects through Grade 6.' },
+              { key: 'preschool', route: 'programs' as const, titleId: 'Program Pra-Sekolah dan TK', titleEn: 'Preschool & Kindergarten Program', ageId: 'Usia 2 – 6 tahun', ageEn: 'Ages 2 – 6 years', descId: 'Practical Life, sensorial, bahasa, dan matematika awal dengan ritme harian yang konsisten.', descEn: 'Practical Life, sensorial, language, and early math with a consistent daily rhythm.' },
+              { key: 'kindergarten', route: 'programs' as const, titleId: 'Program Sekolah Dasar', titleEn: 'Elementary Program', ageId: 'Usia 6 – 12 tahun', ageEn: 'Ages 6 – 12 years', descId: 'Matematika, sains, budaya, dan proyek riset mandiri yang bermakna hingga Kelas 6.', descEn: 'Math, science, culture, and meaningful independent research projects through Grade 6.' },
               { key: 'inclusive', route: 'inclusion' as const, titleId: 'Program Inklusi', titleEn: 'Inclusion Program', ageId: 'Montessori untuk Setiap Anak', ageEn: 'Montessori for Every Child', descId: 'Pendampingan personal untuk setiap anak agar berkembang dengan nyaman.', descEn: 'Personal support for every child to flourish at their own pace.' },
             ].map((p, i) => {
               const img = getImages('programs', p.key)[0];
