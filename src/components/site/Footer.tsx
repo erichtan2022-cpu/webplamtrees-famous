@@ -193,7 +193,7 @@ export const Footer = () => {
         </div>
 
         <div className="mt-12 pt-6 border-t border-[#8B5E3C]/15 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#8B5E3C]/70">
-          <p>© {new Date().getFullYear()} Palmtrees Montessori School. {t('Dibuat dengan ❤️ di BSD.', 'Made with ❤️ in BSD.')}</p>
+          <p>© {new Date().getFullYear()} Palmtrees Montessori School - {t('Sekolah Montessori terbaik di BSD', 'Best Montessori School in BSD')}</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-[#7A9A01]">{t('Kebijakan Privasi', 'Privacy Policy')}</a>
             <a href="#" className="hover:text-[#7A9A01]">{t('Syarat & Ketentuan', 'Terms')}</a>
