@@ -63,8 +63,8 @@ export const Footer = () => {
             <Logo />
             <p className="mt-4 text-sm text-[#8B5E3C]/85 leading-relaxed">
               {t(
-                'Sekolah Montessori dengan program inklusi di BSD, Tangerang Selatan. Tempat anak tumbuh dengan kasih dan rasa ingin tahu.',
-                'A Montessori school with an inclusive program in BSD, South Tangerang. Where children grow with love and curiosity.'
+                'Sekolah Montessori Terbaik di BSD, Tangerang Selatan. Tempat anak tumbuh dengan kasih dan rasa ingin tahu.',
+                'The Best Montessori School in BSD, South Tangerang. Where children grow with love and curiosity.'
               )}
             </p>
             <div className="flex gap-3 mt-5">
