@@ -185,7 +185,7 @@ export default function Admission() {
                 <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-[#7A9A01]" /> {t('Telp.', 'Phone')} {phoneDisplay} · WA: {waDisplay}</p>
                 <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-[#7A9A01]" /> {email}</p>
 
-                <p className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#7A9A01]" /> {t('Senin–Jumat, 08:00–16:00', 'Mon–Fri, 8am–4pm')}</p>
+                <p className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#7A9A01]" /> {t('Senin–Jumat, 07:00–15:30', 'Mon–Fri, 7am–3:30pm')}</p>
               </div>
             </div>
           </SectionReveal>
