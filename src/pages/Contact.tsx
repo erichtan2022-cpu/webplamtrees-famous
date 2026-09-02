@@ -27,7 +27,7 @@ export default function Contact() {
   const facebook = getSetting('facebook') || contactInfo.facebook;
   const youtube = getSetting('youtube') || contactInfo.youtube;
   const hoursWeekday = getSetting('hours_weekday') || '07:00 – 15:30';
-  const hoursSaturday = getSetting('hours_saturday') || '09:00 – 12:00';
+  const hoursSaturday = getSetting('hours_saturday') || 'By Appointment';
   const hoursSunday = getSetting('hours_sunday') || 'Closed';
 
   const hours = [
