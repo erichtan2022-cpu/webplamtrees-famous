@@ -173,8 +173,8 @@ export default function Admission() {
                 }
               </p>
               <a
-                href="#"
-                onClick={(e) => { e.preventDefault(); alert(t('Brosur akan dikirim ke email Ayah Bunda setelah pengisian formulir.', 'The brochure will be emailed after you fill in the form.')); }}
+                href="/Palm_Trees_Montessori_School_Trifold_Brochure.pdf"
+                download
                 className="btn-bounce inline-flex items-center gap-2 bg-[#7A9A01] hover:bg-[#8B5E3C] text-white font-bold px-6 py-3 rounded-full shadow-lg"
               >
                 <Download className="w-5 h-5" />
