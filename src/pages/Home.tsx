@@ -70,10 +70,10 @@ export default function Home() {
 
   return (
     <SiteLayout
-      titleId="Sekolah Montessori Inklusi BSD | Palmtrees Montessori Tangerang Selatan"
-      titleEn="Inclusive Montessori School BSD | Palmtrees Montessori South Tangerang"
-      descId="Palmtrees Montessori adalah sekolah Montessori inklusi di BSD City, Tangerang Selatan. Toddler, Pra-Sekolah, dan TK dengan komunitas hangat."
-      descEn="Palmtrees Montessori is an inclusive Montessori school in BSD City, South Tangerang. Toddler, Preschool, and Kindergarten with a warm community."
+      titleId="Sekolah Montessori BSD | Palmtrees Montessori Tangerang Selatan"
+      titleEn="Montessori School BSD | Palmtrees Montessori South Tangerang"
+      descId="Palmtrees Montessori adalah sekolah Montessori di BSD City, Tangerang Selatan. Toddler, Pra-Sekolah, dan TK dengan komunitas hangat."
+      descEn="Palmtrees Montessori is a Montessori school in BSD City, South Tangerang. Toddler, Preschool, and Kindergarten with a warm community."
     >
       <HeroSlider />
 
@@ -81,8 +81,8 @@ export default function Home() {
       <section className="py-6 px-4 sm:px-8 bg-white border-b border-[#8B5E3C]/10">
         <p className="max-w-4xl mx-auto text-center text-sm text-[#8B5E3C]/75 leading-relaxed">
           {lang === 'id'
-            ? getContent('geo_intro_id', 'Melayani keluarga dari BSD City, Serpong, Alam Sutera, dan Bintaro — sekolah Montessori inklusi terpercaya di jantung Tangerang Selatan sejak tahun 2000.')
-            : getContent('geo_intro_en', 'Serving families from BSD City, Serpong, Alam Sutera, and Bintaro — a trusted inclusive Montessori school in the heart of South Tangerang since 2000.')
+            ? getContent('geo_intro_id', 'Melayani keluarga dari BSD City, Serpong, Alam Sutera, dan Bintaro — sekolah Montessori terpercaya di jantung Tangerang Selatan sejak tahun 2000.')
+            : getContent('geo_intro_en', 'Serving families from BSD City, Serpong, Alam Sutera, and Bintaro — a trusted Montessori school in the heart of South Tangerang since 2000.')
           }
         </p>
       </section>

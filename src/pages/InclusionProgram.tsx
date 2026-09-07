@@ -56,10 +56,10 @@ export default function InclusionProgram() {
 
   return (
     <SiteLayout
-      titleId="Sekolah Inklusi BSD & Tangerang | Program Inklusi Palm Trees Montessori"
-      titleEn="Inclusive School in BSD & Tangerang | Palm Trees Montessori Inclusion Program"
-      descId="Palm Trees Montessori adalah sekolah inklusi di BSD, Tangerang Selatan. Sekolah Montessori terbaik dengan program inklusi di Tangerang: shadow teacher, kolaborasi terapis, dan lingkungan yang mendukung setiap gaya belajar."
-      descEn="Palm Trees Montessori is an inclusive school in BSD, South Tangerang. The best Montessori school with an inclusion program in Tangerang: shadow teachers, therapist collaboration, and an environment that supports every learning style."
+      titleId="Sekolah Montessori BSD & Tangerang | Palm Trees Montessori"
+      titleEn="Montessori School in BSD & Tangerang | Palm Trees Montessori"
+      descId="Palm Trees Montessori adalah sekolah Montessori di BSD, Tangerang Selatan. Sekolah Montessori terbaik di Tangerang: shadow teacher, kolaborasi terapis, dan lingkungan yang mendukung setiap gaya belajar."
+      descEn="Palm Trees Montessori is a Montessori school in BSD, South Tangerang. The best Montessori school in Tangerang: shadow teachers, therapist collaboration, and an environment that supports every learning style."
     >
       <Parallax image={inclusiveHeroImg} speed={0.35} height="min-h-[480px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/70 to-[#7A9A01]/60">
         <div className="h-full min-h-[480px] flex items-center justify-center px-4 text-center">

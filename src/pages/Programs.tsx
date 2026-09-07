@@ -106,10 +106,10 @@ export default function Programs() {
 
   return (
     <SiteLayout
-      titleId="Kelas Pra-Sekolah, TK, Sekolah Dasar & Inklusi | Palmtrees Montessori BSD"
-      titleEn="Preschool, Kindergarten, Elementary & Inclusion Classes | Palmtrees Montessori BSD"
-      descId="Palm Trees Montessori BSD menyediakan program Pra-Sekolah dan TK (2-6 tahun), Program Sekolah Dasar (6-12 tahun), dan Program Inklusi."
-      descEn="Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6), an Elementary program (ages 6-12), and an Inclusion Program."
+      titleId="Kelas Pra-Sekolah, TK & Sekolah Dasar | Palmtrees Montessori BSD"
+      titleEn="Preschool, Kindergarten & Elementary Classes | Palmtrees Montessori BSD"
+      descId="Palm Trees Montessori BSD menyediakan program Pra-Sekolah dan TK (2-6 tahun) dan Program Sekolah Dasar (6-12 tahun)."
+      descEn="Palm Trees Montessori BSD offers a Preschool & Kindergarten program (ages 2-6) and an Elementary program (ages 6-12)."
     >
       <Parallax image={inclusiveHeroImg} speed={0.35} height="min-h-[440px]" overlayClass="bg-gradient-to-b from-[#3a2e22]/70 to-[#7A9A01]/60">
         <div className="h-full min-h-[440px] flex items-center justify-center px-4 text-center">

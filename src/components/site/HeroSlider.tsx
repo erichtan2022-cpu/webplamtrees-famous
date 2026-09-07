@@ -8,8 +8,8 @@ import { usePageContent } from '@/hooks/usePageContent';
 const slides = [
   {
     img: images.heroSlides[0],
-    headlineId: 'Palm Trees Montessori BSD – Sekolah Inklusi & Pra-Sekolah Terbaik di Tangerang Selatan',
-    headlineEn: 'Palm Trees Montessori BSD – Inclusive School & Best Preschool in South Tangerang',
+    headlineId: 'Palm Trees Montessori BSD – Sekolah Montessori & Pra-Sekolah Terbaik di Tangerang Selatan',
+    headlineEn: 'Palm Trees Montessori BSD – Montessori School & Best Preschool in South Tangerang',
     subId: 'Ruang belajar Montessori yang hangat dan menerima setiap anak apa adanya.',
     subEn: 'A warm Montessori space that welcomes every child for who they are.',
   },
