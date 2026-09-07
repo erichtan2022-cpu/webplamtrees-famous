@@ -59,16 +59,14 @@ const defaultPrograms = [
 ];
 
 const defaultDayRhythm = [
-  { icon: Sun, time: '08:00', id: 'Waktu Berkumpul & Menyapa', en: 'Morning Circle & Greeting' },
-  { icon: BookOpen, time: '08:30', id: 'Waktu Eksplorasi: Kegiatan Sehari-hari', en: 'Work Cycle: Practical Life' },
-  { icon: Sparkles, time: '09:30', id: 'Waktu Eksplorasi: Indra & Bahasa', en: 'Work Cycle: Sensorial & Language' },
-  { icon: Coffee, time: '10:30', id: 'Saatnya Camilan', en: 'Snack Together' },
-  { icon: Trees, time: '11:00', id: 'Bermain di Luar & Eksplorasi Alam', en: 'Outdoor Play & Gardening' },
-  { icon: Palette, time: '11:30', id: 'Berkarya & Belajar Mandiri', en: 'Art & Practical Life' },
-  { icon: Music, time: '12:00', id: 'Menutup Hari & Bersiap Pulang', en: 'Closing Circle & Dismissal' },
+  { icon: Sun, time: '10:30 – 11:00', id: 'Free Play', en: 'Free Play' },
+  { icon: Users, time: '11:00 – 11:30', id: 'Circle Time/Community Meeting', en: 'Circle Time/Community Meeting' },
+  { icon: Coffee, time: '11:30 – 12:00', id: 'Lunch', en: 'Lunch' },
+  { icon: BookOpen, time: '12:00 – 12:30', id: 'Reading Time', en: 'Reading Time' },
+  { icon: Palette, time: '12:30 – 13:10', id: 'Community Meeting and Prepare to go Home', en: 'Community Meeting and Prepare to go Home' },
 ];
 
-const rhythmIcons = [Sun, BookOpen, Sparkles, Coffee, Trees, Palette, Music];
+const rhythmIcons = [Sun, Users, Coffee, BookOpen, Palette];
 
 export default function Programs() {
   const { t, lang } = useLanguage();
@@ -185,6 +183,7 @@ export default function Programs() {
         </div>
       </section>
 
+      {p.key === 'inclusive' && (
       <section className="py-20 px-4 sm:px-8 bg-[#F5F0E6]">
         <div className="max-w-5xl mx-auto">
           <SectionReveal className="text-center mb-12">
@@ -221,6 +220,7 @@ export default function Programs() {
           </div>
         </div>
       </section>
+      )}
 
       <Parallax image={inclusiveImg} speed={0.3} height="min-h-[420px]" overlayClass="bg-[#7A9A01]/70">
         <div className="h-full min-h-[420px] flex items-center justify-center text-center px-4">
