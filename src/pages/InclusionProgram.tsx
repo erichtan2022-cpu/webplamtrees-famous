@@ -96,8 +96,8 @@ export default function InclusionProgram() {
               </p>
               <p>
                 {t(
-                  'Sebagai sekolah Montessori dengan program inklusi di Tangerang Selatan, kami memadukan lingkungan Montessori yang tenang dan terstruktur dengan pendampingan personal: shadow teacher terlatih, kolaborasi dengan terapis, dan rencana belajar individual. Kami tidak memberi label pada anak — kami mendukung setiap gaya belajar.',
-                  'As a Montessori school with an inclusion program in South Tangerang, we combine a calm, structured Montessori environment with personal support: trained shadow teachers, therapist collaboration, and individual learning plans. We never label children — we support every learning style.'
+                  'Sebagai sekolah Montessori dengan program inklusi di Tangerang Selatan, kami memadukan lingkungan Montessori yang tenang dan terstruktur dengan pendampingan personal dan rencana belajar individual. Kami tidak memberi label pada anak — kami mendukung setiap gaya belajar.',
+                  'As a Montessori school with an inclusion program in South Tangerang, we combine a calm, structured Montessori environment with personal support and individual learning plans. We never label children — we support every learning style.'
                 )}
               </p>
               <p>
