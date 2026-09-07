@@ -81,7 +81,7 @@ export default function Programs() {
 
   const programs = programCards.length > 0
     ? programCards.map((c, i) => ({
-        key: `program-${i}`,
+        key: defaultPrograms[i]?.key || `program-${i}`,
         labelId: c.title_id + (c.extra_id ? ` · ${c.extra_id}` : ''),
         labelEn: c.title_en + (c.extra_en ? ` · ${c.extra_en}` : ''),
         titleId: c.title_id,
