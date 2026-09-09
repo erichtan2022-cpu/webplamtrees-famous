@@ -99,8 +99,8 @@ export const Footer = () => {
                 { key: 'about' as const, id: 'Tentang Kami', en: 'About Us' },
                 { key: 'programs' as const, id: 'Program', en: 'Programs' },
                 { key: 'method' as const, id: 'Metode Montessori', en: 'Montessori Method' },
-                { key: 'admission' as const, id: 'Pendaftaran', en: 'Admission' },
                 { key: 'inclusion' as const, id: 'Program Inklusi', en: 'Inclusion Program' },
+                { key: 'admission' as const, id: 'Pendaftaran', en: 'Admission' },
                 { key: 'blog' as const, id: 'Blog', en: 'Blog' },
                 { key: 'contact' as const, id: 'Kontak', en: 'Contact' },
               ].map((l) => (

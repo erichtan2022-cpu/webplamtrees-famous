@@ -29,8 +29,8 @@ export const Header = () => {
         { key: 'method', id: 'Metode Montessori', en: 'Montessori Method' },
       ],
     },
-    { key: 'admission', id: 'Pendaftaran', en: 'Admission' },
     { key: 'inclusion', id: 'Program Inklusi', en: 'Inclusion Program' },
+    { key: 'admission', id: 'Pendaftaran', en: 'Admission' },
     { key: 'blog', id: 'Blog', en: 'Blog' },
     { key: 'contact', id: 'Kontak', en: 'Contact' },
   ];
