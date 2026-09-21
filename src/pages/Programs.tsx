@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sun, BookOpen, Palette, Music, Sparkles, Users, Coffee, Trees, Heart, Stethoscope, GraduationCap, MessagesSquare } from 'lucide-react';
+import { Sparkles, Heart, Stethoscope, GraduationCap, MessagesSquare } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
 import { Parallax } from '@/components/site/Parallax';
@@ -58,23 +58,12 @@ const defaultPrograms = [
   },
 ];
 
-const defaultDayRhythm = [
-  { icon: Sun, time: '10:30 – 11:00', id: 'Free Play', en: 'Free Play' },
-  { icon: Users, time: '11:00 – 11:30', id: 'Circle Time/Community Meeting', en: 'Circle Time/Community Meeting' },
-  { icon: Coffee, time: '11:30 – 12:00', id: 'Lunch', en: 'Lunch' },
-  { icon: BookOpen, time: '12:00 – 12:30', id: 'Reading Time', en: 'Reading Time' },
-  { icon: Palette, time: '12:30 – 13:10', id: 'Community Meeting and Prepare to go Home', en: 'Community Meeting and Prepare to go Home' },
-];
-
-const rhythmIcons = [Sun, Users, Coffee, BookOpen, Palette];
-
 export default function Programs() {
   const { t, lang } = useLanguage();
   const [active, setActive] = useState(0);
   const { getContent } = usePageContent('programs');
   const { getImages } = useSiteImages();
   const { cards: programCards } = useSiteCards('program');
-  const { cards: rhythmCards } = useSiteCards('day_rhythm');
 
   const inclusiveHeroImg = getImages('programs', 'inclusive_hero')[0] || images.inclusiveHero;
   const inclusiveImg = getImages('programs', 'inclusive')[0] || images.programs.inclusive;
@@ -92,15 +81,6 @@ export default function Programs() {
         highlights: defaultPrograms[i]?.highlights ?? [],
       }))
     : defaultPrograms;
-
-  const dayRhythm = rhythmCards.length > 0
-    ? rhythmCards.map((c, i) => ({
-        icon: rhythmIcons[i % rhythmIcons.length],
-        time: c.extra_id || '',
-        id: c.title_id,
-        en: c.title_en,
-      }))
-    : defaultDayRhythm;
 
   const p = programs[active] ?? programs[0];
 
@@ -156,7 +136,7 @@ export default function Programs() {
               />
               <div className="absolute -bottom-4 -right-4 bg-[#7A9A01] text-white rounded-2xl px-5 py-3 shadow-xl">
                 <div className="text-xs opacity-80">{t('Rasio kelas', 'Class ratio')}</div>
-                <div className="font-quicksand font-bold text-xl">1 : 6</div>
+                <div className="font-quicksand font-bold text-xl">1 : 5</div>
               </div>
             </div>
             <div>
@@ -182,45 +162,6 @@ export default function Programs() {
           </div>
         </div>
       </section>
-
-      {p.key === 'inclusive' && (
-      <section className="py-20 px-4 sm:px-8 bg-[#F5F0E6]">
-        <div className="max-w-5xl mx-auto">
-          <SectionReveal className="text-center mb-12">
-            <h2 className="font-quicksand font-bold text-3xl sm:text-5xl text-[#8B5E3C] mb-3">
-              {lang === 'id' ? getContent('rhythm_title_id', 'Sehari di Kelas') : getContent('rhythm_title_en', 'A Day in Class')}
-            </h2>
-            <p className="text-[#8B5E3C]/80 max-w-2xl mx-auto">
-              {lang === 'id' ? getContent('rhythm_subtitle_id', 'Ritme harian yang menenangkan dan dapat diprediksi anak.') : getContent('rhythm_subtitle_en', 'A calming, predictable daily rhythm.')}
-            </p>
-          </SectionReveal>
-
-          <div className="relative">
-            <div className="hidden md:block absolute left-8 top-8 bottom-8 w-1 bg-[#7A9A01]/30 rounded-full" />
-            <div className="space-y-4">
-              {dayRhythm.map((step, i) => {
-                const Icon = step.icon;
-                return (
-                  <SectionReveal key={i} delay={i * 60}>
-                    <div className="flex items-center gap-5 bg-white rounded-3xl p-5 shadow-md hover-lift">
-                      <div className="relative w-16 h-16 rounded-full bg-[#7A9A01] flex items-center justify-center text-white shadow-lg flex-shrink-0">
-                        <Icon className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-xs font-bold text-[#7A9A01] uppercase tracking-wider">{step.time}</div>
-                        <div className="font-quicksand font-bold text-lg text-[#8B5E3C]">
-                          {lang === 'id' ? step.id : step.en}
-                        </div>
-                      </div>
-                    </div>
-                  </SectionReveal>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
 
       <Parallax image={inclusiveImg} speed={0.3} height="min-h-[420px]" overlayClass="bg-[#7A9A01]/70">
         <div className="h-full min-h-[420px] flex items-center justify-center text-center px-4">
