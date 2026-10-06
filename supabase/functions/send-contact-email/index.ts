@@ -41,13 +41,47 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { name, email, subject, message } = await req.json();
+    const { name, email, subject, message, captchaA, captchaB, captchaAnswer, formLoadTime, website } = await req.json();
 
     if (!name || !email || !message) {
       return new Response(
         JSON.stringify({ error: "Name, email, and message are required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
+    }
+
+    // --- Anti-spam checks ---
+    // Honeypot: if the hidden field is filled, it's a bot
+    if (website) {
+      return new Response(
+        JSON.stringify({ ok: true, spam: true }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Math captcha verification
+    if (typeof captchaA !== "number" || typeof captchaB !== "number" || typeof captchaAnswer !== "number") {
+      return new Response(
+        JSON.stringify({ error: "Verification is required" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    if (captchaAnswer !== captchaA + captchaB) {
+      return new Response(
+        JSON.stringify({ error: "Verification answer is incorrect" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Time check: reject submissions faster than 3 seconds (likely a bot)
+    if (typeof formLoadTime === "number") {
+      const elapsed = Date.now() - formLoadTime;
+      if (elapsed < 3000) {
+        return new Response(
+          JSON.stringify({ error: "Submission too fast. Please try again." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
     }
 
     // Store message in database regardless of email status

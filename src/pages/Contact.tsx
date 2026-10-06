@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, Check, Instagram, Facebook, Youtube, MessageCircle } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { MapPin, Phone, Mail, Clock, Send, Check, Instagram, Facebook, Youtube, MessageCircle, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
 import { SectionReveal } from '@/components/site/SectionReveal';
@@ -15,6 +15,15 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState('');
+
+  const [captcha] = useState(() => {
+    const a = Math.floor(Math.random() * 5) + 1;
+    const b = Math.floor(Math.random() * 5) + 1;
+    return { a, b };
+  });
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const formLoadTime = useRef(Date.now());
+  const honeypotRef = useRef('');
 
   const addressId = getSetting('address_id') || contactInfo.addressId;
   const addressEn = getSetting('address_en') || contactInfo.addressEn;
@@ -42,6 +51,14 @@ export default function Contact() {
       setSendError('Nama, email, dan pesan wajib diisi.');
       return;
     }
+    if (parseInt(captchaAnswer, 10) !== captcha.a + captcha.b) {
+      setSendError(t('Jawaban verifikasi salah.', 'Verification answer is incorrect.'));
+      return;
+    }
+    if (honeypotRef.current) {
+      setSendError(t('Terjadi kesalahan. Silakan coba lagi.', 'An error occurred. Please try again.'));
+      return;
+    }
     setSending(true);
     setSendError('');
     try {
@@ -55,7 +72,14 @@ export default function Contact() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          captchaA: captcha.a,
+          captchaB: captcha.b,
+          captchaAnswer: parseInt(captchaAnswer, 10),
+          formLoadTime: formLoadTime.current,
+          website: honeypotRef.current,
+        }),
       });
 
       console.log('Response status:', res.status);
@@ -191,6 +215,31 @@ export default function Contact() {
                     <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder={t('Email', 'Email')} className="w-full px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />
                     <input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} placeholder={t('Subjek', 'Subject')} className="w-full px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />
                     <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder={t('Tulis pesan...', 'Write your message...')} className="w-full px-4 py-3 rounded-2xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-[#F5F0E6]/50 text-sm" />
+                    {/* Honeypot field — hidden from humans, bots fill it */}
+                    <input
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      onChange={(e) => { honeypotRef.current = e.target.value; }}
+                      style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                      aria-hidden="true"
+                      name="website"
+                    />
+                    {/* Math captcha */}
+                    <div className="flex items-center gap-3 bg-[#F5F0E6]/50 rounded-2xl px-4 py-3 border border-[#8B5E3C]/20">
+                      <ShieldCheck className="w-5 h-5 text-[#7A9A01] flex-shrink-0" />
+                      <label className="text-sm text-[#8B5E3C] whitespace-nowrap">
+                        {captcha.a} + {captcha.b} = ?
+                      </label>
+                      <input
+                        type="number"
+                        required
+                        value={captchaAnswer}
+                        onChange={(e) => setCaptchaAnswer(e.target.value)}
+                        placeholder={t('Jawaban', 'Answer')}
+                        className="flex-1 px-3 py-2 rounded-xl border border-[#8B5E3C]/20 focus:outline-none focus:border-[#7A9A01] bg-white text-sm w-20"
+                      />
+                    </div>
                     {sendError && (
                       <p className="text-sm text-red-500 bg-red-50 rounded-2xl px-4 py-3">
                         {sendError}
