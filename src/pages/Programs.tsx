@@ -134,10 +134,6 @@ export default function Programs() {
                 alt={p.titleEn}
                 className="w-full aspect-[4/3] object-cover rounded-3xl shadow-2xl"
               />
-              <div className="absolute -bottom-4 -right-4 bg-[#7A9A01] text-white rounded-2xl px-5 py-3 shadow-xl">
-                <div className="text-xs opacity-80">{t('Rasio kelas', 'Class ratio')}</div>
-                <div className="font-quicksand font-bold text-xl">1 : 5</div>
-              </div>
             </div>
             <div>
               <h2 className="font-quicksand font-bold text-3xl sm:text-4xl text-[#8B5E3C] mb-4">
