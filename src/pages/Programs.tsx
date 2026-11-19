@@ -223,15 +223,15 @@ export default function Programs() {
         <div className="max-w-5xl mx-auto">
           <SectionReveal className="text-center mb-12">
             <h2 className="font-quicksand font-bold text-3xl sm:text-4xl text-[#8B5E3C] mb-3">
-              {lang === 'id' ? getContent('how_inclusion_title_id', 'Bagaimana Program Inklusi Bekerja') : getContent('how_inclusion_title_en', 'How Our Inclusive Program Works')}
+              {lang === 'id' ? 'Manfaat kelas usia campuran' : 'Benefits of Mixed-Age Classes'}
             </h2>
           </SectionReveal>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: MessagesSquare, titleId: 'Komunikasi Terbuka', titleEn: 'Open Communication', descId: 'Guru menyambut dialog dengan Ayah Bunda dan berbagi perkembangan Ananda secara berkala.', descEn: 'Our guides welcome dialogue with parents and share your child\'s progress regularly.' },
-              { icon: Stethoscope, titleId: 'Kolaborasi Terapis', titleEn: 'Therapist Collaboration', descId: 'Kami berkoordinasi dengan terapis okupasi, wicara, atau psikolog yang sudah dipilih keluarga.', descEn: 'We coordinate with the OT, speech, or psychologist your family already trusts.' },
-              { icon: GraduationCap, titleId: 'Perencanaan Fleksibel', titleEn: 'Flexible Planning', descId: 'Individual goals yang fleksibel dan dievaluasi bersama orang tua secara rutin.', descEn: 'Flexible individual goals reviewed together with parents on a regular cadence.' },
+              { icon: MessagesSquare, titleId: 'Belajar Sesuai Kemampuan', titleEn: 'Learning at Their Own Pace', descId: 'Anak belajar sesuai kemampuan dan kecepatannya masing-masing.', descEn: 'Children learn according to their individual abilities and pace.' },
+              { icon: Stethoscope, titleId: 'Percaya Diri & Empati', titleEn: 'Confidence & Empathy', descId: 'Menumbuhkan rasa percaya diri dan empati. Adik kelas belajar dari kakak kelas, dan kakak kelas belajar menjadi pemimpin yang sabar ketika membantu adik kelas.', descEn: 'Children build confidence and empathy. Younger students learn from older students, while older students learn to become patient leaders when helping their younger classmates.' },
+              { icon: GraduationCap, titleId: 'Kolaborasi', titleEn: 'Collaboration', descId: 'Melatih kolaborasi, karena anak terbiasa bekerja sama di dalam kelas dibandingkan berkompetisi.', descEn: 'Children develop collaboration skills by becoming accustomed to working together in the classroom rather than competing.' },
             ].map((c, i) => {
               const Icon = c.icon;
               return (
