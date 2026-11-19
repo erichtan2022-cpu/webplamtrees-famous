@@ -24,10 +24,15 @@ const elementaryDetails = [
     titleEn: 'Upper Elementary (9-12 years)',
     badgeId: 'Setara kelas 4, 5, dan 6 SD',
     badgeEn: 'Equivalent to Grades 4, 5, and 6',
-    descId: 'Anak mulai beralih dari alat peraga konkret dan fokus pada riset mandiri, proyek kelompok, penulisan esai, dan manajemen waktu. Struktur ini mencerminkan prinsip dasar Montessori bahwa anak tidak hanya belajar dari orang dewasa, tetapi juga dari teman-temannya, dan sering kali justru lebih efektif.',
-    descEn: 'Children begin transitioning from concrete materials and focus on independent research, group projects, essay writing, and time management. This structure reflects a core Montessori principle that children learn not only from adults but also from their peers, often even more effectively.',
+    descId: 'Anak mulai beralih dari alat peraga konkret dan fokus pada riset mandiri, proyek kelompok, penulisan esai, dan manajemen waktu.',
+    descEn: 'Children begin transitioning from concrete materials and focus on independent research, group projects, essay writing, and time management.'
   },
 ];
+
+const elementaryClosing = {
+  id: 'Struktur ini mencerminkan prinsip dasar Montessori bahwa anak tidak hanya belajar dari orang dewasa, tetapi juga dari teman-temannya, dan sering kali justru lebih efektif.',
+  en: 'This structure reflects a core Montessori principle: children learn not only from adults but also from their peers, and often more effectively.',
+};
 
 const defaultPrograms = [
   {
@@ -54,7 +59,7 @@ const defaultPrograms = [
     titleEn: 'Elementary',
     descId: 'Kelas Elementary menggunakan sistem Mixed Age Group, yaitu anak dengan rentang usia 3 tahun belajar bersama dalam satu ruangan. Pembagian ini didasarkan pada tahap perkembangan kedua menurut Dr. Maria Montessori (usia 6-12 tahun) dan terdiri dari dua jenjang:',
     descEn: 'The Elementary class uses a Mixed Age Group system, where children within a 3-year age range learn together in one classroom. This grouping is based on Dr. Maria Montessori\'s second plane of development (ages 6-12) and consists of two levels:',
-    img: images.programs.kindergarten,
+    img: '/sd.PNG',
     highlights: [],
   },
   {
@@ -93,7 +98,7 @@ export default function Programs() {
         titleEn: c.title_en,
         descId: c.desc_id,
         descEn: c.desc_en,
-        img: getImages('programs', ['preschool', 'kindergarten', 'inclusive'][i] || 'preschool')[0] || c.image_url,
+        img: i === 1 ? '/sd.PNG' : (getImages('programs', ['preschool', 'kindergarten', 'inclusive'][i] || 'preschool')[0] || c.image_url),
         highlights: defaultPrograms[i]?.highlights ?? [],
       }))
     : defaultPrograms;
@@ -148,7 +153,7 @@ export default function Programs() {
               <img
                 src={p.img}
                 alt={p.titleEn}
-                className="w-full aspect-[4/3] object-cover rounded-3xl shadow-2xl"
+                className={`w-full ${p.key === 'elementary' ? 'aspect-[3/4]' : 'aspect-[4/3]'} object-cover rounded-3xl shadow-2xl`}
               />
             </div>
             <div>
@@ -183,6 +188,9 @@ export default function Programs() {
                       </div>
                     );
                   })}
+                  <p className="text-[#8B5E3C]/85 leading-relaxed text-lg pt-1">
+                    {lang === 'id' ? elementaryClosing.id : elementaryClosing.en}
+                  </p>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3">
