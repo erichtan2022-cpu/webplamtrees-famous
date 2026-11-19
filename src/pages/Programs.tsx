@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, Heart, Stethoscope, GraduationCap, MessagesSquare } from 'lucide-react';
+import { Sparkles, Heart, Stethoscope, GraduationCap, MessagesSquare, BookOpen } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SiteLayout } from '@/components/site/SiteLayout';
 import { Parallax } from '@/components/site/Parallax';
@@ -7,6 +7,27 @@ import { SectionReveal } from '@/components/site/SectionReveal';
 import { images } from '@/data/siteContent';
 import { usePageContent } from '@/hooks/usePageContent';
 import { useSiteImages, useSiteCards } from '@/hooks/useSiteContent';
+
+const elementaryDetails = [
+  {
+    icon: BookOpen,
+    titleId: 'Lower Elementary (6-9 tahun)',
+    titleEn: 'Lower Elementary (6-9 years)',
+    badgeId: 'Setara kelas 1, 2, dan 3 SD',
+    badgeEn: 'Equivalent to Grades 1, 2, and 3',
+    descId: 'Fokus pada pengenalan konsep dasar matematika, bahasa, dan sains, menggunakan alat peraga konkret sebelum anak beralih ke pemikiran abstrak.',
+    descEn: 'Focuses on introducing foundational concepts in math, language, and science, using concrete materials before children transition to abstract thinking.',
+  },
+  {
+    icon: GraduationCap,
+    titleId: 'Upper Elementary (9-12 tahun)',
+    titleEn: 'Upper Elementary (9-12 years)',
+    badgeId: 'Setara kelas 4, 5, dan 6 SD',
+    badgeEn: 'Equivalent to Grades 4, 5, and 6',
+    descId: 'Anak mulai beralih dari alat peraga konkret dan fokus pada riset mandiri, proyek kelompok, penulisan esai, dan manajemen waktu. Struktur ini mencerminkan prinsip dasar Montessori bahwa anak tidak hanya belajar dari orang dewasa, tetapi juga dari teman-temannya, dan sering kali justru lebih efektif.',
+    descEn: 'Children begin transitioning from concrete materials and focus on independent research, group projects, essay writing, and time management. This structure reflects a core Montessori principle that children learn not only from adults but also from their peers, often even more effectively.',
+  },
+];
 
 const defaultPrograms = [
   {
@@ -31,15 +52,10 @@ const defaultPrograms = [
     labelEn: 'Elementary · 6-12 y',
     titleId: 'Sekolah Dasar',
     titleEn: 'Elementary',
-    descId: 'Kelas Elementary menggunakan sistem Mixed Age Group, yaitu anak dengan rentang usia 3 tahun belajar bersama dalam satu ruangan. Pembagian ini didasarkan pada tahap perkembangan kedua menurut Dr. Maria Montessori (usia 6-12 tahun) dan terdiri dari dua jenjang: • Lower Elementary (6-9 tahun): setara kelas 1, 2, dan 3 SD. Fokus pada pengenalan konsep dasar matematika, bahasa, dan sains, menggunakan alat peraga konkret sebelum anak beralih ke pemikiran abstrak. • Upper Elementary (9-12 tahun): setara kelas 4, 5, dan 6 SD. Anak mulai beralih dari alat peraga konkret dan fokus pada riset mandiri, proyek kelompok, penulisan esai, dan manajemen waktu. Struktur ini mencerminkan prinsip dasar Montessori bahwa anak tidak hanya belajar dari orang dewasa, tetapi juga dari teman-temannya, dan sering kali justru lebih efektif.',
-    descEn: 'The Elementary class uses a Mixed Age Group system, where children within a 3-year age range learn together in one classroom. This grouping is based on Dr. Maria Montessori\'s second plane of development (ages 6-12) and consists of two levels: • Lower Elementary (6-9 years): equivalent to Grades 1, 2, and 3. Focuses on introducing foundational concepts in math, language, and science, using concrete materials before children transition to abstract thinking. • Upper Elementary (9-12 years): equivalent to Grades 4, 5, and 6. Children begin transitioning from concrete materials and focus on independent research, group projects, essay writing, and time management. This structure reflects a core Montessori principle that children learn not only from adults but also from their peers, often even more effectively.',
+    descId: 'Kelas Elementary menggunakan sistem Mixed Age Group, yaitu anak dengan rentang usia 3 tahun belajar bersama dalam satu ruangan. Pembagian ini didasarkan pada tahap perkembangan kedua menurut Dr. Maria Montessori (usia 6-12 tahun) dan terdiri dari dua jenjang:',
+    descEn: 'The Elementary class uses a Mixed Age Group system, where children within a 3-year age range learn together in one classroom. This grouping is based on Dr. Maria Montessori\'s second plane of development (ages 6-12) and consists of two levels:',
     img: images.programs.kindergarten,
-    highlights: [
-      { id: 'Lower Elementary (6-9 th): konsep dasar konkret', en: 'Lower Elementary (6-9 y): concrete core concepts' },
-      { id: 'Upper Elementary (9-12 th): riset mandiri & esai', en: 'Upper Elementary (9-12 y): research & essays' },
-      { id: 'Mixed Age Group rentang 3 tahun', en: '3-year Mixed Age Group' },
-      { id: 'Cosmic Education: matematika, sains, sejarah', en: 'Cosmic Education: math, science, history' },
-    ],
+    highlights: [],
   },
   {
     key: 'inclusive',
@@ -142,18 +158,46 @@ export default function Programs() {
               <p className="text-[#8B5E3C]/85 leading-relaxed text-lg mb-6">
                 {lang === 'id' ? p.descId : p.descEn}
               </p>
-              <div className="grid grid-cols-2 gap-3">
-                {p.highlights.map((h, i) => (
-                  <div key={i} className="flex items-center gap-2 bg-[#F5F0E6] rounded-2xl px-4 py-3">
-                    <div className="w-6 h-6 rounded-full bg-[#7A9A01] flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-3 h-3 text-white" />
+              {p.key === 'elementary' ? (
+                <div className="space-y-5">
+                  {elementaryDetails.map((detail, i) => {
+                    const Icon = detail.icon;
+                    return (
+                      <div key={i} className="bg-[#F5F0E6] border border-[#8B5E3C]/15 rounded-3xl p-6 shadow-sm hover-lift">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-2xl bg-[#7A9A01] flex items-center justify-center flex-shrink-0 shadow-md">
+                            <Icon className="w-6 h-6 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="font-quicksand font-bold text-xl text-[#8B5E3C] mb-2">
+                              {lang === 'id' ? detail.titleId : detail.titleEn}
+                            </h3>
+                            <span className="inline-block rounded-full bg-white border border-[#7A9A01]/25 px-3 py-1 text-xs font-bold text-[#7A9A01] mb-3">
+                              {lang === 'id' ? detail.badgeId : detail.badgeEn}
+                            </span>
+                            <p className="text-[#8B5E3C]/85 leading-relaxed">
+                              {lang === 'id' ? detail.descId : detail.descEn}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  {p.highlights.map((h, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-[#F5F0E6] rounded-2xl px-4 py-3">
+                      <div className="w-6 h-6 rounded-full bg-[#7A9A01] flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="w-3 h-3 text-white" />
+                      </div>
+                      <span className="text-sm text-[#8B5E3C] font-medium">
+                        {lang === 'id' ? h.id : h.en}
+                      </span>
                     </div>
-                    <span className="text-sm text-[#8B5E3C] font-medium">
-                      {lang === 'id' ? h.id : h.en}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
